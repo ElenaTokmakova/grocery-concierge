@@ -1,0 +1,25 @@
+{
+  "name": "grocery-concierge",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/corciega/grocery-concierge.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/corciega/grocery-concierge/issues"
+  },
+  "homepage": "https://github.com/corciega/grocery-concierge#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "lunr": "^2.3.8",
+    "socket.io": "^2.3.0"
+  }
+}
