@@ -4,7 +4,11 @@ const app = express();
 app.use(express.static(__dirname + '/views')); // html
 app.use(express.static(__dirname + '/public')); // js, css, images
 
-const server = app.listen(5000);
+const PORT = process.env.PORT || 3000;
+const server = app.listen(PORT, () => {
+    console.log(`Our app is running on port ${ PORT }`);
+});
+
 app.get('/', (req, res) => {
   res.sendFile('index.html');
 });
