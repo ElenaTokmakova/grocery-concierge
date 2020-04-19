@@ -23,7 +23,7 @@ if (ENVIRONMENT === 'development') {
     app.use(cors());
  }
 
-// Point static path to dist
+// Point static path to the public folder
 app.use('/', express.static(path.join(__dirname, '..', 'public')));
 app.use('/public', express.static(path.join(__dirname, '..', 'public')));
 
@@ -50,7 +50,7 @@ const idx = lunr(function () {
   }, this)
 })
 
-// attach socket.io to a plain Node.JS HTTP server listening on port 3000
+// attach socket.io to an Express server listening on port 3000
 const io = socketIo(server);
 io.on('connection', function(socket) {
   console.log('Client connected');
