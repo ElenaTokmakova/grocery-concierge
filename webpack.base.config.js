@@ -33,6 +33,19 @@ module.exports = env => {
             ]
           },
           {
+            test: /\.(gif|png|jpe?g|svg)$/i,
+            use: [
+              {
+                loader: 'url-loader',
+                options: {
+                  limit: 1000000, //files up to 1 mb
+                  name: path + '.[ext]', //Path will be assets or image path
+                  fallback: 'responsive-loader'
+                }
+              }
+           ],
+          },
+          {
             test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
             loader: "url-loader?limit=10000&mimetype=application/font-woff" // loader for Font Awesome fonts
             // Loads files as `base64` encoded URL
@@ -70,7 +83,11 @@ module.exports = env => {
       },
       output: {
         path: path.resolve(__dirname, 'public'),
-        filename: 'bundle.js'
+        filename: 'bundle.js',
+        publicPath: '/' // publicPath allows you to specify the base path for all the assets within your application
+      },
+      devServer: {
+        historyApiFallback: true // historyAPIFallback will redirect 404s to /index.html
       },
       plugins: [
         new webpack.HotModuleReplacementPlugin(),
@@ -88,7 +105,7 @@ module.exports = env => {
           'process.env.VERSION': JSON.stringify(env.VERSION),
           'process.env.PLATFORM': JSON.stringify(env.PLATFORM)
         }),
-        new CopyWebpackPlugin([ { from: 'client/static' } ])
+        new CopyWebpackPlugin([ { from: 'client/assets/images', to: 'assets/images' } ])
       ]
     }
 

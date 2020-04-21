@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
+import { Container, Row, Col } from 'reactstrap';
 // a standalone build of socket.io-client is exposed automatically by the socket.io server
 import socketIOClient from "socket.io-client";
 import axios from 'axios';
+import conciergeImage from "../assets/images/concierge.jpg";
 
 // dev url is only required in development to make requests from client to server
 let DEV_URL = '';
@@ -29,7 +31,8 @@ class App extends Component {
       listening: false,
       outputYou: '',
       outputBot: '',
-      infoDisplay: ''
+      infoDisplay: '',
+      conciergeImage : conciergeImage
     };
 
     componentDidMount(){
@@ -157,19 +160,25 @@ class App extends Component {
 
     render() {
       return (
-        <section>
-            <h1>Grocery Concierge</h1>
-            <h2>How can I help you today?</h2>
+        <Container className="app-container text-center">
+          <h1>Grocery Concierge</h1>
+          <h2>How can I help you today?</h2>
 
+          <Row>
+            <img className="image-concierge" src={this.state.conciergeImage} />
+          </Row>
+
+          <Row>
             <button onClick={this.toggleListen}><i className="fa fa-microphone icon"></i></button>
+          </Row>
 
-            <div>
-                <p>Listening? { this.state.listening.toString() }</p>
-                <p>You said: <em className="output-you">{ this.state.outputYou }</em></p>
-                <p>Concierge replied: <em className="output-bot">{ this.state.outputBot }</em></p>
-            </div>
-            <div className="info-display">{ this.state.infoDisplay }</div>
-        </section>
+          <div className="voice-recognition-info">
+              <p>Listening? { this.state.listening.toString() }</p>
+              <p>You said: <em className="output-you">{ this.state.outputYou }</em></p>
+              <p>Concierge replied: <em className="output-bot">{ this.state.outputBot }</em></p>
+          </div>
+          <div className="info-display">{ this.state.infoDisplay }</div>
+        </Container>
       );
     }
 }
