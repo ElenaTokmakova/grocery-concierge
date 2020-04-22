@@ -1,13 +1,7 @@
 const express = require('express');
 const path = require('path');
-// HTTP request logger middleware for node.js
-const logger = require('morgan');
-// Parse incoming request bodies in a middleware before your handlers, available under the req.body property
 const bodyParser = require('body-parser');
-// Socket.IO enables real-time bidirectional event-based communication
 const socketIo = require("socket.io");
-// small, full-text search library for use in the browser
-// indexes JSON documents and provides a simple search interface for retrieving documents that best match text queries
 const lunr = require('lunr');
 const routes = require('./routes');
 const documents = require('./data/default');
@@ -29,13 +23,10 @@ app.use('/public', express.static(path.join(__dirname, '..', 'public')));
 
 app.use('/', routes);
 
-// we need express.json() and express.urlencoded() for
+// express.json() and express.urlencoded() for
 // POST and PUT requests to process request body (future use)
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-
-// HTTP request logger middleware for node.js
-app.use(logger('dev'));
 
 const server = app.listen(PORT, () => {
     console.log(`Our cors enabled server is listening on port ${ PORT }`);

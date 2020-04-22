@@ -19,7 +19,8 @@
 
 * clone the repository
 * npm install
-* npm dev
+* npm run install_client
+* npm run dev
 * visit `http://localhost:8080/`
 * view server output in your console
 
@@ -27,7 +28,8 @@
 
 * clone the repository
 * npm install
-* npm prebuild
+* npm run install_client
+* npm run prebuild
 * npm run server
 * visit `http://localhost:3000/`
 * view server output in your console

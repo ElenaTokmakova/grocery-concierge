@@ -6,7 +6,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-const APP_DIR = path.resolve(__dirname, './client/index.jsx');
+const APP_DIR = path.resolve(__dirname, './index.jsx');
 
 module.exports = env => {
   const { PLATFORM, VERSION } = env;
@@ -97,7 +97,7 @@ module.exports = env => {
         //This ensures that no assets are emitted that include errors. The emitted flag in the stats is false for all assets.
         new webpack.NamedModulesPlugin(),
         //This plugin will cause the relative path of the module to be displayed when HMR is enabled. Suggested for use in development.
-        new HtmlWebpackPlugin({template: './client/index.html'}),
+        new HtmlWebpackPlugin({template: './index.html'}),
         //The plugin will generate an HTML5 file for you that includes all your webpack bundles in the body using script tags.
 
         // The DefinePlugin allows you to create global constants which can be configured at compile time
@@ -105,7 +105,7 @@ module.exports = env => {
           'process.env.VERSION': JSON.stringify(env.VERSION),
           'process.env.PLATFORM': JSON.stringify(env.PLATFORM)
         }),
-        new CopyWebpackPlugin([ { from: 'client/assets/images', to: 'assets/images' } ])
+        new CopyWebpackPlugin([ { from: 'assets/images', to: '../public/assets/images' } ])
       ]
     }
 
