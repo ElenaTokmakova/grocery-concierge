@@ -45,9 +45,31 @@ io.on('connection', function(socket) {
   socket.on('customer query', (text) => {
     console.log('Message: ' + text);
 
-    // TODO search for item requested
-    var results = idx.search("beans");
+    // TODO parse the incoming text
+    var searchItem = text;
 
-    socket.emit('response', { reply: 'You can find that in aisle 3', info: 'Aisle 3'});
+    // TODO search for item requested
+    var results = idx.search(searchItem);
+
+    if (results.length > 0) {
+      let found = documents.find(e => e.name === results[0].ref);
+      console.log('Message: ' + found.location);
+      socket.emit('response', { reply: 'You can find that in ' + found.location, info: found.location});
+    } else {
+      socket.emit('response', { reply: 'Sorry, I can\'t find what you\'re looking for, please try again', info: 'Please try again'});
+    }
+    
   });
 });
+
+app.get('/test', function (req, res) {
+
+  var results = idx.search("macaroni and cheese");
+  
+  if (results.length > 0) {
+    let found = documents.find(e => e.name === results[0].ref);
+    console.log('Message: ' + found.location);
+  }
+
+  res.send('hello world')
+})
