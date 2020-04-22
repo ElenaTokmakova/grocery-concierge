@@ -82,7 +82,7 @@ module.exports = env => {
         extensions: ['*', '.js', '.jsx']
       },
       output: {
-        path: path.resolve(__dirname, 'public'),
+        path: path.resolve(__dirname, '..', 'public'),
         filename: 'bundle.js',
         publicPath: '/' // publicPath allows you to specify the base path for all the assets within your application
       },
