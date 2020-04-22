@@ -1,8 +1,15 @@
 import React, {Component} from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect
+} from "react-router-dom";
 import { Container, Row, Col } from 'reactstrap';
 // a standalone build of socket.io-client is exposed automatically by the socket.io server
 import socketIOClient from "socket.io-client";
 import axios from 'axios';
+import GoogleMap from './GoogleMap';
 import conciergeImage from "../assets/images/concierge.jpg";
 
 // dev url is only required in development to make requests from client to server
@@ -178,6 +185,14 @@ class App extends Component {
               <p>Concierge replied: <em className="output-bot">{ this.state.outputBot }</em></p>
           </div>
           <div className="info-display">{ this.state.infoDisplay }</div>
+
+
+          <section className="google-map">
+            <Container>
+              <GoogleMap/>
+            </Container>
+          </section>
+
         </Container>
       );
     }
