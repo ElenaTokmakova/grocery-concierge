@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { Button, Card, CardBody, CardTitle } from 'reactstrap';
 import {
   BrowserRouter as Router,
   Switch,
@@ -39,7 +40,9 @@ class App extends Component {
       outputYou: '',
       outputBot: '',
       infoDisplay: '',
-      conciergeImage : conciergeImage
+      conciergeImage : conciergeImage,
+      selectedPlace: {},
+      navigateToStore: false
     };
 
     componentDidMount(){
@@ -165,6 +168,23 @@ class App extends Component {
         synth.speak(utterance);
     }
 
+    onStoreSelection = (e, selectedPlace) => {
+      console.log("On store selection", selectedPlace)
+      this.setState({
+        navigateToStore: true,
+        selectedPlace
+      }, () => {
+        console.log("State: ", this.state)
+      });
+    }
+
+    navigateToMap = () => {
+      this.setState({
+        navigateToStore: false,
+        selectedPlace: {}
+      })
+    }
+
     render() {
       return (
         <Container className="app-container text-center">
@@ -178,21 +198,47 @@ class App extends Component {
             <Switch>
               <Route path="/select-store">
               <h2>Please select a store</h2>
-              <section className="google-map">
-                  <GoogleMap/>
-              </section>
+              {
+                this.state.navigateToStore === false &&
+                <section className="google-map">
+                  <GoogleMap onStoreSelection={this.onStoreSelection}/>
+                </section>
+              }
+              {
+                this.state.navigateToStore === true &&
+                <Redirect to="/select-products" store={this.state.selectedPlace}/>
+              }
               </Route>
-              <Route path="/select-products">
-                <Row>
-                  <button className="microphone" onClick={this.toggleListen}><i className="fa fa-microphone icon"></i></button>
-                </Row>
-
-                <div className="voice-recognition-info">
-                    <p>Listening? { this.state.listening.toString() }</p>
-                    <p>You said: <em className="output-you">{ this.state.outputYou }</em></p>
-                    <p>Concierge replied: <em className="output-bot">{ this.state.outputBot }</em></p>
-                </div>
-              <div className="info-display">{ this.state.infoDisplay }</div>
+              <Route path="/select-products" store={this.state.selectedPlace}>
+                {
+                  this.state.navigateToStore === true &&
+                  <section className="product-search">
+                    <Row className="back-to-map-button-container justify-content-center">
+                      <Button color="primary" className="back-to-map-button" onClick={this.onButtonClick} onClick={this.navigateToMap}>
+                        <i className="fa fa-long-arrow-left" aria-hidden="true"></i> Select another store
+                      </Button>
+                    </Row>
+                    <Row className="microphone-button-container justify-content-center">
+                      <button className="microphone" onClick={this.toggleListen}><i className="fa fa-microphone icon" aria-hidden="true"></i></button>
+                    </Row>
+                    <Row className="voice-search-info-container justify-content-center">
+                    <Card>
+                      <CardBody>
+                        <CardTitle><p>{ !this.state.listening ? 'Click on the microphone to start speaking' : 'I\'m listening!'}</p></CardTitle>
+                        <div className="voice-search-info">
+                            <p>You said: <em className="output-you">{ this.state.outputYou }</em></p>
+                            <p>Concierge replied: <em className="output-bot">{ this.state.outputBot }</em></p>
+                        </div>
+                        <div className="info-display">{ this.state.infoDisplay }</div>
+                      </CardBody>
+                    </Card>
+                    </Row>
+                  </section>
+                }
+                {
+                this.state.navigateToStore === false &&
+                  <Redirect to="/select-store"/>
+                }
               </Route>
               <Route exact path="/">
                 <Redirect to="/select-store" />

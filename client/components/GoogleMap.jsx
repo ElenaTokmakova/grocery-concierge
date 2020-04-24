@@ -4,12 +4,16 @@ import {Map, Marker, Circle, GoogleApiWrapper} from 'google-maps-react';
 import InfoWindowEx from './InfoWindowEx';
 
 export class MapContainer extends Component {
-  state = {
+
+  constructor(props) {
+    super(props);
+    this.state = {
       showingInfoWindow: false,
       activeMarker: {},
       selectedPlace: {},
       places: []
-  };
+    };
+  }
 
   nextPath(path) {
     this.props.history.push(path);
@@ -49,10 +53,6 @@ export class MapContainer extends Component {
       })
     }
   };
-
-  onButtonClick = () => {
-    console.log("Active store", this.state.selectedPlace)
-  }
 
   render() {
 
@@ -102,7 +102,7 @@ export class MapContainer extends Component {
         <InfoWindowEx marker={this.state.activeMarker} visible={this.state.showingInfoWindow}>
             <div>
               <h4>{this.state.selectedPlace.name}</h4>
-              <Button color="primary" onClick={this.onButtonClick} onClick={this.onButtonClick}>Find products</Button>
+              <Button color="primary" onClick={this.onButtonClick} onClick={ (e) => this.props.onStoreSelection(e, this.state.selectedPlace)}>Find products</Button>
             </div>
         </InfoWindowEx>
 
