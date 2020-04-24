@@ -224,7 +224,7 @@ class App extends Component {
                     <Row className="voice-search-info-container justify-content-center">
                     <Card>
                       <CardBody>
-                        <CardTitle><p>{ !this.state.listening ? 'Click on the microphone to start speaking' : 'I\'m listening!'}</p></CardTitle>
+                        <CardTitle><p>{ !this.state.listening ? 'Click or tap the microphone to start speaking' : 'I\'m listening! Click again to finish your search'}</p></CardTitle>
                         <div className="voice-search-info">
                             <p>You said: <em className="output-you">{ this.state.outputYou }</em></p>
                             <p>Concierge replied: <em className="output-bot">{ this.state.outputBot }</em></p>
