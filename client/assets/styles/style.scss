@@ -11,7 +11,7 @@ body {
   padding-top: 5rem;
   padding-bottom: 5rem;
 }
-button {
+.microphone {
   display: block;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -29,19 +29,19 @@ button {
   will-change: transform, filter;
   transition: all 0.3s ease-out;
 }
-button .icon {
+.microphone .icon {
   font-size: 130px;
   line-height: 200px;
   margin: 0;
   text-shadow: 1px 2px 2px #2a8b90;
 }
-button:hover {
+.microphone:hover {
   transform: scale(.92);
 }
-button:active {
+.microphone:active {
   filter: brightness(.8);
 }
-button:focus {
+.microphone:focus {
   outline: 0;
 }
 .info-display {

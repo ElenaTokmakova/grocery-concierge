@@ -176,7 +176,7 @@ class App extends Component {
           </Row>
 
           <Row>
-            <button onClick={this.toggleListen}><i className="fa fa-microphone icon"></i></button>
+            <button className="microphone" onClick={this.toggleListen}><i className="fa fa-microphone icon"></i></button>
           </Row>
 
           <div className="voice-recognition-info">
