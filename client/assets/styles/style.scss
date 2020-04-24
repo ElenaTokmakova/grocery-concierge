@@ -8,8 +8,11 @@ body {
   color: #333;
 }
 .app-container {
-  padding-top: 5rem;
-  padding-bottom: 5rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+.logo-container {
+  margin-bottom: 2rem;
 }
 .microphone {
   display: block;
@@ -49,7 +52,7 @@ body {
   text-align: center;
 }
 .image-concierge {
-  margin: 4rem auto 0;
+  margin: 2rem auto 0;
   max-width: 200px;
 }
 

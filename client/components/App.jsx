@@ -169,29 +169,36 @@ class App extends Component {
       return (
         <Container className="app-container text-center">
           <h1>Grocery Concierge</h1>
-          <h2>How can I help you today?</h2>
 
-          <Row>
+          <Row className="logo-container">
             <img className="image-concierge" src={this.state.conciergeImage} />
           </Row>
 
-          <Row>
-            <button className="microphone" onClick={this.toggleListen}><i className="fa fa-microphone icon"></i></button>
-          </Row>
+          <Router>
+            <Switch>
+              <Route path="/select-store">
+              <h2>Please select a store</h2>
+              <section className="google-map">
+                  <GoogleMap/>
+              </section>
+              </Route>
+              <Route path="/select-products">
+                <Row>
+                  <button className="microphone" onClick={this.toggleListen}><i className="fa fa-microphone icon"></i></button>
+                </Row>
 
-          <div className="voice-recognition-info">
-              <p>Listening? { this.state.listening.toString() }</p>
-              <p>You said: <em className="output-you">{ this.state.outputYou }</em></p>
-              <p>Concierge replied: <em className="output-bot">{ this.state.outputBot }</em></p>
-          </div>
-          <div className="info-display">{ this.state.infoDisplay }</div>
-
-
-          <section className="google-map">
-            <Container>
-              <GoogleMap/>
-            </Container>
-          </section>
+                <div className="voice-recognition-info">
+                    <p>Listening? { this.state.listening.toString() }</p>
+                    <p>You said: <em className="output-you">{ this.state.outputYou }</em></p>
+                    <p>Concierge replied: <em className="output-bot">{ this.state.outputBot }</em></p>
+                </div>
+              <div className="info-display">{ this.state.infoDisplay }</div>
+              </Route>
+              <Route exact path="/">
+                <Redirect to="/select-store" />
+              </Route>
+            </Switch>
+          </Router>
 
         </Container>
       );

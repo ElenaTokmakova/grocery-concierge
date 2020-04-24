@@ -11,8 +11,11 @@ export class MapContainer extends Component {
       places: []
   };
 
+  nextPath(path) {
+    this.props.history.push(path);
+  }
+
   fetchPlaces = (mapProps, map) => {
-    console.log("Fetch places", mapProps, map)
     const {google} = mapProps;
     const service = new google.maps.places.PlacesService(map);
     service.nearbySearch({
@@ -64,13 +67,6 @@ export class MapContainer extends Component {
       scrollwheel: true
     };
 
-    const infoWindowProps = {
-      marker: this.state.activeMarker,
-      visible: this.state.showingInfoWindow,
-      onOpen: this.windowHasOpened,
-      onClose: this.onInfoWindowClose
-    };
-
     return (
       <Map className="google-map--map" style={{width: 800, height: 500, position: 'relative'}} {...mapProps}>
 
@@ -106,7 +102,7 @@ export class MapContainer extends Component {
         <InfoWindowEx marker={this.state.activeMarker} visible={this.state.showingInfoWindow}>
             <div>
               <h4>{this.state.selectedPlace.name}</h4>
-              <Button color="primary" onClick={this.onButtonClick}>Find products</Button>
+              <Button color="primary" onClick={this.onButtonClick} onClick={this.onButtonClick}>Find products</Button>
             </div>
         </InfoWindowEx>
 
