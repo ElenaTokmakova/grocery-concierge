@@ -214,6 +214,7 @@ class App extends Component {
                   this.state.navigateToStore === true &&
                   <section className="product-search">
                     <Row className="back-to-map-button-container justify-content-center">
+                      <p>You have selected {this.state.selectedPlace.name}</p>
                       <Button color="primary" className="back-to-map-button" onClick={this.onButtonClick} onClick={this.navigateToMap}>
                         <i className="fa fa-long-arrow-left" aria-hidden="true"></i> Select another store
                       </Button>
