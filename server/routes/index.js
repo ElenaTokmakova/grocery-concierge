@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const path = require('path');
 const helpers = require('../helpers');
+const documents = require('../data/default');
 
 // routes will be called first and, if no middleware handles the request, then express will call static files
 // return default (mock) product location data

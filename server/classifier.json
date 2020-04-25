@@ -1,0 +1,80 @@
+{
+    "classifier": {
+        "classFeatures": {
+            "where": {
+                "0": 2,
+                "1": 2,
+                "2": 2,
+                "3": 2,
+                "4": 2
+            },
+            "hello": {
+                "5": 2,
+                "6": 2,
+                "7": 2
+            }
+        },
+        "classTotals": {
+            "where": 4,
+            "hello": 4
+        },
+        "totalExamples": 7,
+        "smoothing": 1
+    },
+    "docs": [
+        {
+            "label": "where",
+            "text": [
+                "bean"
+            ]
+        },
+        {
+            "label": "where",
+            "text": [
+                "tell",
+                "chocol"
+            ]
+        },
+        {
+            "label": "where",
+            "text": [
+                "look",
+                "bread"
+            ]
+        },
+        {
+            "label": "hello",
+            "text": [
+                "hello"
+            ]
+        },
+        {
+            "label": "hello",
+            "text": [
+                "hi"
+            ]
+        },
+        {
+            "label": "hello",
+            "text": [
+                "howdi"
+            ]
+        }
+    ],
+    "features": {
+        "bean": 1,
+        "tell": 1,
+        "chocol": 1,
+        "look": 1,
+        "bread": 1,
+        "hello": 1,
+        "hi": 1,
+        "howdi": 1
+    },
+    "stemmer": {},
+    "lastAdded": 6,
+    "events": {
+        "_events": {},
+        "_eventsCount": 0
+    }
+}

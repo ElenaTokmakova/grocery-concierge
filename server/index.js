@@ -8,6 +8,13 @@ const documents = require('./data/default');
 
 const app = express();
 
+const natural = require('natural');
+let classifier = new natural.BayesClassifier();
+
+natural.BayesClassifier.load('classifier.json', null, function(err, c) {
+  classifier = c;
+});
+
 const PORT = process.env.PORT || 3000;
 const ENVIRONMENT = process.env.NODE_ENV || 'development';
 
@@ -48,10 +55,35 @@ io.on('connection', function(socket) {
   socket.on('customer query', (text) => {
     console.log('Message: ' + text);
 
-    // TODO search for item requested
-    const results = idx.search("beans");
+    // Determine intent of utterance
+    const classification = classifier.classify(text);
 
-    // send search result to client
-    socket.emit('response', { reply: 'You can find that in aisle 3', info: 'Aisle 3'});
+    if (classification == 'where') {
+      // Filter question to get the search item
+      const tokens = natural.PorterStemmer.tokenizeAndStem(text);
+
+      let searchItem = '';
+      tokens.forEach(function (token, index) {
+        console.log(token);
+        searchItem += token + ' ';
+      });
+
+      // TODO search for item requested
+      var results = idx.search(searchItem);
+
+      // send search result to client
+      // Search for the item in the index
+      var results = idx.search(searchItem);
+
+      if (results.length > 0) {
+        let found = documents.find(e => e.name === results[0].ref);
+        console.log('Message: ' + found.location);
+        socket.emit('response', { reply: 'You can find that in ' + found.location, info: found.location});
+      } else {
+        socket.emit('response', { reply: 'Sorry, I can\'t find what you\'re looking for, please try again', info: 'Please try again'});
+      }
+    } else if (classification == 'hello') {
+      socket.emit('response', { reply: 'Hi!', info: 'Hi!'});
+    }
   });
 });
