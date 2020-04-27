@@ -61,7 +61,7 @@ class App extends Component {
               <Route path="/select-products" store={this.state.selectedPlace}>
                 {
                   this.state.navigateToStore === true &&
-                  <ProductSearch selectedPlace={this.state.selectedPlace}/>
+                  <ProductSearch selectedPlace={this.state.selectedPlace} navigateToMap={this.navigateToMap}/>
                 }
                 {
                 this.state.navigateToStore === false &&

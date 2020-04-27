@@ -200,7 +200,7 @@ class App extends Component {
                 <Row className="back-to-map-button-container justify-content-center">
                     <Col sm="12">
                         <p className="product-search-subtitle">You have selected <strong>{store}</strong></p>
-                        <Button color="primary" className="back-to-map-button" onClick={this.onButtonClick} onClick={this.navigateToMap}>
+                        <Button color="primary" className="back-to-map-button" onClick={this.props.navigateToMap}>
                             <FontAwesomeIcon icon="long-arrow-alt-left" /> Select another store
                         </Button>
                     </Col>
