@@ -1,0 +1,66 @@
+[
+    {
+        "name" : "Apples",
+        "class" : "apple-alt"
+    },
+    {
+        "name" : "Bacon",
+        "class" : "bacon"
+    },
+    {
+        "name" : "Bread",
+        "class" : "bread-slice"
+    },
+    {
+        "name" : "Candy",
+        "class" : "candy-cane"
+    },
+    {
+        "name" : "Carrot",
+        "class" : "carrot"
+    },
+    {
+        "name" : "Cheese",
+        "class" : "cheese"
+    },
+    {
+        "name" : "Cookies",
+        "class" : "cookie"
+    },
+    {
+        "name" : "Eggs",
+        "class" : "egg"
+    },
+    {
+        "name" : "Fish",
+        "class" : "fish"
+    },
+    {
+        "name" : "Hamburgers",
+        "class" : "hamburger"
+    },
+    {
+        "name" : "Hotdogs",
+        "class" : "hotdog"
+    },
+    {
+        "name" : "Lemons",
+        "class" : "lemon"
+    },
+    {
+        "name" : "Macaroni and Cheese",
+        "class" : "cloud-meatball"
+    },
+    {
+        "name" : "Peppers",
+        "class" : "pepper-hot"
+    },
+    {
+        "name" : "Pizza",
+        "class" : "pizza-slice"
+    },
+    {
+        "name" : "Waffles",
+        "class" : "stroopwafel"
+    }
+]

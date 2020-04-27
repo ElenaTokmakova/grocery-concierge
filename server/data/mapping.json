@@ -1,0 +1,12 @@
+[
+  {
+    "name": "beans",
+    "location" : "Aisle 3"
+  }, {
+    "name": "toilet paper",
+    "location": "Aisle 5"
+  }, {
+    "name": "kraft macaroni and cheese",
+    "location": "Aisle 7"
+  }
+]

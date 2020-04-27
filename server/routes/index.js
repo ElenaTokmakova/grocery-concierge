@@ -1,13 +1,13 @@
 const router = require('express').Router();
 const path = require('path');
 const helpers = require('../helpers');
-const documents = require('../data/default');
+const documents = require('../data/mapping');
 
 // routes will be called first and, if no middleware handles the request, then express will call static files
 // return default (mock) product location data
-router.get('/default', (req, res) => {
-  console.log("Default data route");
-  const data = helpers.readJsonFileSync('../data/default.json');
+router.get('/products', (req, res) => {
+  console.log("Products data route");
+  const data = helpers.readJsonFileSync('../data/products.json');
   res.json(data)
 });
 

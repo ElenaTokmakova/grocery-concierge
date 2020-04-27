@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const socketIo = require("socket.io");
 const lunr = require('lunr');
 const routes = require('./routes');
-const documents = require('./data/default');
+const documents = require('./data/mapping');
 
 const app = express();
 

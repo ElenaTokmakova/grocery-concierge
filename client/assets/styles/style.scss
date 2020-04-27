@@ -65,6 +65,19 @@ body {
     }
   }
 }
+.product-search-subtitle {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  margin-top: 0;
+  padding: 1rem;
+  @media (min-width: 576px) {
+    margin-top: 1rem;
+  }
+}
+.available-products-container {
+  max-height: 490px;
+  overflow-y: scroll;
+}
 .back-to-map-button-container {
   flex-direction: column;
   .back-to-map-button {
@@ -72,7 +85,11 @@ body {
     max-width: 200px;
   }
 }
-.card {
-  width: 480px;
-  max-width: 100%;
+.voice-search-info-container {
+  @media (min-width: 576px) {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  .card {width: 100%;
+  }
 }
