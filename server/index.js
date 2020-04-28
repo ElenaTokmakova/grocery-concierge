@@ -68,9 +68,6 @@ io.on('connection', function(socket) {
         searchItem += token + ' ';
       });
 
-      // TODO search for item requested
-      var results = idx.search(searchItem);
-
       // send search result to client
       // Search for the item in the index
       var results = idx.search(searchItem);
@@ -78,12 +75,12 @@ io.on('connection', function(socket) {
       if (results.length > 0) {
         let found = documents.find(e => e.name === results[0].ref);
         console.log('Message: ' + found.location);
-        socket.emit('response', { reply: 'You can find that in ' + found.location, info: found.location});
+        socket.emit('response', { type: 'where', term: searchItem, reply: 'You can find that in ' + found.location, location: found.location, info: found.location});
       } else {
-        socket.emit('response', { reply: 'Sorry, I can\'t find what you\'re looking for, please try again', info: 'Please try again'});
+        socket.emit('response', { type: 'not-found', reply: 'Sorry, I can\'t find what you\'re looking for, please try again', info: 'Please try again'});
       }
     } else if (classification == 'hello') {
-      socket.emit('response', { reply: 'Hi!', info: 'Hi!'});
+      socket.emit('response', { type: 'hello', reply: 'Hi!', info: 'Hi!'});
     }
   });
 });

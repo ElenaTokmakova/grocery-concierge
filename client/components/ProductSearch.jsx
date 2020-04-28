@@ -2,12 +2,13 @@ import React, {Component} from 'react';
 import { Row, Col, Button, ListGroup, ListGroupItem, Card, CardBody, CardTitle } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faLongArrowAltLeft, faAppleAlt, faBacon, faBreadSlice, faCandyCane, faCarrot, faCheese, faCookie, faEgg, faFish, faHamburger, faHotdog, faLemon, faCloudMeatball, faPepperHot, faPizzaSlice, faStroopwafel, faMicrophone } from '@fortawesome/free-solid-svg-icons'
+import { faLongArrowAltLeft, faAppleAlt, faBacon, faBox, faBreadSlice, faCandyCane, faCarrot, faCheese, faCookie, faEgg, faFish, faHamburger, faHotdog, faLemon, faPepperHot, faPizzaSlice, faStroopwafel, faMicrophone, faToiletPaper, faDrumSteelpan } from '@fortawesome/free-solid-svg-icons'
 // a standalone build of socket.io-client is exposed automatically by the socket.io server
 import socketIOClient from "socket.io-client";
+import stringSimilarity from 'string-similarity';
 import axios from 'axios';
 
-library.add(faLongArrowAltLeft, faAppleAlt, faBacon, faBreadSlice, faCandyCane, faCarrot, faCheese, faCookie, faEgg, faFish, faHamburger, faHotdog, faLemon, faCloudMeatball, faPepperHot, faPizzaSlice, faStroopwafel, faMicrophone);
+library.add(faLongArrowAltLeft, faAppleAlt, faBacon, faBox, faBreadSlice, faCandyCane, faCarrot, faCheese, faCookie, faEgg, faFish, faHamburger, faHotdog, faLemon, faPepperHot, faPizzaSlice, faStroopwafel, faMicrophone, faToiletPaper, faDrumSteelpan );
 
 // dev url is only required in development to make requests from client to server
 let DEV_URL = '';
@@ -34,6 +35,8 @@ class App extends Component {
         super(props);
         this.state = {
             products: [],
+            product_names: [],
+            grocery_list: [],
             listening: false,
             outputYou: '',
             outputBot: '',
@@ -60,8 +63,10 @@ class App extends Component {
           .then(data => {
               // do something with the data
               console.log('Got mock data from Express server!', data.data);
+              const productNames = data.data.map(element => element.name);
               this.setState({
-                  products: data.data
+                  products: data.data,
+                  product_names: productNames
               })
         }
           )
@@ -76,7 +81,7 @@ class App extends Component {
         const component = this;
         // listening for search result from the server
         socket.on('response', (response) => {
-          console.log('Socket on response: response', response);
+          console.log('Socket response', response);
           component.synthVoice(response.reply);
 
           if(response.reply == '') response.reply = '(No answer...)';
@@ -85,6 +90,18 @@ class App extends Component {
               outputBot: response.reply,
               infoDisplay: response.info
           })
+
+          if (response.type === 'where') {
+            const matches = stringSimilarity.findBestMatch(response.term, this.state.product_names);
+            console.log("Matches", matches);
+            if (matches.bestMatch.target) {
+              this.setState({
+                grocery_list: [ ...this.state.grocery_list, { name: matches.bestMatch.target, location: response.location } ]
+              })
+            }
+            console.log("Grocery list", this.state.grocery_list)
+          }
+
         });
     }
 
@@ -133,7 +150,7 @@ class App extends Component {
       }
 
       recognition.onresult = (e) => {
-        console.log('Result has been detected.');
+        console.log('Result has been detected.', e);
 
         const last = e.results.length - 1;
         const text = e.results[last][0].transcript;
@@ -186,6 +203,10 @@ class App extends Component {
         )
     }
 
+    renderGroceryList() {
+      console.log("Rendering grocery list here...")
+    }
+
     render() {
       const store = this.props.selectedPlace.name;
       return (
@@ -227,6 +248,9 @@ class App extends Component {
             </Col>
             <Col sm="12" md="4">
                 <p className="product-search-subtitle">Your grocery list</p>
+                {
+                    this.state.grocery_list.length > 0 && this.renderGroceryList()
+                }
             </Col>
         </section>
       );

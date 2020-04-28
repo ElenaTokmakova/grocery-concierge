@@ -8,6 +8,10 @@
         "class" : "bacon"
     },
     {
+        "name" : "Beans",
+        "class" : "drum-steelpan"
+    },
+    {
         "name" : "Bread",
         "class" : "bread-slice"
     },
@@ -49,7 +53,7 @@
     },
     {
         "name" : "Macaroni and Cheese",
-        "class" : "cloud-meatball"
+        "class" : "box"
     },
     {
         "name" : "Peppers",
@@ -58,6 +62,10 @@
     {
         "name" : "Pizza",
         "class" : "pizza-slice"
+    },
+    {
+        "name" : "Toilet Paper",
+        "class" : "toilet-paper"
     },
     {
         "name" : "Waffles",
