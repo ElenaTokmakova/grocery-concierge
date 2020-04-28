@@ -48,7 +48,7 @@ body {
   outline: 0;
 }
 .info-display {
-  font-size: 6em;
+  font-size: 3em;
   text-align: center;
 }
 .image-concierge {
@@ -91,5 +91,10 @@ body {
     padding-right: 1rem;
   }
   .card {width: 100%;
+  }
+}
+.clear-shopping-list-icon {
+  &:hover {
+    cursor: pointer;
   }
 }

@@ -1,14 +1,14 @@
-import React, {Component} from 'react';
-import { Row, Col, Button, ListGroup, ListGroupItem, Card, CardBody, CardTitle } from 'reactstrap';
+import React, {Component, Fragment} from 'react';
+import { Row, Col, Button, ListGroup, ListGroupItem, Card, CardBody, CardTitle, Table } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faLongArrowAltLeft, faAppleAlt, faBacon, faBox, faBreadSlice, faCandyCane, faCarrot, faCheese, faCookie, faEgg, faFish, faHamburger, faHotdog, faLemon, faPepperHot, faPizzaSlice, faStroopwafel, faMicrophone, faToiletPaper, faDrumSteelpan } from '@fortawesome/free-solid-svg-icons'
+import { faLongArrowAltLeft, faAppleAlt, faBacon, faBox, faBreadSlice, faCandyCane, faCarrot, faCheese, faCookie, faEgg, faFish, faHamburger, faHotdog, faLemon, faPepperHot, faPizzaSlice, faStroopwafel, faMicrophone, faToiletPaper, faDrumSteelpan, faTrash } from '@fortawesome/free-solid-svg-icons'
 // a standalone build of socket.io-client is exposed automatically by the socket.io server
 import socketIOClient from "socket.io-client";
 import stringSimilarity from 'string-similarity';
 import axios from 'axios';
 
-library.add(faLongArrowAltLeft, faAppleAlt, faBacon, faBox, faBreadSlice, faCandyCane, faCarrot, faCheese, faCookie, faEgg, faFish, faHamburger, faHotdog, faLemon, faPepperHot, faPizzaSlice, faStroopwafel, faMicrophone, faToiletPaper, faDrumSteelpan );
+library.add(faLongArrowAltLeft, faAppleAlt, faBacon, faBox, faBreadSlice, faCandyCane, faCarrot, faCheese, faCookie, faEgg, faFish, faHamburger, faHotdog, faLemon, faPepperHot, faPizzaSlice, faStroopwafel, faMicrophone, faToiletPaper, faDrumSteelpan, faTrash );
 
 // dev url is only required in development to make requests from client to server
 let DEV_URL = '';
@@ -95,9 +95,12 @@ class App extends Component {
             const matches = stringSimilarity.findBestMatch(response.term, this.state.product_names);
             console.log("Matches", matches);
             if (matches.bestMatch.target) {
-              this.setState({
-                grocery_list: [ ...this.state.grocery_list, { name: matches.bestMatch.target, location: response.location } ]
-              })
+              const includes = this.state.grocery_list.map(element => element.name).includes(matches.bestMatch.target);
+              if (!includes) {
+                this.setState({
+                  grocery_list: [ ...this.state.grocery_list, { name: matches.bestMatch.target, location: response.location } ]
+                })
+              }
             }
             console.log("Grocery list", this.state.grocery_list)
           }
@@ -203,8 +206,36 @@ class App extends Component {
         )
     }
 
+    removeItemFromShoppingList = (name) => {
+      const newGroceryList = this.state.grocery_list.filter(element => element.name !== name);
+      this.setState({
+        grocery_list : newGroceryList
+      })
+    }
+
     renderGroceryList() {
-      console.log("Rendering grocery list here...")
+      return (
+        <tbody>
+          {
+            this.state.grocery_list.map(product => {
+                  const { name, location } = product;
+                  return (
+                    <tr key={name}>
+                      <td>{name}</td>
+                      <td>{location}</td>
+                      <td><FontAwesomeIcon onClick={this.removeItemFromShoppingList.bind(this, name)} icon="trash" className="clear-shopping-list-icon"/></td>
+                    </tr>
+                  )
+              })
+          }
+        </tbody>
+      );
+    }
+
+    clearShoppingList = () => {
+      this.setState({
+        grocery_list: []
+      })
     }
 
     render() {
@@ -247,9 +278,22 @@ class App extends Component {
                 </Row>
             </Col>
             <Col sm="12" md="4">
-                <p className="product-search-subtitle">Your grocery list</p>
-                {
+                <p className="product-search-subtitle">Your shopping list</p>
+                <Table striped bordered responsive hover>
+                  <thead>
+                    <tr>
+                      <th>Product</th>
+                      <th>Location</th>
+                      <th>Remove</th>
+                    </tr>
+                  </thead>
+                  {
                     this.state.grocery_list.length > 0 && this.renderGroceryList()
+                  }
+                </Table>
+                {
+                  this.state.grocery_list.length > 0 &&
+                  <Button color="primary" className="back-to-map-button" onClick={this.clearShoppingList}>Clear shopping list</Button>
                 }
             </Col>
         </section>
