@@ -58,15 +58,17 @@ module.exports = env => {
           {
             test: /\.(css|scss)$/,
             use: [
-              PLATFORM === 'production' ? MiniCssExtractPlugin.loader : 'style-loader', //  extract the generated CSS into a separate module or inject CSS to page
-                'css-loader', // translates CSS into CommonJS modules
-                'sass-loader', // compiles Sass to CSS
+              // extract the generated CSS into a separate module or inject CSS to page
+              // translates CSS into CommonJS modules
+              // compiles Sass to CSS
+              PLATFORM === 'production' ? MiniCssExtractPlugin.loader : 'style-loader', 'css-loader', 'sass-loader',
                 {
                   loader: 'postcss-loader', // Run post css actions
                   options: {
+                    // parse mixins as custom at-rules & variables as properties
+                    parser: "postcss-scss",
                     plugins: function () { // post css plugins, can be exported to postcss.config.js
                       return [
-                        require('precss'), // lets use Sass-like markup and staged CSS features in CSS
                         require('autoprefixer')
                         //PostCSS plugin to parse CSS and add vendor prefixes to CSS rules using values from Can I Use.
                         //It is recommended by Google and used in Twitter and Taobao.

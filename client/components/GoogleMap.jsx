@@ -77,11 +77,11 @@ export class MapContainer extends Component {
 
       <MDBRow className="store-search-results">
 
-        <MDBCol className="store-search-results--store-list-container">
+        <MDBCol md="12" lg="5" className="store-search-results--store-list-container">
           <StoreList stores={this.state.places} onStoreSelection={this.onStoreSelection}/>
         </MDBCol>
 
-        <MDBCol className="store-search-results--map-container">
+        <MDBCol md="12" lg="7" className="store-search-results--map-container">
           <Map className="google-map--map" style={{width: 700, height: 500, position: 'relative'}} {...mapProps}>
 
             <Circle
