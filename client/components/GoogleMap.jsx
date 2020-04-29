@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import { Button } from 'reactstrap';
+import { Row, Col, Button } from 'reactstrap';
 import {Map, Marker, Circle, GoogleApiWrapper} from 'google-maps-react';
+import StoreList from './StoreList';
 import InfoWindowEx from './InfoWindowEx';
 
 export class MapContainer extends Component {
@@ -28,6 +29,7 @@ export class MapContainer extends Component {
       type: ['grocery_or_supermarket']
     }, (results, status) => {
       if (status !== 'OK') return;
+      console.log("PLACES", results)
       this.setState({ places: results });
       const bounds = new google.maps.LatLngBounds();
       for (let i = 0, place; place = results[i]; i++) {
@@ -45,7 +47,7 @@ export class MapContainer extends Component {
     });
   }
 
-  onMapClicked = (props) => {
+  onMapClicked = () => {
     if (this.state.showingInfoWindow) {
       this.setState({
         showingInfoWindow: false,
@@ -53,6 +55,10 @@ export class MapContainer extends Component {
       })
     }
   };
+
+  onStoreSelection = (place) => {
+    this.props.onStoreSelection(place);
+  }
 
   render() {
 
@@ -68,45 +74,57 @@ export class MapContainer extends Component {
     };
 
     return (
-      <Map className="google-map--map" style={{width: 800, height: 500, position: 'relative'}} {...mapProps}>
 
-        <Circle
-            radius={1200}
-            center={coords}
-            onMouseover={() => console.log('mouseover')}
-            onClick={() => console.log('click')}
-            onMouseout={() => console.log('mouseout')}
-            strokeColor='transparent'
-            strokeOpacity={0}
-            strokeWeight={5}
-            fillColor='#FF0000'
-            fillOpacity={0.2}
-        />
+      <Row>
 
-        {
-          this.state.places.length > 0 &&
-            this.state.places.map((place, index) => {
-              const image = {
-                url: place.icon,
-                size: new google.maps.Size(71, 71),
-                origin: new google.maps.Point(0, 0),
-                anchor: new google.maps.Point(17, 34),
-                scaledSize: new google.maps.Size(25, 25)
-              };
-              return (
-                <Marker key={place.id} name={place.name} icon={image} position={place.geometry.location} onClick={this.onMarkerClick} />
-              )
-            })
-        }
+        <Col>
+          <StoreList stores={this.state.places} onStoreSelection={this.onStoreSelection}/>
+        </Col>
 
-        <InfoWindowEx marker={this.state.activeMarker} visible={this.state.showingInfoWindow}>
-            <div>
-              <h4>{this.state.selectedPlace.name}</h4>
-              <Button color="primary" onClick={this.onButtonClick} onClick={ (e) => this.props.onStoreSelection(e, this.state.selectedPlace)}>Find products</Button>
-            </div>
-        </InfoWindowEx>
+        <Col>
+          <Map className="google-map--map" style={{width: 700, height: 500, position: 'relative'}} {...mapProps}>
 
-      </Map>
+            <Circle
+                radius={1200}
+                center={coords}
+                onMouseover={() => console.log('mouseover')}
+                onClick={() => console.log('click')}
+                onMouseout={() => console.log('mouseout')}
+                strokeColor='transparent'
+                strokeOpacity={0}
+                strokeWeight={5}
+                fillColor='#FF0000'
+                fillOpacity={0.2}
+            />
+
+            {
+              this.state.places.length > 0 &&
+                this.state.places.map((place, index) => {
+                  const image = {
+                    url: place.icon,
+                    size: new google.maps.Size(71, 71),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(17, 34),
+                    scaledSize: new google.maps.Size(25, 25)
+                  };
+                  return (
+                    <Marker key={place.id} name={place.name} icon={image} position={place.geometry.location} onClick={this.onMarkerClick} />
+                  )
+                })
+            }
+
+            <InfoWindowEx marker={this.state.activeMarker} visible={this.state.showingInfoWindow}>
+                <div>
+                  <h4>{this.state.selectedPlace.name}</h4>
+                  <Button color="primary" onClick={this.onButtonClick} onClick={ () => this.props.onStoreSelection(this.state.selectedPlace)}>Find products</Button>
+                </div>
+            </InfoWindowEx>
+
+          </Map>
+        </Col>
+
+      </Row>
+
     );
   }
 }

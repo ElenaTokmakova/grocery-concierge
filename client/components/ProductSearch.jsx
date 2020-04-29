@@ -46,11 +46,9 @@ class App extends Component {
 
     componentDidMount(){
 
-        // sample request to test calls to Express server; this route returns json data
-
         // cancel previous request
         if (typeof this._source != typeof undefined) {
-          this._source.cancel('Operation canceled due to new request')
+          this._source.cancel('Operation canceled due to new request');
         }
 
         // save the new request for cancellation
@@ -61,8 +59,7 @@ class App extends Component {
             cancelToken: this._source.token
           })
           .then(data => {
-              // do something with the data
-              console.log('Got mock data from Express server!', data.data);
+              console.log('Got data from Express server!', data.data);
               const productNames = data.data.map(element => element.name);
               this.setState({
                   products: data.data,

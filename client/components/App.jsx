@@ -18,7 +18,7 @@ class App extends Component {
       navigateToStore: false
     };
 
-    onStoreSelection = (e, selectedPlace) => {
+    onStoreSelection = (selectedPlace) => {
       this.setState({
         navigateToStore: true,
         selectedPlace
@@ -46,7 +46,7 @@ class App extends Component {
           <Router>
             <Switch>
               <Route path="/select-store">
-              <h2>Please select a store</h2>
+              <h2 className="store-selection-title">Please select a store</h2>
               {
                 this.state.navigateToStore === false &&
                 <section className="google-map">
