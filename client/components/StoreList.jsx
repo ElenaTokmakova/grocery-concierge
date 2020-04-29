@@ -10,7 +10,7 @@ const StoreList = props => {
                     const {name, id, vicinity, geometry} = store;
                     let isOpen = '';
                     if (store.opening_hours) {
-                        isOpen = store.opening_hours.isOpen() ? 'Open' : 'Closed';
+                        isOpen = store.opening_hours.open_now ? 'Open' : 'Closed';
                     }
                     const map_link = `https://www.google.com/maps/search/?api=1&query_place_id=${id}&query=${vicinity}`;
                     return (
