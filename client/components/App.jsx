@@ -5,7 +5,7 @@ import {
   Route,
   Redirect
 } from "react-router-dom";
-import { Container, Row } from 'reactstrap';
+import { MDBContainer, MDBRow } from "mdbreact";
 import GoogleMap from './GoogleMap';
 import ProductSearch from './ProductSearch';
 import conciergeImage from "../assets/images/concierge.jpg";
@@ -36,12 +36,12 @@ class App extends Component {
 
     render() {
       return (
-        <Container className="app-container text-center">
+        <MDBContainer className="app-container text-center">
           <h1>Grocery Concierge</h1>
 
-          <Row className="logo-container">
+          <MDBRow className="logo-container">
             <img className="image-concierge" src={this.state.conciergeImage} />
-          </Row>
+          </MDBRow>
 
           <Router>
             <Switch>
@@ -74,7 +74,7 @@ class App extends Component {
             </Switch>
           </Router>
 
-        </Container>
+        </MDBContainer>
       );
     }
 }

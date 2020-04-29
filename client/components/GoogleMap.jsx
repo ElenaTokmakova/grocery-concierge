@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import { Row, Col, Button } from 'reactstrap';
-import {Map, Marker, Circle, GoogleApiWrapper} from 'google-maps-react';
+import { MDBRow, MDBCol, MDBBtn } from "mdbreact";
+import { Map, Marker, Circle, GoogleApiWrapper } from 'google-maps-react';
 import StoreList from './StoreList';
 import InfoWindowEx from './InfoWindowEx';
 
@@ -75,13 +75,13 @@ export class MapContainer extends Component {
 
     return (
 
-      <Row>
+      <MDBRow>
 
-        <Col>
+        <MDBCol>
           <StoreList stores={this.state.places} onStoreSelection={this.onStoreSelection}/>
-        </Col>
+        </MDBCol>
 
-        <Col>
+        <MDBCol>
           <Map className="google-map--map" style={{width: 700, height: 500, position: 'relative'}} {...mapProps}>
 
             <Circle
@@ -116,14 +116,14 @@ export class MapContainer extends Component {
             <InfoWindowEx marker={this.state.activeMarker} visible={this.state.showingInfoWindow}>
                 <div>
                   <h4>{this.state.selectedPlace.name}</h4>
-                  <Button color="primary" onClick={this.onButtonClick} onClick={ () => this.props.onStoreSelection(this.state.selectedPlace)}>Find products</Button>
+                  <MDBBtn color="primary" onClick={this.onButtonClick} onClick={ () => this.props.onStoreSelection(this.state.selectedPlace)}>Find products</MDBBtn>
                 </div>
             </InfoWindowEx>
 
           </Map>
-        </Col>
+        </MDBCol>
 
-      </Row>
+      </MDBRow>
 
     );
   }

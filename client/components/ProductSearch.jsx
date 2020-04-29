@@ -1,5 +1,5 @@
-import React, {Component, Fragment} from 'react';
-import { Row, Col, Button, ListGroup, ListGroupItem, Card, CardBody, CardTitle, Table } from 'reactstrap';
+import React, {Component} from 'react';
+import { MDBRow, MDBCol, MDBBtn, MDBListGroup, MDBListGroupItem, MDBCard, MDBCardBody, MDBCardTitle, MDBTable } from "mdbreact";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faLongArrowAltLeft, faAppleAlt, faBacon, faBox, faBreadSlice, faCandyCane, faCarrot, faCheese, faCookie, faEgg, faFish, faHamburger, faHotdog, faLemon, faPepperHot, faPizzaSlice, faStroopwafel, faMicrophone, faToiletPaper, faDrumSteelpan, faTrash } from '@fortawesome/free-solid-svg-icons'
@@ -186,20 +186,20 @@ class App extends Component {
 
     renderProducts() {
         return (
-            <ListGroup className="available-products-container">
+            <MDBListGroup className="available-products-container">
                 {
                     this.state.products.map(product => {
                         return (
-                            <ListGroupItem key={product.name}>
-                                <Row>
-                                    <Col sm="5"><FontAwesomeIcon icon={product.class} /></Col>
-                                    <Col sm="7" className="text-left"><span>{product.name}</span></Col>
-                                </Row>
-                            </ListGroupItem>
+                            <MDBListGroupItem key={product.name}>
+                                <MDBRow>
+                                    <MDBCol sm="5"><FontAwesomeIcon icon={product.class} /></MDBCol>
+                                    <MDBCol sm="7" className="text-left"><span>{product.name}</span></MDBCol>
+                                </MDBRow>
+                            </MDBListGroupItem>
                         )
                     })
                 }
-            </ListGroup>
+            </MDBListGroup>
         )
     }
 
@@ -239,44 +239,44 @@ class App extends Component {
       const store = this.props.selectedPlace.name;
       return (
         <section className="product-search row">
-            <Col sm="12" md="4">
+            <MDBCol sm="12" md="4">
                 <p className="product-search-subtitle">Products {store} has in stock</p>
                 {
                     this.state.products.length > 0 && this.renderProducts()
                 }
-            </Col>
-            <Col sm="12" md="4">
-                <Row className="back-to-map-button-container justify-content-center">
-                    <Col sm="12">
+            </MDBCol>
+            <MDBCol sm="12" md="4">
+                <MDBRow className="back-to-map-button-container justify-content-center">
+                    <MDBCol sm="12">
                         <p className="product-search-subtitle">You have selected <strong>{store}</strong></p>
-                        <Button color="primary" className="back-to-map-button" onClick={this.props.navigateToMap}>
+                        <MDBBtn color="primary" className="back-to-map-button" onClick={this.props.navigateToMap}>
                             <FontAwesomeIcon icon="long-arrow-alt-left" /> Select another store
-                        </Button>
-                    </Col>
-                </Row>
-                <Row className="microphone-button-container justify-content-center">
-                    <Col sm="12">
+                        </MDBBtn>
+                    </MDBCol>
+                </MDBRow>
+                <MDBRow className="microphone-button-container justify-content-center">
+                    <MDBCol sm="12">
                         <button className="microphone" onClick={this.toggleListen}>
                             <FontAwesomeIcon icon="microphone" className="icon"/>
                         </button>
-                    </Col>
-                </Row>
-                <Row className="voice-search-info-container justify-content-center">
-                <Card>
-                    <CardBody>
-                    <CardTitle><p>{ !this.state.listening ? 'Click or tap the microphone to start speaking' : 'I\'m listening! Click again to finish your search'}</p></CardTitle>
+                    </MDBCol>
+                </MDBRow>
+                <MDBRow className="voice-search-info-container justify-content-center">
+                <MDBCard>
+                    <MDBCardBody>
+                    <MDBCardTitle><p>{ !this.state.listening ? 'Click or tap the microphone to start speaking' : 'I\'m listening! Click again to finish your search'}</p></MDBCardTitle>
                     <div className="voice-search-info">
                         <p>You said: <em className="output-you">{ this.state.outputYou }</em></p>
                         <p>Concierge replied: <em className="output-bot">{ this.state.outputBot }</em></p>
                     </div>
                     <div className="info-display">{ this.state.infoDisplay }</div>
-                    </CardBody>
-                </Card>
-                </Row>
-            </Col>
-            <Col sm="12" md="4">
+                    </MDBCardBody>
+                </MDBCard>
+                </MDBRow>
+            </MDBCol>
+            <MDBCol sm="12" md="4">
                 <p className="product-search-subtitle">Your shopping list</p>
-                <Table striped bordered responsive hover>
+                <MDBTable striped bordered responsive hover>
                   <thead>
                     <tr>
                       <th>Product</th>
@@ -287,12 +287,12 @@ class App extends Component {
                   {
                     this.state.grocery_list.length > 0 && this.renderGroceryList()
                   }
-                </Table>
+                </MDBTable>
                 {
                   this.state.grocery_list.length > 0 &&
-                  <Button color="primary" className="back-to-map-button" onClick={this.clearShoppingList}>Clear shopping list</Button>
+                  <MDBBtn color="primary" className="back-to-map-button" onClick={this.clearShoppingList}>Clear shopping list</MDBBtn>
                 }
-            </Col>
+            </MDBCol>
         </section>
       );
     }
