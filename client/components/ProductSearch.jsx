@@ -240,7 +240,7 @@ class App extends Component {
       return (
         <section className="product-search row">
             <MDBCol sm="12" md="4">
-                <p className="product-search-subtitle">COVID essential product</p>
+                <p className="product-search-subtitle">COVID essential product list</p>
                 {
                     this.state.products.length > 0 && this.renderProducts()
                 }
@@ -249,7 +249,7 @@ class App extends Component {
                 <MDBRow className="back-to-map-button-container justify-content-center">
                     <MDBCol sm="12">
                         <p className="product-search-subtitle">You have selected <strong>{store}</strong></p>
-                        <MDBBtn color="primary" className="back-to-map-button" onClick={this.props.navigateToMap}>
+                        <MDBBtn className="back-to-map-button btn-light-green" onClick={this.props.navigateToMap}>
                             <FontAwesomeIcon className="back-to-map-icon" icon="long-arrow-alt-left" /> Select another store
                         </MDBBtn>
                     </MDBCol>
@@ -277,7 +277,7 @@ class App extends Component {
             <MDBCol sm="12" md="4">
                 <p className="product-search-subtitle">Your shopping list</p>
                 <MDBTable striped bordered responsive hover>
-                  <MDBTableHead textWhite color="primary-color">
+                  <MDBTableHead>
                     <tr>
                       <th>Product</th>
                       <th>Location</th>
