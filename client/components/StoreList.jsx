@@ -7,9 +7,9 @@ const StoreList = props => {
         <MDBListGroup className="grocery-stores">
             {
                 props.stores.map((store, index) => {
-                    const {name, id, vicinity, geometry} = store;
+                    const {name, id, vicinity, opening_hours} = store;
                     let isOpen = '';
-                    if (store.opening_hours) {
+                    if (opening_hours) {
                         isOpen = store.opening_hours.open_now ? 'Open' : 'Closed';
                     }
                     const map_link = `https://www.google.com/maps/search/?api=1&query_place_id=${id}&query=${vicinity}`;

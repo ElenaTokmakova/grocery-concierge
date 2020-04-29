@@ -2,13 +2,13 @@ import React, {Component} from 'react';
 import { MDBRow, MDBCol, MDBBtn, MDBListGroup, MDBListGroupItem, MDBCard, MDBCardBody, MDBCardTitle, MDBTable, MDBTableHead, MDBTableBody } from "mdbreact";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faLongArrowAltLeft, faAppleAlt, faBacon, faBox, faBreadSlice, faCandyCane, faCarrot, faCheese, faCookie, faEgg, faFish, faHamburger, faHotdog, faLemon, faPepperHot, faPizzaSlice, faStroopwafel, faMicrophone, faToiletPaper, faDrumSteelpan, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faLongArrowAltLeft, faAppleAlt, faBacon, faBox, faBreadSlice, faCandyCane, faCarrot, faCheese, faCookie, faEgg, faFish, faHamburger, faHotdog, faLemon, faPepperHot, faPizzaSlice, faStroopwafel, faMicrophone, faToiletPaper, faDrumSteelpan, faTrash, faScroll, faPumpMedical } from '@fortawesome/free-solid-svg-icons'
 // a standalone build of socket.io-client is exposed automatically by the socket.io server
 import socketIOClient from "socket.io-client";
 import stringSimilarity from 'string-similarity';
 import axios from 'axios';
 
-library.add(faLongArrowAltLeft, faAppleAlt, faBacon, faBox, faBreadSlice, faCandyCane, faCarrot, faCheese, faCookie, faEgg, faFish, faHamburger, faHotdog, faLemon, faPepperHot, faPizzaSlice, faStroopwafel, faMicrophone, faToiletPaper, faDrumSteelpan, faTrash );
+library.add(faLongArrowAltLeft, faAppleAlt, faBacon, faBox, faBreadSlice, faCandyCane, faCarrot, faCheese, faCookie, faEgg, faFish, faHamburger, faHotdog, faLemon, faPepperHot, faPizzaSlice, faStroopwafel, faMicrophone, faToiletPaper, faDrumSteelpan, faTrash, faScroll, faPumpMedical );
 
 // dev url is only required in development to make requests from client to server
 let DEV_URL = '';
@@ -186,7 +186,7 @@ class App extends Component {
 
     renderProducts() {
         return (
-            <MDBListGroup className="available-products-container">
+            <MDBListGroup className="essential-products-container">
                 {
                     this.state.products.map(product => {
                         return (
@@ -236,19 +236,30 @@ class App extends Component {
     }
 
     render() {
-      const store = this.props.selectedPlace.name;
+      const {name, id, vicinity, opening_hours} = this.props.selectedPlace;
+      let isOpen = '';
+      if (opening_hours) {
+          isOpen = opening_hours.open_now ? 'Open' : 'Closed';
+      }
+      const map_link = `https://www.google.com/maps/search/?api=1&query_place_id=${id}&query=${vicinity}`;
       return (
         <section className="product-search row">
-            <MDBCol sm="12" md="4">
+            <MDBCol md="12" lg="4" className="essential-products-wrapper">
                 <p className="product-search-subtitle">COVID essential product list</p>
                 {
                     this.state.products.length > 0 && this.renderProducts()
                 }
             </MDBCol>
-            <MDBCol sm="12" md="4">
+            <MDBCol md="12" lg="4">
                 <MDBRow className="back-to-map-button-container justify-content-center">
                     <MDBCol sm="12">
-                        <p className="product-search-subtitle">You have selected <strong>{store}</strong></p>
+                        <p className="product-search-subtitle voice-search">
+                          <span className="font-weight-bold">Your selected store</span>
+                          <span className="grocery-stores--store-name">{name}</span>
+                          <span className="grocery-stores--store-address">{vicinity}</span>
+                          <span className="grocery-stores--store-is-open">{isOpen}</span>
+                          <span className="grocery-stores--google-map"><a href={map_link} target="_blank">Open Google Maps</a></span>
+                        </p>
                         <MDBBtn className="back-to-map-button btn-light-green" onClick={this.props.navigateToMap}>
                             <FontAwesomeIcon className="back-to-map-icon" icon="long-arrow-alt-left" /> Select another store
                         </MDBBtn>
@@ -274,9 +285,9 @@ class App extends Component {
                 </MDBCard>
                 </MDBRow>
             </MDBCol>
-            <MDBCol sm="12" md="4">
+            <MDBCol md="12" lg="4">
                 <p className="product-search-subtitle">Your shopping list</p>
-                <MDBTable striped bordered responsive hover>
+                <MDBTable className="shopping-list-table" striped bordered responsive hover>
                   <MDBTableHead>
                     <tr>
                       <th>Product</th>

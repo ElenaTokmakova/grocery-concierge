@@ -1,74 +1,42 @@
 [
     {
-        "name" : "Apples",
-        "class" : "apple-alt"
+        "name" : "Toilet Paper",
+        "class" : "toilet-paper"
     },
     {
-        "name" : "Bacon",
-        "class" : "bacon"
+        "name" : "Paper Towels",
+        "class" : "scroll"
     },
     {
-        "name" : "Beans",
+        "name" : "Hand Sanitizer",
+        "class" : "pump-medical"
+    },
+    {
+        "name": "Pasta",
+        "class": "box"
+    },
+    {
+        "name": "Rice",
+        "class": "box"
+    },
+    {
+        "name" : "Canned Food",
         "class" : "drum-steelpan"
-    },
-    {
-        "name" : "Bread",
-        "class" : "bread-slice"
-    },
-    {
-        "name" : "Candy",
-        "class" : "candy-cane"
-    },
-    {
-        "name" : "Carrot",
-        "class" : "carrot"
-    },
-    {
-        "name" : "Cheese",
-        "class" : "cheese"
-    },
-    {
-        "name" : "Cookies",
-        "class" : "cookie"
     },
     {
         "name" : "Eggs",
         "class" : "egg"
     },
     {
-        "name" : "Fish",
-        "class" : "fish"
-    },
-    {
-        "name" : "Hamburgers",
-        "class" : "hamburger"
-    },
-    {
-        "name" : "Hotdogs",
-        "class" : "hotdog"
-    },
-    {
-        "name" : "Lemons",
-        "class" : "lemon"
-    },
-    {
         "name" : "Macaroni and Cheese",
         "class" : "box"
     },
     {
-        "name" : "Peppers",
-        "class" : "pepper-hot"
+        "name" : "Bacon",
+        "class" : "bacon"
     },
     {
-        "name" : "Pizza",
-        "class" : "pizza-slice"
-    },
-    {
-        "name" : "Toilet Paper",
-        "class" : "toilet-paper"
-    },
-    {
-        "name" : "Waffles",
-        "class" : "stroopwafel"
+        "name" : "Bread",
+        "class" : "bread-slice"
     }
 ]
