@@ -11,7 +11,7 @@ const app = express();
 const natural = require('natural');
 let classifier = new natural.BayesClassifier();
 
-natural.BayesClassifier.load('classifier.json', null, function(err, c) {
+natural.BayesClassifier.load('server\\classifier.json', null, function(err, c) {
   classifier = c;
 });
 
@@ -40,8 +40,9 @@ const server = app.listen(PORT, () => {
 });
 
 const idx = lunr(function () {
-  this.ref('name')
-  this.field('name')
+  this.ref('name');
+  this.field('name');
+  this.field('category');
 
   documents.forEach(function (doc) {
     this.add(doc)
@@ -75,7 +76,7 @@ io.on('connection', function(socket) {
       if (results.length > 0) {
         let found = documents.find(e => e.name === results[0].ref);
         console.log('Message: ' + found.location);
-        socket.emit('response', { type: 'where', term: searchItem, reply: 'You can find that in ' + found.location, location: found.location, info: found.location});
+        socket.emit('response', { type: 'where', term: searchItem, reply: 'You can find ' + found.category + ' in ' + found.location, location: found.location, info: found.location});
       } else {
         socket.emit('response', { type: 'not-found', reply: 'Sorry, I can\'t find what you\'re looking for, please try again', info: 'Please try again'});
       }
