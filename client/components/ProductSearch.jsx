@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { MDBRow, MDBCol, MDBBtn, MDBListGroup, MDBListGroupItem, MDBCard, MDBCardBody, MDBCardTitle, MDBTable } from "mdbreact";
+import { MDBRow, MDBCol, MDBBtn, MDBListGroup, MDBListGroupItem, MDBCard, MDBCardBody, MDBCardTitle, MDBTable, MDBTableHead, MDBTableBody } from "mdbreact";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faLongArrowAltLeft, faAppleAlt, faBacon, faBox, faBreadSlice, faCandyCane, faCarrot, faCheese, faCookie, faEgg, faFish, faHamburger, faHotdog, faLemon, faPepperHot, faPizzaSlice, faStroopwafel, faMicrophone, faToiletPaper, faDrumSteelpan, faTrash } from '@fortawesome/free-solid-svg-icons'
@@ -212,7 +212,7 @@ class App extends Component {
 
     renderGroceryList() {
       return (
-        <tbody>
+        <MDBTableBody>
           {
             this.state.grocery_list.map(product => {
                   const { name, location } = product;
@@ -225,7 +225,7 @@ class App extends Component {
                   )
               })
           }
-        </tbody>
+        </MDBTableBody>
       );
     }
 
@@ -240,7 +240,7 @@ class App extends Component {
       return (
         <section className="product-search row">
             <MDBCol sm="12" md="4">
-                <p className="product-search-subtitle">Products {store} has in stock</p>
+                <p className="product-search-subtitle">COVID essential product</p>
                 {
                     this.state.products.length > 0 && this.renderProducts()
                 }
@@ -250,7 +250,7 @@ class App extends Component {
                     <MDBCol sm="12">
                         <p className="product-search-subtitle">You have selected <strong>{store}</strong></p>
                         <MDBBtn color="primary" className="back-to-map-button" onClick={this.props.navigateToMap}>
-                            <FontAwesomeIcon icon="long-arrow-alt-left" /> Select another store
+                            <FontAwesomeIcon className="back-to-map-icon" icon="long-arrow-alt-left" /> Select another store
                         </MDBBtn>
                     </MDBCol>
                 </MDBRow>
@@ -277,13 +277,13 @@ class App extends Component {
             <MDBCol sm="12" md="4">
                 <p className="product-search-subtitle">Your shopping list</p>
                 <MDBTable striped bordered responsive hover>
-                  <thead>
+                  <MDBTableHead textWhite color="primary-color">
                     <tr>
                       <th>Product</th>
                       <th>Location</th>
                       <th>Remove</th>
                     </tr>
-                  </thead>
+                  </MDBTableHead>
                   {
                     this.state.grocery_list.length > 0 && this.renderGroceryList()
                   }

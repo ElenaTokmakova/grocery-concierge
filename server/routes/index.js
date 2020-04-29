@@ -12,7 +12,6 @@ router.get('/products', (req, res) => {
 
 // the path redirects users to the public/index.html to the React application
 router.get('*', (req, res) => {
-  console.log("Load static file route");
   const route = path.join(__dirname, '..', '..', 'public', 'index.html');
   res.sendFile(route);
 });

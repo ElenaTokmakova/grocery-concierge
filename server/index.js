@@ -3,26 +3,29 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const socketIo = require("socket.io");
 const lunr = require('lunr');
+const natural = require('natural');
 const routes = require('./routes');
 const documents = require('./data/mapping');
 
 const app = express();
 
-const natural = require('natural');
-let classifier = new natural.BayesClassifier();
-
-natural.BayesClassifier.load('server\\classifier.json', null, function(err, c) {
-  classifier = c;
-});
-
 const PORT = process.env.PORT || 3000;
 const ENVIRONMENT = process.env.NODE_ENV || 'development';
+
+let classifier = new natural.BayesClassifier();
 
 // use cors to allow cross origin resource sharing on localhost
 if (ENVIRONMENT === 'development') {
     const cors = require('cors');
     app.use(cors());
- }
+    natural.BayesClassifier.load('classifier.json', null, function(err, c) {
+      classifier = c;
+    });
+} else {
+    natural.BayesClassifier.load('server//classifier.json', null, function(err, c) {
+      classifier = c;
+    });
+}
 
 // Point static path to the public folder
 app.use('/', express.static(path.join(__dirname, '..', 'public')));

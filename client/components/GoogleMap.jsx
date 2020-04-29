@@ -75,13 +75,13 @@ export class MapContainer extends Component {
 
     return (
 
-      <MDBRow>
+      <MDBRow className="store-search-results">
 
-        <MDBCol>
+        <MDBCol className="store-search-results--store-list-container">
           <StoreList stores={this.state.places} onStoreSelection={this.onStoreSelection}/>
         </MDBCol>
 
-        <MDBCol>
+        <MDBCol className="store-search-results--map-container">
           <Map className="google-map--map" style={{width: 700, height: 500, position: 'relative'}} {...mapProps}>
 
             <Circle
@@ -115,8 +115,8 @@ export class MapContainer extends Component {
 
             <InfoWindowEx marker={this.state.activeMarker} visible={this.state.showingInfoWindow}>
                 <div>
-                  <h4>{this.state.selectedPlace.name}</h4>
-                  <MDBBtn color="primary" onClick={this.onButtonClick} onClick={ () => this.props.onStoreSelection(this.state.selectedPlace)}>Find products</MDBBtn>
+                  <h5>{this.state.selectedPlace.name}</h5>
+                  <MDBBtn className="btn-light-green" onClick={this.onButtonClick} onClick={ () => this.props.onStoreSelection(this.state.selectedPlace)}>Find products</MDBBtn>
                 </div>
             </InfoWindowEx>
 

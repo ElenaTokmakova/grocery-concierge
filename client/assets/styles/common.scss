@@ -1,0 +1,42 @@
+body {
+    padding: 0;
+    margin: 0;
+    font-family: "HelveticaNeueLight", "HelveticaNeue-Light", "Helvetica Neue Light", "HelveticaNeue", "Helvetica Neue", 'TeXGyreHerosRegular', "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
+    font-weight: 300;
+    background: #f7f7f7;
+    background-size: cover;
+    color: #333;
+  }
+  .btn {
+    background-color: white !important;
+    border: 2px solid;
+    border-radius: 25px;
+    box-shadow: none;
+    font-size: 0.8rem;
+    font-weight: bold;
+    padding: 0.75rem;
+    text-transform: none;
+    &-light-green {
+      color: $concierge-green;
+      border-color: $concierge-green;
+      &:hover {
+        color: $concierge-green;
+        border-color: $concierge-green;
+      }
+    }
+    &-orange-red {
+      color: $concierge-red;
+      border-color: $concierge-red;
+      &hover {
+        color: $concierge-red;
+        border-color: $concierge-red;
+      }
+    }
+  }
+
+  .app-container {
+    background-color: white;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }

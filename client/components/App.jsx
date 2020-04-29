@@ -6,6 +6,7 @@ import {
   Redirect
 } from "react-router-dom";
 import { MDBContainer, MDBRow } from "mdbreact";
+import Header from './Header';
 import GoogleMap from './GoogleMap';
 import ProductSearch from './ProductSearch';
 import conciergeImage from "../assets/images/concierge.jpg";
@@ -15,7 +16,8 @@ class App extends Component {
     state = {
       conciergeImage : conciergeImage,
       selectedPlace: {},
-      navigateToStore: false
+      navigateToStore: false,
+      postalCode: 'you'
     };
 
     onStoreSelection = (selectedPlace) => {
@@ -37,7 +39,8 @@ class App extends Component {
     render() {
       return (
         <MDBContainer className="app-container text-center">
-          <h1>Grocery Concierge</h1>
+
+          <Header />
 
           <MDBRow className="logo-container">
             <img className="image-concierge" src={this.state.conciergeImage} />
@@ -46,7 +49,7 @@ class App extends Component {
           <Router>
             <Switch>
               <Route path="/select-store">
-              <h2 className="store-selection-title">Please select a store</h2>
+              <h2 className="store-selection-title">Stores nearby {this.state.postalCode}</h2>
               {
                 this.state.navigateToStore === false &&
                 <section className="google-map">

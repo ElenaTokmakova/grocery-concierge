@@ -1,21 +1,79 @@
-body {
-  padding: 0;
-  margin: 0;
-  font-family: "HelveticaNeueLight", "HelveticaNeue-Light", "Helvetica Neue Light", "HelveticaNeue", "Helvetica Neue", 'TeXGyreHerosRegular', "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
-  font-weight: 300;
-  background: #f7f7f7;
-  background-size: cover;
-  color: #333;
-}
-.app-container {
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-}
+@import './variables';
+@import './common';
+@import './header';
+
 .logo-container {
   margin-bottom: 2rem;
 }
 .store-selection-title {
-  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+}
+.google-map {
+  &--map {
+    position: relative !important;
+    > div {
+      margin-left: auto;
+      margin-right: auto;
+      max-width: 100%;
+    }
+  }
+}
+.grocery-stores {
+  max-height: 500px;
+  overflow-y: scroll;
+  &--store-wrapper {
+    border: none;
+    padding-top: 0;
+    padding-right: 0.5rem;
+    &:first-of-type {
+      padding-top: 1rem;
+    }
+    &:last-of-type {
+      div {
+        border-bottom: none;
+      }
+    }
+  }
+  &--store {
+    border-bottom: 1px solid $concierge-red;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding-bottom: 1rem;
+  }
+  &--store-info {
+    max-width: calc(100% - 150px);
+    text-align: left;
+    span {
+      display: block
+    }
+  }
+  &--store-name {
+    color: $concierge-red;
+    font-weight: bold;
+  }
+  &--store-selection-button {
+    align-self: center;
+  }
+  &--store-address, &--store-is-open, &--google-map {
+    font-size: 0.85rem;
+  }
+  &--store-address, &--store-is-open {
+    color: $concierge-grey;
+  }
+  &--google-map {
+    text-decoration: underline;
+    a {
+      color: $concierge-black;
+    }
+  }
+}
+.back-to-map-button-container {
+  flex-direction: column;
+  .back-to-map-button {
+    margin: 0 auto;
+  }
 }
 .microphone {
   display: block;
@@ -58,32 +116,6 @@ body {
   margin: 1rem auto 0;
   max-width: 200px;
 }
-.google-map {
-  &--map {
-    position: relative !important;
-    > div {
-      margin-left: auto;
-      margin-right: auto;
-      max-width: 100%;
-    }
-  }
-}
-.grocery-stores {
-  max-height: 500px;
-  overflow-y: scroll;
-  &--store {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
-  &--store-name {
-    max-width: calc(100% - 150px);
-    text-align: left;
-  }
-  &--store-selection-button {
-    align-self: center;
-  }
-}
 .product-search-subtitle {
   background: #ffffff;
   border: 1px solid rgba(0, 0, 0, 0.125);
@@ -96,13 +128,6 @@ body {
 .available-products-container {
   max-height: 490px;
   overflow-y: scroll;
-}
-.back-to-map-button-container {
-  flex-direction: column;
-  .back-to-map-button {
-    margin: 0 auto;
-    max-width: 200px;
-  }
 }
 .voice-search-info-container {
   @media (min-width: 576px) {

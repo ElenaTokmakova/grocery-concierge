@@ -1,0 +1,18 @@
+.header {
+    &--wrapper {
+        align-items: center;
+        background: $concierge-black;
+        display: flex;
+        justify-content: center;
+        min-height: 100px;
+    }
+    &--title {
+        .header--title-green {
+            background: transparent;
+            color: $concierge-green;
+        }
+        .header--title-white {
+            color: white;
+        }
+    }
+}
