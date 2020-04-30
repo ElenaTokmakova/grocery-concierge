@@ -1,6 +1,7 @@
 import React, {Fragment} from 'react';
 import { MDBTable, MDBTableHead, MDBTableBody, MDBBtn } from "mdbreact";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import SweetAlert from 'sweetalert2-react';
 
 const ShoppingList = props => {
 

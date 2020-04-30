@@ -97,6 +97,7 @@ class App extends Component {
 
     // Invoked right before React unmounts and destroys the component
     componentWillUnmount() {
+      socket.off();
       if (this._source) {
           this._source.cancel('Operation canceled due to component unmounting');
       }
