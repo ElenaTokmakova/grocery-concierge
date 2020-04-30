@@ -62,8 +62,8 @@ export default class EssentialProducts extends Component {
                             return (
                                 <MDBListGroupItem key={product.name}>
                                     <MDBRow>
-                                        <MDBCol sm="5"><FontAwesomeIcon icon={product.class} /></MDBCol>
-                                        <MDBCol sm="7" className="text-left"><span>{product.name}</span></MDBCol>
+                                        <MDBCol size="4"><FontAwesomeIcon icon={product.class} /></MDBCol>
+                                        <MDBCol size="8" className="text-left"><span>{product.name}</span></MDBCol>
                                     </MDBRow>
                                 </MDBListGroupItem>
                             )

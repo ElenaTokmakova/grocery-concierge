@@ -7,10 +7,10 @@ import {
 } from "react-router-dom";
 import { MDBContainer, MDBRow } from "mdbreact";
 import Header from './Header';
+import Hero from './Hero';
 import GoogleMap from './GoogleMap';
 import ProductSearch from './ProductSearch';
 import SearchResults from './SearchResults';
-import conciergeImage from "../assets/images/concierge.jpg";
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faLongArrowAltLeft, faMicrophone, faAngleRight, faMapMarker, faAppleAlt, faBacon, faBox, faBreadSlice, faCandyCane, faCarrot, faCheese, faCookie, faEgg, faFish, faHamburger, faHotdog, faLemon, faPepperHot, faPizzaSlice, faStroopwafel, faToiletPaper, faDrumSteelpan, faTrash, faScroll, faPumpMedical } from '@fortawesome/free-solid-svg-icons'
@@ -20,7 +20,6 @@ library.add(faLongArrowAltLeft, faMicrophone, faAngleRight, faMapMarker, faApple
 class App extends Component {
 
     state = {
-      conciergeImage : conciergeImage,
       selectedPlace: {},
       navigateToMap: true,
       navigateToStore: false,
@@ -103,11 +102,8 @@ class App extends Component {
         <MDBContainer className="app-container text-center">
 
           <Header />
-          {
-            <MDBRow className="logo-container">
-              <img className="image-concierge" src={this.state.conciergeImage} />
-            </MDBRow>
-          }
+
+          <Hero />
 
           <Router>
             <Switch>

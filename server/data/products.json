@@ -26,17 +26,5 @@
     {
         "name" : "Eggs",
         "class" : "egg"
-    },
-    {
-        "name" : "Macaroni and Cheese",
-        "class" : "box"
-    },
-    {
-        "name" : "Bacon",
-        "class" : "bacon"
-    },
-    {
-        "name" : "Bread",
-        "class" : "bread-slice"
     }
 ]
