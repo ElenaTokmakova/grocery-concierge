@@ -79,7 +79,7 @@ io.on('connection', function(socket) {
       if (results.length > 0) {
         let found = documents.find(e => e.name === results[0].ref);
         console.log('Message: ' + found.location);
-        socket.emit('response', { type: 'where', term: searchItem, reply: 'You can find ' + found.category + ' in ' + found.location, location: found.location, info: found.location});
+        socket.emit('response', { type: 'where', term: searchItem, reply: 'You can find ' + found.category + ' in ' + found.location, name: found.name, info: found.location});
       } else {
         socket.emit('response', { type: 'not-found', reply: 'Sorry, I can\'t find what you\'re looking for, please try again', info: 'Please try again'});
       }

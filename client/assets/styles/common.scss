@@ -19,17 +19,19 @@ body {
     &-light-green {
       color: $concierge-green;
       border-color: $concierge-green;
-      &:hover {
-        color: $concierge-green;
-        border-color: $concierge-green;
+      &:hover, &:active, &:focus {
+        color: $concierge-green !important;
+        border-color: $concierge-green !important;
       }
     }
     &-orange-red {
       color: $concierge-red;
+      background-color: white !important;
       border-color: $concierge-red;
-      &hover {
-        color: $concierge-red;
-        border-color: $concierge-red;
+      &:hover, &:active, &:focus {
+        color: $concierge-red !important;
+        background-color: white !important;
+        border-color: $concierge-red !important;
       }
     }
   }

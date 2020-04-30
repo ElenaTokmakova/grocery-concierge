@@ -10,6 +10,11 @@ router.get('/products', (req, res) => {
   res.json(data)
 });
 
+router.get('/mapping', (req, res) => {
+  const data = helpers.readJsonFileSync('../data/mapping.json');
+  res.json(data)
+});
+
 // the path redirects users to the public/index.html to the React application
 router.get('*', (req, res) => {
   const route = path.join(__dirname, '..', '..', 'public', 'index.html');
