@@ -29,11 +29,11 @@ class App extends Component {
       essentialProducts: [],
       groceryList: [],
       productLocation: '',
-      showHeroSection: true
+      showHeroSection: true,
+      located: false
     };
 
     onStoreSelection = (selectedPlace) => {
-      console.log("Navigating to store through store selection")
       this.setState({
         navigateToMap: false,
         navigateToStore: true,
@@ -45,7 +45,6 @@ class App extends Component {
     }
 
     navigateToMap = () => {
-      console.log("Navigating to map")
       this.setState({
         navigateToMap: true,
         navigateToStore: false,
@@ -55,7 +54,6 @@ class App extends Component {
     }
 
     navigateToStore = () => {
-      console.log("Navigating to store")
       this.setState({
         navigateToMap: false,
         navigateToStore: true,
@@ -64,7 +62,6 @@ class App extends Component {
     }
 
     navigateToSearchResults = () => {
-      console.log("Navigating to search results")
       this.setState({
         navigateToMap: false,
         navigateToStore: false,
@@ -73,14 +70,12 @@ class App extends Component {
     }
 
     addItemToGroceryList = (item) => {
-      console.log("Adding item to shopping list")
       this.setState({
         groceryList: [ ...this.state.groceryList, item ]
       })
     }
 
     removeItemFromShoppingList = (name) => {
-      console.log("Removing item from shopping list")
       const newGroceryList = this.state.groceryList.filter(element => element.name !== name);
       this.setState({
         groceryList : newGroceryList
@@ -88,7 +83,6 @@ class App extends Component {
     }
 
     clearShoppingList = () => {
-      console.log("Clearing shopping list")
       this.setState({
           groceryList: []
       })
@@ -99,8 +93,11 @@ class App extends Component {
     }
 
     hideHeroSection = () => {
-      console.log("Hiding hero section")
       this.setState({ showHeroSection: false })
+    }
+
+    updateLocated = (located) => {
+      this.setState({ located })
     }
 
     render() {
@@ -120,7 +117,7 @@ class App extends Component {
                     {
                       (this.state.navigateToMap && !this.state.navigateToStore && !this.state.navigateToSearchResults) &&
                         <section className="google-map">
-                          <GoogleMap onStoreSelection={this.onStoreSelection} hideHeroSection={this.hideHeroSection}/>
+                          <GoogleMap onStoreSelection={this.onStoreSelection} hideHeroSection={this.hideHeroSection} located={this.state.located} updateLocated={this.updateLocated}/>
                         </section>
                     }
                     {

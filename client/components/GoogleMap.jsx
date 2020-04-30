@@ -17,9 +17,7 @@ export class MapContainer extends Component {
       showingInfoWindow: false,
       activeMarker: {},
       selectedPlace: {},
-      places: [],
-      geolocation: false,
-      geocoding: false
+      places: []
     };
   }
 
@@ -28,10 +26,11 @@ export class MapContainer extends Component {
       navigator.geolocation.getCurrentPosition(position => {
           const lat = position.coords.latitude;
           const lng = position.coords.longitude;
-          this.setState({lat, lng, geolocation: true, geocoding: false}, () => {
-            console.log("State: ", this.state)
+          this.setState({lat, lng}, () => {
+            // console.log("State: ", this.state)
           })
           this.props.hideHeroSection();
+          this.props.updateLocated(true);
         }
       )
     } else {
@@ -75,10 +74,11 @@ export class MapContainer extends Component {
   };
 
   updateCoords = (lat, lng) => {
-    this.setState({lat, lng, geolocation: false, geocoding: true}, () => {
+    this.setState({lat, lng}, () => {
         console.log("State: ", this.state)
       })
     this.props.hideHeroSection();
+    this.props.updateLocated(true);
   }
 
   onStoreSelection = (place) => {
@@ -105,7 +105,7 @@ export class MapContainer extends Component {
 
         <MDBRow className="store-geocoder">
           <MDBCol sm="12" md="6" className="offset-md-3" >
-            <GeocoderInput updateCoords={this.updateCoords} geocoding={this.state.geocoding}/>
+            <GeocoderInput updateCoords={this.updateCoords}/>
           </MDBCol>
         </MDBRow>
 
@@ -117,14 +117,17 @@ export class MapContainer extends Component {
           </MDBCol>
         </MDBRow>
 
-        <MDBRow className="store-search-results">
+        {
+          (this.props.located) &&
+
+          <MDBRow className="store-search-results">
 
           <MDBCol md="12" lg="5" className="store-search-results--store-list-container">
             <StoreList stores={this.state.places} onStoreSelection={this.onStoreSelection}/>
           </MDBCol>
 
           <MDBCol md="12" lg="7" className="store-search-results--map-container">
-            <Map className="google-map--map" style={{width: 700, height: 500, position: 'relative'}} geolocation={this.state.geoclocation} {...mapProps}>
+            <Map className="google-map--map" style={{width: 700, height: 500, position: 'relative'}} {...mapProps}>
 
               <Circle
                   radius={1200}
@@ -166,6 +169,9 @@ export class MapContainer extends Component {
           </MDBCol>
 
         </MDBRow>
+
+        }
+
       </Fragment>
 
     );

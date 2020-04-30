@@ -210,13 +210,13 @@ class App extends Component {
                         </button>
                     </MDBCol>
                 </MDBRow>
-                <MDBRow className="voice-search-info-container justify-content-center">
+                {/* <MDBRow className="voice-search-info-container justify-content-center">
                     <div className="voice-search-info">
                         <p><em className="output-you">{ this.state.outputYou }</em></p>
-                        {/* <p><em className="output-bot">{ this.state.outputBot }</em></p> */}
+                        <p><em className="output-bot">{ this.state.outputBot }</em></p>
                     </div>
-                    {/* <div className="info-display">{ this.state.infoDisplay }</div> */}
-                </MDBRow>
+                    <div className="info-display">{ this.state.infoDisplay }</div>
+                </MDBRow> */}
             </MDBCol>
             <MDBCol md="12" lg="4">
             </MDBCol>
