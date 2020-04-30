@@ -10,7 +10,7 @@ class SearchResults extends Component {
         show: false
     }
     render () {
-        const { selectedPlace, productLocation, groceryList, removeItemFromShoppingList, clearShoppingList, navigateToStore } = this.props;
+        const { selectedPlace, productLocation, groceryList, removeItemFromShoppingList, clearShoppingList, navigateToStore, navigateToMap } = this.props;
         return (
             <Fragment>
                 <div><p className="font-weight-bold">{productLocation}</p></div>
@@ -46,6 +46,13 @@ class SearchResults extends Component {
                     }} onClick={navigateToStore}>
                         <MDBBtn className="back-to-search-button btn-lighter-green">
                             Ask another question
+                        </MDBBtn>
+                    </Link>
+                    <Link to={{
+                        pathname: '/select-store'
+                    }} onClick={navigateToMap}>
+                        <MDBBtn className="back-to-search-button btn-orange-red">
+                            Exit the store
                         </MDBBtn>
                     </Link>
                 </MDBRow>

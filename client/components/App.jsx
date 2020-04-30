@@ -161,6 +161,7 @@ class App extends Component {
                           removeItemFromShoppingList={this.removeItemFromShoppingList}
                           clearShoppingList={this.clearShoppingList}
                           navigateToStore={this.navigateToStore}
+                          navigateToMap={this.navigateToMap}
                           selectedPlace={this.selectedPlace}
                           productLocation={this.state.productLocation}
                         />
