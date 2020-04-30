@@ -29,7 +29,6 @@ export class MapContainer extends Component {
       type: ['grocery_or_supermarket']
     }, (results, status) => {
       if (status !== 'OK') return;
-      console.log("PLACES", results)
       this.setState({ places: results });
       const bounds = new google.maps.LatLngBounds();
       for (let i = 0, place; place = results[i]; i++) {
@@ -116,7 +115,7 @@ export class MapContainer extends Component {
             <InfoWindowEx marker={this.state.activeMarker} visible={this.state.showingInfoWindow}>
                 <div>
                   <h5>{this.state.selectedPlace.name}</h5>
-                  <MDBBtn className="btn-light-green" onClick={this.onButtonClick} onClick={ () => this.props.onStoreSelection(this.state.selectedPlace)}>Find products</MDBBtn>
+                  <MDBBtn className="btn-lighter-green" onClick={this.onButtonClick} onClick={ () => this.props.onStoreSelection(this.state.selectedPlace)}>Find products</MDBBtn>
                 </div>
             </InfoWindowEx>
 

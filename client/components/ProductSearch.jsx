@@ -84,10 +84,11 @@ class App extends Component {
           })
 
           if (response.type === 'where') {
-            const includes = component.props.grocery_list.map(element => element.name).includes(response.name);
+            const includes = component.props.groceryList.map(element => element.name).includes(response.name);
             if (!includes) {
               component.props.addItemToGroceryList({ name: response.name, location: response.info });
             }
+            this.props.setProductLocation(response.reply)
             this.props.navigateToSearchResults();
           }
 
@@ -144,6 +145,8 @@ class App extends Component {
         const last = e.results.length - 1;
         const text = e.results[last][0].transcript;
 
+        console.log("Text", text)
+
         this.setState({
           outputYou: text
         })
@@ -155,6 +158,7 @@ class App extends Component {
 
       recognition.onspeechend = () => {
         console.log('Speech has ended.');
+        this.setState({ listening: false })
       }
 
       recognition.onerror = e => {
@@ -183,7 +187,7 @@ class App extends Component {
             <MDBCol md="12" lg="4">
                 <MDBRow className="back-to-map-button-container justify-content-center">
                     <MDBCol sm="12">
-                        <MDBBtn className="back-to-map-button btn-light-green" onClick={this.props.navigateToMap}>
+                        <MDBBtn className="back-to-map-button btn-lighter-green" onClick={this.props.navigateToMap}>
                             <FontAwesomeIcon className="back-to-map-icon" icon="long-arrow-alt-left" /> Select another store
                         </MDBBtn>
                         <p className="product-search-subtitle voice-search">
@@ -199,7 +203,7 @@ class App extends Component {
                     <MDBCol sm="12">
                         <p className="font-weight-bold">What are you looking for?</p>
                         <p className="microphone-anser-tip">
-                          { !this.state.listening ? 'Tap to answer' : 'I\'m listening! Click again to finish your search'}
+                          { !this.state.listening ? 'Tap to answer' : 'I\'m listening!'}
                         </p>
                         <button className="microphone" onClick={this.toggleListen}>
                             <FontAwesomeIcon icon="microphone" className="icon"/>
@@ -211,7 +215,7 @@ class App extends Component {
                         <p><em className="output-you">{ this.state.outputYou }</em></p>
                         {/* <p><em className="output-bot">{ this.state.outputBot }</em></p> */}
                     </div>
-                    <div className="info-display">{ this.state.infoDisplay }</div>
+                    {/* <div className="info-display">{ this.state.infoDisplay }</div> */}
                 </MDBRow>
             </MDBCol>
             <MDBCol md="12" lg="4">

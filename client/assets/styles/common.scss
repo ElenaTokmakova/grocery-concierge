@@ -16,10 +16,10 @@ body {
     font-weight: bold;
     padding: 0.75rem;
     text-transform: none;
-    &-light-green {
+    &-lighter-green {
       color: $concierge-green;
       border-color: $concierge-green;
-      &:hover, &:active, &:focus {
+      &:hover, &:active, &:focus, &:visited {
         color: $concierge-green !important;
         border-color: $concierge-green !important;
       }
@@ -28,7 +28,7 @@ body {
       color: $concierge-red;
       background-color: white !important;
       border-color: $concierge-red;
-      &:hover, &:active, &:focus {
+      &:hover, &:active, &:focus, &:visited {
         color: $concierge-red !important;
         background-color: white !important;
         border-color: $concierge-red !important;
@@ -41,4 +41,8 @@ body {
     margin-top: 1rem;
     padding-top: 1rem;
     padding-bottom: 2rem;
+  }
+
+  .btn-default:not([disabled]):not(.disabled):active, .btn-default:not([disabled]):not(.disabled).active, .show > .btn-default.dropdown-toggle {
+    background-color: white !important;
   }

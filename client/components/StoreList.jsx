@@ -17,7 +17,7 @@ const StoreList = props => {
                                     <span className="grocery-stores--store-address">{vicinity}</span>
                                     <span className="grocery-stores--google-map"><a href={map_link} target="_blank">Open Google Maps</a></span>
                                 </div>
-                                <MDBBtn className="grocery-stores--store-selection-button btn-light-green" onClick={() => props.onStoreSelection(store)}>Select this store</MDBBtn>
+                                <MDBBtn className="grocery-stores--store-selection-button btn-lighter-green" onClick={() => props.onStoreSelection(store)}>Select this store</MDBBtn>
                             </div>
                         </MDBListGroupItem>
                     )

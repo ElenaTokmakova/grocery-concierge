@@ -12,7 +12,6 @@ import ProductSearch from './ProductSearch';
 import SearchResults from './SearchResults';
 import conciergeImage from "../assets/images/concierge.jpg";
 
-
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faLongArrowAltLeft, faMicrophone, faAppleAlt, faBacon, faBox, faBreadSlice, faCandyCane, faCarrot, faCheese, faCookie, faEgg, faFish, faHamburger, faHotdog, faLemon, faPepperHot, faPizzaSlice, faStroopwafel, faToiletPaper, faDrumSteelpan, faTrash, faScroll, faPumpMedical } from '@fortawesome/free-solid-svg-icons'
 // a standalone build of socket.io-client is exposed automatically by the socket.io server
@@ -29,7 +28,8 @@ class App extends Component {
       postalCode: 'you',
       currentLocation: '',
       essentialProducts: [],
-      grocery_list: []
+      groceryList: [],
+      productLocation: ''
     };
 
     onStoreSelection = (selectedPlace) => {
@@ -75,23 +75,27 @@ class App extends Component {
     addItemToGroceryList = (item) => {
       console.log("Adding item to shopping list")
       this.setState({
-        grocery_list: [ ...this.state.grocery_list, item ]
+        groceryList: [ ...this.state.groceryList, item ]
       })
     }
 
     removeItemFromShoppingList = (name) => {
       console.log("Removing item from shopping list")
-      const newGroceryList = this.state.grocery_list.filter(element => element.name !== name);
+      const newGroceryList = this.state.groceryList.filter(element => element.name !== name);
       this.setState({
-        grocery_list : newGroceryList
+        groceryList : newGroceryList
       })
     }
 
     clearShoppingList = () => {
       console.log("Clearing shopping list")
       this.setState({
-          grocery_list: []
+          groceryList: []
       })
+    }
+
+    setProductLocation = (location) => {
+      this.setState({ productLocation: location })
     }
 
     render() {
@@ -128,11 +132,12 @@ class App extends Component {
                     {
                       (!this.state.navigateToMap && this.state.navigateToStore && !this.state.navigateToSearchResults ) &&
                         <ProductSearch
+                          setProductLocation={this.setProductLocation}
                           selectedPlace={this.state.selectedPlace}
                           navigateToMap={this.navigateToMap}
                           navigateToSearchResults={this.navigateToSearchResults}
                           addItemToGroceryList={this.addItemToGroceryList}
-                          grocery_list={this.state.grocery_list}
+                          groceryList={this.state.groceryList}
                         />
                     }
                     {
@@ -152,11 +157,12 @@ class App extends Component {
                     {
                       (!this.state.navigateToMap && !this.state.navigateToStore && this.state.navigateToSearchResults) &&
                         <SearchResults
-                          grocery_list={this.state.grocery_list}
+                          groceryList={this.state.groceryList}
                           removeItemFromShoppingList={this.removeItemFromShoppingList}
                           clearShoppingList={this.clearShoppingList}
                           navigateToStore={this.navigateToStore}
                           selectedPlace={this.selectedPlace}
+                          productLocation={this.state.productLocation}
                         />
                     }
               </Route>

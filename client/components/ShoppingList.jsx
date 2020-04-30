@@ -17,10 +17,10 @@ const ShoppingList = props => {
                 </MDBTableHead>
                 <MDBTableBody>
                 {
-                    props.grocery_list.map(product => {
+                    props.groceryList.map( (product, index) => {
                         const { name, location } = product;
                         return (
-                            <tr key={name}>
+                            <tr key={index}>
                             <td>{name}</td>
                             <td>{location}</td>
                             <td><FontAwesomeIcon onClick={props.removeItemFromShoppingList.bind(this, name)} icon="trash" className="clear-shopping-list-icon"/></td>
@@ -31,8 +31,11 @@ const ShoppingList = props => {
             </MDBTableBody>
             </MDBTable>
             {
-                props.grocery_list.length > 0 &&
-                <MDBBtn className="back-to-product-search-button btn-orange-red" onClick={props.clearShoppingList}>Clear shopping list</MDBBtn>
+                props.groceryList.length > 0 &&
+                <Fragment>
+                    <MDBBtn className="back-to-product-search-button btn-orange-red">Save shopping list</MDBBtn>
+                    <MDBBtn className="back-to-product-search-button btn-lighter-green" onClick={props.clearShoppingList}>Clear shopping list</MDBBtn>
+                </Fragment>
             }
         </Fragment>
       );
