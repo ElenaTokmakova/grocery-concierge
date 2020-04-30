@@ -13,7 +13,7 @@ class SearchResults extends Component {
         const { selectedPlace, productLocation, groceryList, removeItemFromShoppingList, clearShoppingList, navigateToStore, navigateToMap } = this.props;
         return (
             <Fragment>
-                <div><p className="font-weight-bold">{productLocation}</p></div>
+                <div class="search-results-location"><p className="font-weight-bold">{productLocation}</p></div>
                 <MDBRow className="product-search-results">
                     <MDBCol md="12" lg="6">
                         <img className="image-grocery-isle img-fluid" src={grocery_store_isle} />
