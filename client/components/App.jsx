@@ -110,7 +110,7 @@ class App extends Component {
           <Header />
 
           {
-            this.state.showHeroSection && <Hero />
+            (this.state.showHeroSection || !this.state.navigateToMap) && <Hero />
           }
 
           <Router>
