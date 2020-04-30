@@ -13,9 +13,9 @@ import SearchResults from './SearchResults';
 import conciergeImage from "../assets/images/concierge.jpg";
 
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faLongArrowAltLeft, faMicrophone, faAppleAlt, faBacon, faBox, faBreadSlice, faCandyCane, faCarrot, faCheese, faCookie, faEgg, faFish, faHamburger, faHotdog, faLemon, faPepperHot, faPizzaSlice, faStroopwafel, faToiletPaper, faDrumSteelpan, faTrash, faScroll, faPumpMedical } from '@fortawesome/free-solid-svg-icons'
+import { faLongArrowAltLeft, faMicrophone, faAngleRight, faMapMarker, faAppleAlt, faBacon, faBox, faBreadSlice, faCandyCane, faCarrot, faCheese, faCookie, faEgg, faFish, faHamburger, faHotdog, faLemon, faPepperHot, faPizzaSlice, faStroopwafel, faToiletPaper, faDrumSteelpan, faTrash, faScroll, faPumpMedical } from '@fortawesome/free-solid-svg-icons'
 // a standalone build of socket.io-client is exposed automatically by the socket.io server
-library.add(faLongArrowAltLeft, faMicrophone, faAppleAlt, faBacon, faBox, faBreadSlice, faCandyCane, faCarrot, faCheese, faCookie, faEgg, faFish, faHamburger, faHotdog, faLemon, faPepperHot, faPizzaSlice, faStroopwafel, faToiletPaper, faDrumSteelpan, faTrash, faScroll, faPumpMedical );
+library.add(faLongArrowAltLeft, faMicrophone, faAngleRight, faMapMarker, faAppleAlt, faBacon, faBox, faBreadSlice, faCandyCane, faCarrot, faCheese, faCookie, faEgg, faFish, faHamburger, faHotdog, faLemon, faPepperHot, faPizzaSlice, faStroopwafel, faToiletPaper, faDrumSteelpan, faTrash, faScroll, faPumpMedical );
 
 class App extends Component {
 

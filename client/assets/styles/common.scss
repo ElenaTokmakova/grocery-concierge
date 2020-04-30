@@ -46,3 +46,16 @@ body {
   .btn-default:not([disabled]):not(.disabled):active, .btn-default:not([disabled]):not(.disabled).active, .show > .btn-default.dropdown-toggle {
     background-color: white !important;
   }
+
+  .md-form.md-outline input[type="text"]:focus:not([readonly]) {
+    border-color: $concierge-green;
+    box-shadow: inset 0 0 0 1px $concierge-green;
+  }
+
+  .md-form.md-outline input[type="text"]:focus:not([readonly]) + label {
+    color: $concierge-green;
+  }
+
+  .md-form.md-outline {
+    margin: 0;
+  }

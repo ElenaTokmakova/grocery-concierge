@@ -5,6 +5,27 @@
 .logo-container {
   margin-bottom: 1rem;
 }
+.geocoder-input-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  .geocoder-submit-button {
+    margin: 0 1rem 0.5rem;
+    height: 48px;
+    width: 48px;
+  }
+  label {
+    font-size: 1rem !important;
+    line-height: 1.8rem;
+  }
+}
+.store-geolocation {
+  margin-bottom: 2rem;
+  .geolocation-button {
+    width: 200px;
+  }
+}
 .store-selection-title {
   font-size: 1.5rem;
   margin-bottom: 2rem;
