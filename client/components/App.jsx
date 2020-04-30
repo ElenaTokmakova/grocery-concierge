@@ -28,7 +28,8 @@ class App extends Component {
       currentLocation: '',
       essentialProducts: [],
       groceryList: [],
-      productLocation: ''
+      productLocation: '',
+      showHeroSection: true
     };
 
     onStoreSelection = (selectedPlace) => {
@@ -97,13 +98,20 @@ class App extends Component {
       this.setState({ productLocation: location })
     }
 
+    hideHeroSection = () => {
+      console.log("Hiding hero section")
+      this.setState({ showHeroSection: false })
+    }
+
     render() {
        return (
         <MDBContainer className="app-container text-center">
 
           <Header />
 
-          <Hero />
+          {
+            this.state.showHeroSection && <Hero />
+          }
 
           <Router>
             <Switch>
@@ -112,7 +120,7 @@ class App extends Component {
                     {
                       (this.state.navigateToMap && !this.state.navigateToStore && !this.state.navigateToSearchResults) &&
                         <section className="google-map">
-                          <GoogleMap onStoreSelection={this.onStoreSelection}/>
+                          <GoogleMap onStoreSelection={this.onStoreSelection} hideHeroSection={this.hideHeroSection}/>
                         </section>
                     }
                     {

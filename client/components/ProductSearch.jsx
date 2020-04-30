@@ -53,7 +53,6 @@ class App extends Component {
             cancelToken: this._source.token
           })
           .then(data => {
-              // console.log('Got data from Express server!', data.data);
               const productNames = data.data.map(element => element.name);
               this.setState({
                   products: data.data,

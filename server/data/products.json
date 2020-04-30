@@ -8,20 +8,8 @@
         "class" : "scroll"
     },
     {
-        "name" : "Hand Sanitizer",
-        "class" : "pump-medical"
-    },
-    {
-        "name": "Pasta",
-        "class": "box"
-    },
-    {
         "name": "Rice",
         "class": "box"
-    },
-    {
-        "name" : "Canned Food",
-        "class" : "drum-steelpan"
     },
     {
         "name" : "Eggs",

@@ -17,20 +17,21 @@ export class MapContainer extends Component {
       showingInfoWindow: false,
       activeMarker: {},
       selectedPlace: {},
-      places: []
+      places: [],
+      geolocation: false,
+      geocoding: false
     };
   }
 
   showCurrentLocation = () => {
-    console.log("Geolocating...")
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(position => {
-          console.log("Current position", position);
           const lat = position.coords.latitude;
           const lng = position.coords.longitude;
-          this.setState({lat, lng}, () => {
+          this.setState({lat, lng, geolocation: true, geocoding: false}, () => {
             console.log("State: ", this.state)
           })
+          this.props.hideHeroSection();
         }
       )
     } else {
@@ -74,11 +75,10 @@ export class MapContainer extends Component {
   };
 
   updateCoords = (lat, lng) => {
-    console.log("Current coords", this.state.lat, this.state.lng);
-    console.log("New coordinates", lat, lng)
-    this.setState({lat, lng}, () => {
+    this.setState({lat, lng, geolocation: false, geocoding: true}, () => {
         console.log("State: ", this.state)
       })
+    this.props.hideHeroSection();
   }
 
   onStoreSelection = (place) => {
@@ -87,12 +87,12 @@ export class MapContainer extends Component {
 
   render() {
 
+    const initialCoords = { lat: 43.643500, lng: -79.393520 };
     const coords = { lat: this.state.lat, lng: this.state.lng };
 
-    console.log("Rendering coordinates", this.state.lat, this.state.lng)
-
     const mapProps = {
-      initialCenter: coords,
+      initialCenter: initialCoords,
+      center: coords,
       google: this.props.google,
       onReady: this.fetchPlaces,
       onClick: this.onMapClicked,
@@ -106,7 +106,7 @@ export class MapContainer extends Component {
 
         <MDBRow className="store-geocoder">
           <MDBCol sm="12" md="6" className="offset-md-3" >
-            <GeocoderInput updateCoords={this.updateCoords}/>
+            <GeocoderInput updateCoords={this.updateCoords} geocoding={this.state.geocoding}/>
           </MDBCol>
         </MDBRow>
 
@@ -125,7 +125,7 @@ export class MapContainer extends Component {
           </MDBCol>
 
           <MDBCol md="12" lg="7" className="store-search-results--map-container">
-            <Map className="google-map--map" style={{width: 700, height: 500, position: 'relative'}} {...mapProps}>
+            <Map className="google-map--map" style={{width: 700, height: 500, position: 'relative'}} geolocation={this.state.geoclocation} {...mapProps}>
 
               <Circle
                   radius={1200}

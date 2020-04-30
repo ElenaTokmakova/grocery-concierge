@@ -12,6 +12,9 @@
     color: $concierge-red;
     font-weight: bold;
   }
+  .concierge-image {
+    max-width: 250px;
+  }
 }
 .geocoder-input-container {
   display: flex;
@@ -37,9 +40,6 @@
 .store-selection-title {
   font-size: 1.5rem;
   margin: 2rem auto;
-  @media (min-width: 992px) {
-    margin-top: 0;
-  }
 }
 
 .store-search-results {
