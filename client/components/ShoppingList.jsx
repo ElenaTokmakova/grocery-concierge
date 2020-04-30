@@ -10,7 +10,7 @@ class ShoppingList extends Component {
     render () {
         return (
             <Fragment>
-                <p className="product-search-subtitle">Your shopping list</p>
+                <p className="product-search-subtitle font-weight-bold">Your shopping list</p>
                 <MDBTable className="shopping-list-table" striped bordered responsive hover>
                     <MDBTableHead>
                     <tr>

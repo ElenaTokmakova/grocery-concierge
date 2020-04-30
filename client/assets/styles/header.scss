@@ -6,9 +6,13 @@
         align-items: center;
         background: $concierge-black;
         display: flex;
-        justify-content: center;
+        justify-content: flex-start;
         min-height: 100px;
         padding: 1rem;
+        position: relative;
+        @media (min-width: 576px) {
+            justify-content: center;
+        }
     }
     &--title {
         h1 {
@@ -30,5 +34,15 @@
         .header--title-white {
             color: white;
         }
+    }
+    &--account-link {
+        color: white;
+        position: absolute;
+        right: 1rem;
+        text-decoration: underline;
+        &:hover, &:active, &:focus, &:visited {
+            color: white !important;
+            text-decoration: underline;
+          }
     }
 }
