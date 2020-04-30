@@ -43,7 +43,7 @@ export class MapContainer extends Component {
     const {google} = mapProps;
     const service = new google.maps.places.PlacesService(map);
     service.nearbySearch({
-      location: mapProps.initialCenter,
+      location: mapProps.center,
       radius: 1000,
       type: ['grocery_or_supermarket']
     }, (results, status) => {
@@ -87,15 +87,14 @@ export class MapContainer extends Component {
 
   render() {
 
-    const initialCoords = { lat: 43.643500, lng: -79.393520 };
     const coords = { lat: this.state.lat, lng: this.state.lng };
 
     const mapProps = {
-      initialCenter: initialCoords,
       center: coords,
       google: this.props.google,
       onReady: this.fetchPlaces,
       onClick: this.onMapClicked,
+      onCenterChanged: this.fetchPlaces,
       zoom: 14,
       scrollwheel: true
     };

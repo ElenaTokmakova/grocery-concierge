@@ -31,7 +31,6 @@ export default class EssentialProducts extends Component {
             cancelToken: this._source.token
           })
           .then(data => {
-              console.log('Got data from Express server!', data.data);
               this.setState({
                   products: data.data
               })
