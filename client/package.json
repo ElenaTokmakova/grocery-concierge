@@ -67,6 +67,7 @@
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-geocode": "^0.2.1",
     "react-popper": "^0.10.1",
     "react-render-html": "^0.6.0",
     "react-router": "^5.1.2",

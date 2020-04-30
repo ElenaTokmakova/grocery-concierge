@@ -9,6 +9,10 @@ export class MapContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      currentLatLng: {
+        lat: 43.643500,
+        lng: -79.393520
+      },
       showingInfoWindow: false,
       activeMarker: {},
       selectedPlace: {},
@@ -16,8 +20,25 @@ export class MapContainer extends Component {
     };
   }
 
-  nextPath(path) {
-    this.props.history.push(path);
+  componentDidMount() {
+    this.showCurrentLocation();
+  }
+
+  showCurrentLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(position => {
+          this.setState(prevState => ({
+            currentLatLng: {
+              ...prevState.currentLatLng,
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            }
+          }))
+        }
+      )
+    } else {
+      error => console.log(error)
+    }
   }
 
   fetchPlaces = (mapProps, map) => {
@@ -61,7 +82,7 @@ export class MapContainer extends Component {
 
   render() {
 
-    const coords = { lat: 43.643500, lng: -79.393520 };
+    const coords = { lat: this.state.currentLatLng.lat, lng: this.state.currentLatLng.lng };
 
     const mapProps = {
       initialCenter: coords,
