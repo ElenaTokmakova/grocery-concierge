@@ -1,0 +1,24 @@
+const router = require('express').Router();
+const path = require('path');
+const helpers = require('../helpers');
+const documents = require('../data/mapping');
+
+// routes will be called first and, if no middleware handles the request, then express will call static files
+// return default (mock) product location data
+router.get('/products', (req, res) => {
+  const data = helpers.readJsonFileSync('../data/products.json');
+  res.json(data)
+});
+
+router.get('/mapping', (req, res) => {
+  const data = helpers.readJsonFileSync('../data/mapping.json');
+  res.json(data)
+});
+
+// the path redirects users to the public/index.html to the React application
+router.get('*', (req, res) => {
+  const route = path.join(__dirname, '..', '..', 'public', 'index.html');
+  res.sendFile(route);
+});
+
+module.exports = router;

@@ -1,11 +1,19 @@
 {
   "name": "grocery-concierge",
   "version": "1.0.0",
+  "engines": {
+    "node": "10.16.x"
+  },
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
+    "server": "cd server && nodemon index.js",
+    "client": "cd client && npm run client",
+    "prebuild": "cd client && npm run prebuild",
+    "install_client": "cd client && npm install",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "node server"
   },
   "repository": {
     "type": "git",
@@ -19,9 +27,14 @@
   },
   "homepage": "https://github.com/corciega/grocery-concierge#readme",
   "dependencies": {
+    "concurrently": "^5.1.0",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "lunr": "^2.3.8",
     "natural": "^1.0.1",
     "socket.io": "^2.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.3"
   }
 }

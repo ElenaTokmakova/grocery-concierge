@@ -1,0 +1,61 @@
+body {
+    padding: 0;
+    margin: 0;
+    font-family: "HelveticaNeueLight", "HelveticaNeue-Light", "Helvetica Neue Light", "HelveticaNeue", "Helvetica Neue", 'TeXGyreHerosRegular', "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
+    font-weight: 300;
+    background: #f7f7f7;
+    background-size: cover;
+    color: #333;
+  }
+  .btn {
+    background-color: white !important;
+    border: 2px solid;
+    border-radius: 25px;
+    box-shadow: none;
+    font-size: 0.8rem;
+    font-weight: bold;
+    padding: 0.75rem;
+    text-transform: none;
+    &-lighter-green {
+      color: $concierge-green;
+      border-color: $concierge-green;
+      &:hover, &:active, &:focus, &:visited {
+        color: $concierge-green !important;
+        border-color: $concierge-green !important;
+      }
+    }
+    &-orange-red {
+      color: $concierge-red;
+      background-color: white !important;
+      border-color: $concierge-red;
+      &:hover, &:active, &:focus, &:visited {
+        color: $concierge-red !important;
+        background-color: white !important;
+        border-color: $concierge-red !important;
+      }
+    }
+  }
+
+  .app-container {
+    background-color: white;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+  }
+
+  .btn-default:not([disabled]):not(.disabled):active, .btn-default:not([disabled]):not(.disabled).active, .show > .btn-default.dropdown-toggle {
+    background-color: white !important;
+  }
+
+  .md-form.md-outline input[type="text"]:focus:not([readonly]) {
+    border-color: $concierge-green;
+    box-shadow: inset 0 0 0 1px $concierge-green;
+  }
+
+  .md-form.md-outline input[type="text"]:focus:not([readonly]) + label {
+    color: $concierge-green;
+  }
+
+  .md-form.md-outline {
+    margin: 0;
+  }
