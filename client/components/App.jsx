@@ -155,7 +155,7 @@ class App extends Component {
                 </Route>
                 <Route path="/select-products">
                       {
-                        (!this.state.stepTwo) && <Redirect to="/select-store"/>
+                        (this.state.stepOne) && <Redirect to="/select-store"/>
                       }
                       {
                         (this.state.stepTwo ) &&
