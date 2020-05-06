@@ -2,12 +2,16 @@ var path = require('path');
 const webpack = require('webpack');
 const merge = require("webpack-merge");
 
+const Dotenv = require('dotenv-webpack');
+
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const APP_DIR = path.resolve(__dirname, './index.jsx');
 
+// setting module.exports with a function is important
+// otherwise, you don't get access to the env variable
 module.exports = env => {
   const { PLATFORM, VERSION } = env;
   return merge([
@@ -110,7 +114,8 @@ module.exports = env => {
           'process.env.VERSION': JSON.stringify(env.VERSION),
           'process.env.PLATFORM': JSON.stringify(env.PLATFORM)
         }),
-        new CopyWebpackPlugin([ { from: 'assets/images', to: '../public/assets/images' } ])
+        new CopyWebpackPlugin([ { from: 'assets/images', to: '../public/assets/images' } ]),
+        new Dotenv()
       ]
     }
 

@@ -3,8 +3,8 @@ import Geocode from "react-geocode";
 import { MDBInput, MDBBtn } from "mdbreact";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import SweetAlert from 'sweetalert2-react';
-Geocode.setApiKey("AIzaSyDboNRlvYB28UXVObFYGaP6xw0p3HJiowA");
 
+Geocode.setApiKey(process.env.API_KEY);
 
 export default class GeocoderInput extends Component {
     state = {
@@ -20,8 +20,6 @@ export default class GeocoderInput extends Component {
             this.setState({ show: true });
             return;
         }
-
-        console.log("Postal code for Geocoder", this.state.postalCode)
 
         Geocode.fromAddress(this.state.postalCode).then(
             response => {
@@ -39,7 +37,7 @@ export default class GeocoderInput extends Component {
           );
     }
 
-    keyPressed(event) {
+    onKeyPressed(event) {
         if (event.key === "Enter") {
           this.getCoordsFromPostalCode()
         }
@@ -50,7 +48,7 @@ export default class GeocoderInput extends Component {
             <div className="form-group geocoder-input-container">
                 <MDBInput label="Enter postal code" outline size="lg" className="goecoder-input"
                             value={this.state.postalCode}
-                            onKeyPress={(event) => this.keyPressed(event)}
+                            onKeyPress={(event) => this.onKeyPressed(event)}
                             onChange={(event) => this.setState({ postalCode: event.target.value })}/>
                 <MDBBtn className="btn-lighter-green geocoder-submit-button" onClick={this.getCoordsFromPostalCode} >
                     <FontAwesomeIcon icon="angle-right"/>

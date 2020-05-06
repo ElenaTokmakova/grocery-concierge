@@ -1,5 +1,6 @@
 import React, {Fragment, useState, useEffect } from 'react';
 import { MDBRow, MDBCol, MDBListGroup, MDBListGroupItem } from "mdbreact";
+import SweetAlert from 'sweetalert2-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 
@@ -13,6 +14,7 @@ if (process.env.NODE_ENV === 'development') {
 const EssentialProducts = () => {
 
     const [products, setProducts] = useState([]);
+    const [show, setShow] = useState(false);
 
     const url = DEV_URL + '/products';
 
@@ -37,7 +39,7 @@ const EssentialProducts = () => {
                 if (axios.isCancel(error)) {
                     console.log(`Call for essential products was cancelled`);
                 } else {
-                    throw error;
+                    setShow(true);
                 }
             }
         };
@@ -70,6 +72,14 @@ const EssentialProducts = () => {
                     })
                 }
             </MDBListGroup>
+            <SweetAlert
+                type="error"
+                confirmButtonColor="#a1bf63"
+                show={show}
+                title="Error"
+                text="Something went wrong while getting essential products"
+                onConfirm={() => setShow(false)}
+            />
         </Fragment>
     )
 }
