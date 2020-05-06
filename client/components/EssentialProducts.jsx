@@ -1,4 +1,4 @@
-import React, {Fragment, Component} from 'react';
+import React, {Fragment, useState, useEffect } from 'react';
 import { MDBRow, MDBCol, MDBListGroup, MDBListGroupItem } from "mdbreact";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
@@ -10,66 +10,68 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // render this componetn anywhere, it gets its data itself and doesn't depend on parent props
-export default class EssentialProducts extends Component {
+const EssentialProducts = () => {
 
-    state = {
-        products: []
-    }
+    const [products, setProducts] = useState([]);
 
-    componentDidMount(){
+    const url = DEV_URL + '/products';
 
-        // cancel previous request
-        if (typeof this._source != typeof undefined) {
-          this._source.cancel('Operation canceled due to new request');
-        }
+    // function annotated with async returns an implicit promise
+    // an effect hook should return nothing or a clean up function
+    // you can call an async function inside an effect
 
-        // save the new request for cancellation
-        this._source = axios.CancelToken.source();
+    useEffect(() => {
 
-        axios.get(DEV_URL + '/products', {
-            // cancel token used by axios
-            cancelToken: this._source.token
-          })
-          .then(data => {
-              this.setState({
-                  products: data.data
-              })
-        }
-          )
-          .catch(error => {
-            if(axios.isCancel(error)){
-              console.log('Request is canceled', error);
-            } else {
-              console.log(error);
+        // Set up a cancellation source
+        let source = axios.CancelToken.source();
+
+        const fetchData = async () => {
+            try {
+                const result = await axios(url, {
+                    // Assign the source.token to this request
+                    cancelToken: source.token
+                });
+                setProducts(result.data);
+            } catch(error) {
+                // Is this error because we cancelled it?
+                if (axios.isCancel(error)) {
+                    console.log(`Call for essential products was cancelled`);
+                } else {
+                    throw error;
+                }
             }
-          });
-    }
+        };
 
-    // Invoked right before React unmounts and destroys the component
-    componentWillUnmount() {
-      if (this._source) {
-          this._source.cancel('Operation canceled due to component unmounting');
-      }
-    }
-    render() {
-        return (
-            <Fragment>
-                <p className="product-search-subtitle">COVID essential product list</p>
-                <MDBListGroup className="essential-products-container">
-                    {   this.state.products.length > 0 &&
-                        this.state.products.map(product => {
-                            return (
-                                <MDBListGroupItem key={product.name}>
-                                    <MDBRow>
-                                        <MDBCol size="4"><FontAwesomeIcon icon={product.class} /></MDBCol>
-                                        <MDBCol size="8" className="text-left"><span>{product.name}</span></MDBCol>
-                                    </MDBRow>
-                                </MDBListGroupItem>
-                            )
-                        })
-                    }
-                </MDBListGroup>
-            </Fragment>
-        )
-    }
+        fetchData();
+
+        return () => {
+            // Let's cancel the request on effect cleanup
+            source.cancel();
+        };
+
+      },
+      [url]
+    );
+
+    return (
+        <Fragment>
+            <p className="product-search-subtitle">COVID essential product list</p>
+            <MDBListGroup className="essential-products-container">
+                {   products.length > 0 &&
+                    products.map(product => {
+                        return (
+                            <MDBListGroupItem key={product.name}>
+                                <MDBRow>
+                                    <MDBCol size="4"><FontAwesomeIcon icon={product.class} /></MDBCol>
+                                    <MDBCol size="8" className="text-left"><span>{product.name}</span></MDBCol>
+                                </MDBRow>
+                            </MDBListGroupItem>
+                        )
+                    })
+                }
+            </MDBListGroup>
+        </Fragment>
+    )
 }
+
+export default EssentialProducts;
