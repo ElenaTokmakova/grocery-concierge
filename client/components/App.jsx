@@ -1,4 +1,4 @@
-import React, {Component, Fragment} from 'react';
+import React, { Fragment, useReducer, useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -6,6 +6,7 @@ import {
   Redirect
 } from "react-router-dom";
 import { MDBContainer } from "mdbreact";
+
 import Loading from './Loading';
 import Header from './Header';
 import Hero from './Hero';
@@ -17,193 +18,239 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { faLongArrowAltLeft, faMicrophone, faAngleRight, faMapMarker, faBox, faEgg, faFish, faToiletPaper, faScroll, faTrash } from '@fortawesome/free-solid-svg-icons'
 library.add(faLongArrowAltLeft, faMicrophone, faAngleRight, faMapMarker, faBox, faEgg, faFish, faToiletPaper, faScroll, faTrash );
 
-class App extends Component {
+const initialState = {
+  loading: true,
+    selectedPlace: {},
+    stepOne: true,
+    stepTwo: false,
+    stepThree: false,
+    postalCode: 'you',
+    currentLocation: '',
+    groceryList: [],
+    productLocation: '',
+    located: false,
+    lat: 43.643500,
+    lng: -79.393520
+};
 
-    state = {
-      loading: true,
-      selectedPlace: {},
-      stepOne: true,
-      stepTwo: false,
-      stepThree: false,
-      postalCode: 'you',
-      currentLocation: '',
-      groceryList: [],
-      productLocation: '',
-      located: false,
-      lat: 43.643500,
-      lng: -79.393520
-    };
-
-    componentDidMount() {
-
-      setTimeout( () => this.setState({ loading: false }), 1500 )
-
+const reducer = (state, action) => {
+  console.log('State, action', state, action)
+  switch (action.type) {
+    case 'loading' :
+      return {
+        ...state,
+        loading: action.payload
+      }
+    case 'setStep':
+      return {
+          ...state,
+          ...action.payload
+      };
+    case 'stepOne':
+      return {
+          ...state,
+          stepOne: true,
+          stepTwo: false,
+          stepThree: false,
+          selectedPlace: {}
+      };
+    case 'stepTwo':
+      return {
+          ...state,
+          stepOne: false,
+          stepTwo: true,
+          stepThree: false
+      };
+    case 'stepThree':
+      return {
+          ...state,
+          stepOne: false,
+          stepTwo: false,
+          stepThree: true
+      };
+    case 'products':
+      return {
+          ...state,
+          products: action.payload
+      };
+    case 'storeSelection':
+      return {
+          ...state,
+          stepOne: false,
+          stepTwo: true,
+          stepThree: false,
+          selectedPlace: action.payload
+      };
+    case 'setProductLocation':
+      return {
+        ...state,
+        productLocation: action.payload
+      }
+    case 'updateLocated' :
+      return {
+        ...state,
+        located: action.payload.located,
+        lat: action.payload.lat,
+        lng: action.payload.lng
+      }
+    case 'updateGroceryList' :
+      return {
+        ...state,
+        groceryList: action.payload
+      }
+    default:
+        throw new Error();
     }
+}
 
-    onStoreSelection = (selectedPlace) => {
-      this.setState({
-        stepOne: false,
-        stepTwo: true,
-        stepThree: false,
-        selectedPlace
-      });
-    }
 
-    goToStepOne = () => {
-      console.log("Going to step one")
-      this.setState({
-        stepOne: true,
-        stepTwo: false,
-        stepThree: false,
-        selectedPlace: {}
-      })
-    }
+const App = () => {
 
-    goToStepTwo = () => {
-      console.log("Going to step two")
-      this.setState({
-        stepOne: false,
-        stepTwo: true,
-        stepThree: false,
-      })
-    }
+  const [state, dispatch] = useReducer(reducer, initialState);
 
-    goToStepThree = () => {
-      this.setState({
-        stepOne: false,
-        stepTwo: false,
-        stepThree: true
-      })
-    }
+    useEffect(() => {
+      setTimeout( () => dispatch({ type: 'loading', payload: false }), 1500 )
+    }, []);
 
-    addItemToGroceryList = (item) => {
-      this.setState({
-        groceryList: [ ...this.state.groceryList, item ]
-      })
-    }
-
-    removeItemFromShoppingList = (name) => {
-      const newGroceryList = this.state.groceryList.filter(element => element.name !== name);
-      this.setState({
-        groceryList : newGroceryList
-      })
-    }
-
-    clearShoppingList = () => {
-      this.setState({
-          groceryList: []
-      })
-    }
-
-    setProductLocation = (location) => {
-      this.setState({ productLocation: location })
-    }
-
-    updateLocated = (located, lat, lng) => {
-      this.setState({ located, lat, lng })
-    }
-
-    render() {
-
-      if (this.state.loading) {
-        return (
-          <Loading isVisible={this.state.loading} />
-        )
+    const onStoreSelection = (selectedPlace) => {
+        dispatch({ type: 'storeSelection', payload: selectedPlace });
       }
 
-      return (
+    const goToStepOne = () => {
+        console.log("Going to step one");
+        dispatch({ type: 'stepOne' });
+      }
 
-          !this.state.loading && <MDBContainer className="app-container text-center">
+    const goToStepTwo = () => {
+        console.log("Going to step two");
+        dispatch({ type: 'stepTwo' });
+      }
 
-            <Header />
+    const goToStepThree = () => {
+        console.log('Going to step three');
+        dispatch({ type: 'stepThree' });
+      }
 
-            {
-              (!this.state.located || !this.state.stepOne) && <Hero />
-            }
-
-            <Router>
-              <Switch>
-                <Route path="/select-store">
-                      <div className="store-selection-title-container">
-                        { !this.state.located &&
-                          <Fragment>
-                            <h2 className="store-selection-title store-selection-title-welcome">Welcome! </h2>
-                            <p>Start searching for your nearest grocery store here </p>
-                          </Fragment>
-                        }
-                        {
-                          this.state.located && <h2 className="store-selection-title store-selection-title-nearby">Stores nearby {this.state.postalCode}</h2>
-                        }
-                      </div>
-
-                      {
-                        this.state.stepOne &&
-                          <section className="google-map">
-                            <GoogleMap
-                              onStoreSelection={this.onStoreSelection}
-                              located={this.state.located}
-                              lat={this.state.lat}
-                              lng={this.state.lng}
-                              updateLocated={this.updateLocated}
-                              />
-                          </section>
-                      }
-                      {
-                        (this.state.stepTwo) &&
-                          <Redirect to="/select-products"/>
-                      }
-                </Route>
-                <Route path="/select-products">
-                      {
-                        (this.state.stepOne) && <Redirect to="/select-store"/>
-                      }
-                      {
-                        (this.state.stepTwo ) &&
-                          <ProductSearch
-                            setProductLocation={this.setProductLocation}
-                            selectedPlace={this.state.selectedPlace}
-                            goToStepOne={this.goToStepOne}
-                            goToStepThree={this.goToStepThree}
-                            addItemToGroceryList={this.addItemToGroceryList}
-                            groceryList={this.state.groceryList}
-                            lat={this.state.lat}
-                            lng={this.state.lng}
-                          />
-                      }
-                      {
-                      (this.state.stepThree) &&
-                        <Redirect to="/search-results"/>
-                      }
-                </Route>
-                <Route path="/search-results">
-                      {
-                        (this.state.stepOne) && <Redirect to="/select-store"/>
-                      }
-                      {
-                        (this.state.stepTwo) && <Redirect to="/select-products"/>
-                      }
-                      {
-                        (this.state.stepThree) &&
-                          <SearchResults
-                            groceryList={this.state.groceryList}
-                            removeItemFromShoppingList={this.removeItemFromShoppingList}
-                            clearShoppingList={this.clearShoppingList}
-                            goToStepOne={this.goToStepOne}
-                            goToStepTwo={this.goToStepTwo}
-                            selectedPlace={this.selectedPlace}
-                            productLocation={this.state.productLocation}
-                          />
-                      }
-                </Route>
-                <Route exact path="/">
-                  <Redirect to="/select-store" />
-                </Route>
-              </Switch>
-            </Router>
-
-          </MDBContainer>
-      );
+    const addItemToGroceryList = (item) => {
+      const newGroceryList = [ ...state.groceryList, item ];
+      dispatch({type: 'updateGroceryList', payload: newGroceryList })
     }
+
+    const removeItemFromShoppingList = (name) => {
+      const newGroceryList = state.groceryList.filter(element => element.name !== name);
+      dispatch({ type: 'updateGroceryList', payload: newGroceryList });
+    }
+
+    const clearShoppingList = () => {
+      dispatch({ type: 'updateGroceryList', payload: [] });
+    }
+
+    const setProductLocation = (location) => {
+      dispatch({ type: 'setProductLocation', payload: location })
+    }
+
+    const updateLocated = (located, lat, lng) => {
+      dispatch({ type : 'updateLocated', payload : { located, lat, lng }});
+    }
+
+    if (state.loading) {
+      return (
+        <Loading isVisible={state.loading} />
+      )
+    }
+
+    return (
+
+        !state.loading && <MDBContainer className="app-container text-center">
+
+          <Header />
+
+          {
+            (!state.located || !state.stepOne) && <Hero />
+          }
+
+          <Router>
+            <Switch>
+              <Route path="/select-store">
+                    <div className="store-selection-title-container">
+                      { !state.located &&
+                        <Fragment>
+                          <h2 className="store-selection-title store-selection-title-welcome">Welcome! </h2>
+                          <p>Start searching for your nearest grocery store here </p>
+                        </Fragment>
+                      }
+                      {
+                        state.located && <h2 className="store-selection-title store-selection-title-nearby">Stores nearby {state.postalCode}</h2>
+                      }
+                    </div>
+
+                    {
+                      state.stepOne &&
+                        <section className="google-map">
+                          <GoogleMap
+                            onStoreSelection={onStoreSelection}
+                            located={state.located}
+                            lat={state.lat}
+                            lng={state.lng}
+                            updateLocated={updateLocated}
+                            />
+                        </section>
+                    }
+                    {
+                      (state.stepTwo) &&
+                        <Redirect to="/select-products"/>
+                    }
+              </Route>
+              <Route path="/select-products">
+                    {
+                      (state.stepOne) && <Redirect to="/select-store"/>
+                    }
+                    {
+                      (state.stepTwo ) &&
+                        <ProductSearch
+                          setProductLocation={setProductLocation}
+                          selectedPlace={state.selectedPlace}
+                          goToStepOne={goToStepOne}
+                          goToStepThree={goToStepThree}
+                          addItemToGroceryList={addItemToGroceryList}
+                          groceryList={state.groceryList}
+                          lat={state.lat}
+                          lng={state.lng}
+                        />
+                    }
+                    {
+                    (state.stepThree) &&
+                      <Redirect to="/search-results"/>
+                    }
+              </Route>
+              <Route path="/search-results">
+                    {
+                      (state.stepOne) && <Redirect to="/select-store"/>
+                    }
+                    {
+                      (state.stepTwo) && <Redirect to="/select-products"/>
+                    }
+                    {
+                      (state.stepThree) &&
+                        <SearchResults
+                          groceryList={state.groceryList}
+                          removeItemFromShoppingList={removeItemFromShoppingList}
+                          clearShoppingList={clearShoppingList}
+                          goToStepOne={goToStepOne}
+                          goToStepTwo={goToStepTwo}
+                          selectedPlace={state.selectedPlace}
+                          productLocation={state.productLocation}
+                        />
+                    }
+              </Route>
+              <Route exact path="/">
+                <Redirect to="/select-store" />
+              </Route>
+            </Switch>
+          </Router>
+
+        </MDBContainer>
+    );
 }
 
 export default App;
