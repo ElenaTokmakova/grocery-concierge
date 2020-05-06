@@ -1,16 +1,13 @@
-import React, {Component, Fragment} from 'react';
+import React, {Fragment, useState} from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { MDBRow, MDBCol, MDBBtn } from "mdbreact";
 import ShoppingList from './ShoppingList';
 import SweetAlert from 'sweetalert2-react';
 import grocery_store_isle from "../assets/images/grocery_store_isle.png";
 
-class SearchResults extends Component {
-    state = {
-        show: false
-    }
-    render () {
-        const { productLocation, groceryList, removeItemFromShoppingList, clearShoppingList, goToStepOne, goToStepTwo } = this.props;
+const SearchResults = props => {
+    const [show, setShow] = useState(false);
+    const { productLocation, groceryList, removeItemFromShoppingList, clearShoppingList, goToStepOne, goToStepTwo } = props;
         return (
             <Fragment>
                 <div className="search-results-location"><p className="font-weight-bold">{productLocation}</p></div>
@@ -20,7 +17,7 @@ class SearchResults extends Component {
                     </MDBCol>
                     <MDBCol md="12" lg="6">
                         {
-                        this.props.groceryList.length > 0 && <ShoppingList
+                        props.groceryList.length > 0 && <ShoppingList
                                 groceryList={groceryList}
                                 removeItemFromShoppingList={removeItemFromShoppingList}
                                 clearShoppingList={clearShoppingList}
@@ -29,16 +26,16 @@ class SearchResults extends Component {
                     </MDBCol>
                 </MDBRow>
                 <MDBRow className="product-search-results--action-buttons">
-                    <MDBBtn className="back-to-search-button btn-orange-red" onClick={ () => this.setState({ show:true })}>
+                    <MDBBtn className="back-to-search-button btn-orange-red" onClick={ () => setShow(true)}>
                         Save this Map
                     </MDBBtn>
                     <SweetAlert
                         type="success"
                         confirmButtonColor="#a1bf63"
-                        show={this.state.show}
+                        show={show}
                         title="Success"
                         text="Your map has been saved!"
-                        onConfirm={() => this.setState({ show: false })}
+                        onConfirm={() => setShow(false)}
                     />
                     <Link to={{
                         pathname: '/select-products'
@@ -57,7 +54,6 @@ class SearchResults extends Component {
                 </MDBRow>
             </Fragment>
         )
-    }
 }
 
 export default withRouter(SearchResults);
