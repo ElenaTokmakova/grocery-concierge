@@ -64,7 +64,7 @@ const MapContainer = (props) => {
       type: ['grocery_or_supermarket']
     }, (results, status) => {
       if (status !== 'OK') return;
-      dispatch({ type: 'places', payload: results })
+      dispatch({ type: 'places', payload: results });
       const bounds = new google.maps.LatLngBounds();
       for (let i = 0, place; place = results[i]; i++) {
         bounds.extend(place.geometry.location);
