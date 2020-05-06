@@ -1,4 +1,4 @@
-import React, {Component, Fragment} from 'react';
+import React, {Fragment, useReducer} from 'react';
 import { MDBRow, MDBCol, MDBBtn } from "mdbreact";
 import { Map, Marker, Circle, GoogleApiWrapper } from 'google-maps-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -6,24 +6,48 @@ import StoreList from './StoreList';
 import GeocoderInput from './Geocoder';
 import InfoWindowEx from './InfoWindowEx';
 
-export class MapContainer extends Component {
+const initialState = {
+    showingInfoWindow: false,
+    activeMarker: {},
+    selectedPlace: {},
+    places: []
+};
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      showingInfoWindow: false,
-      activeMarker: {},
-      selectedPlace: {},
-      places: []
-    };
-  }
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'onMarkerClick':
+        return {
+            ...state,
+            showingInfoWindow: true,
+            selectedPlace: action.payload.place,
+            activeMarker: action.payload.marker
+        };
+    case 'onMapClick':
+        return {
+            ...state,
+            showingInfoWindow: false,
+            activeMarker: null
+        };
+    case 'places':
+        return {
+            ...state,
+            places: action.payload
+        };
+    default:
+        throw new Error();
+    }
+}
 
-  showCurrentLocation = () => {
+const MapContainer = (props) => {
+
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  const showCurrentLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(position => {
           const lat = position.coords.latitude;
           const lng = position.coords.longitude;
-          this.props.updateLocated(true, lat, lng);
+          props.updateLocated(true, lat, lng);
         }
       )
     } else {
@@ -31,7 +55,7 @@ export class MapContainer extends Component {
     }
   }
 
-  fetchPlaces = (mapProps, map) => {
+  const fetchPlaces = (mapProps, map) => {
     const {google} = mapProps;
     const service = new google.maps.places.PlacesService(map);
     service.nearbySearch({
@@ -40,7 +64,7 @@ export class MapContainer extends Component {
       type: ['grocery_or_supermarket']
     }, (results, status) => {
       if (status !== 'OK') return;
-      this.setState({ places: results });
+      dispatch({ type: 'places', payload: results })
       const bounds = new google.maps.LatLngBounds();
       for (let i = 0, place; place = results[i]; i++) {
         bounds.extend(place.geometry.location);
@@ -49,119 +73,105 @@ export class MapContainer extends Component {
     });
   }
 
-  onMarkerClick = (place, marker, e) => {
-    this.setState({
-      selectedPlace: place,
-      activeMarker: marker,
-      showingInfoWindow: true
-    });
+  const onMarkerClick = (place, marker, e) => {
+    dispatch({ type: 'onMarkerClick', payload: { place, marker } });
   }
 
-  onMapClicked = () => {
-    if (this.state.showingInfoWindow) {
-      this.setState({
-        showingInfoWindow: false,
-        activeMarker: null
-      })
+  const onMapClick = () => {
+    if (showingInfoWindow) {
+      dispatch({ type: 'onMapClick' });
     }
   };
 
-  updateCoords = (lat, lng) => {
-    this.props.updateLocated(true, lat, lng);
+  const updateCoords = (lat, lng) => {
+    props.updateLocated(true, lat, lng);
   }
 
-  onStoreSelection = (place) => {
-    this.props.onStoreSelection(place);
-  }
+  const coords = { lat: props.lat, lng: props.lng };
 
-  render() {
+  const mapProps = {
+    center: coords,
+    google: props.google,
+    onReady: fetchPlaces,
+    onClick: onMapClick,
+    onCenterChanged: fetchPlaces,
+    zoom: 14,
+    scrollwheel: true
+  };
 
-    const coords = { lat: this.props.lat, lng: this.props.lng };
+  return (
 
-    const mapProps = {
-      center: coords,
-      google: this.props.google,
-      onReady: this.fetchPlaces,
-      onClick: this.onMapClicked,
-      onCenterChanged: this.fetchPlaces,
-      zoom: 14,
-      scrollwheel: true
-    };
+    <Fragment>
 
-    return (
+      <MDBRow className="store-geocoder">
+        <MDBCol sm="12" md="6" className="offset-md-3" >
+          <GeocoderInput updateCoords={updateCoords}/>
+        </MDBCol>
+      </MDBRow>
 
-      <Fragment>
+      <MDBRow className="store-geolocation">
+        <MDBCol sm="12" md="6" className="offset-md-3" >
+              <MDBBtn className="btn-orange-red geolocation-button" onClick={showCurrentLocation} >
+                  <FontAwesomeIcon icon="map-marker"/> Locate Me
+              </MDBBtn>
+        </MDBCol>
+      </MDBRow>
 
-        <MDBRow className="store-geocoder">
-          <MDBCol sm="12" md="6" className="offset-md-3" >
-            <GeocoderInput updateCoords={this.updateCoords}/>
-          </MDBCol>
-        </MDBRow>
+      {
+        props.located &&
 
-        <MDBRow className="store-geolocation">
-          <MDBCol sm="12" md="6" className="offset-md-3" >
-                <MDBBtn className="btn-orange-red geolocation-button" onClick={this.showCurrentLocation} >
-                    <FontAwesomeIcon icon="map-marker"/> Locate Me
-                </MDBBtn>
-          </MDBCol>
-        </MDBRow>
+        <MDBRow className="store-search-results">
 
-        {
-          (this.props.located) &&
+        <MDBCol md="12" lg="5" className="store-search-results--store-list-container">
+          <StoreList stores={state.places} onStoreSelection={props.onStoreSelection}/>
+        </MDBCol>
 
-          <MDBRow className="store-search-results">
+        <MDBCol md="12" lg="7" className="store-search-results--map-container">
+          <Map className="google-map--map" style={{width: 700, height: 500, position: 'relative'}} {...mapProps}>
 
-          <MDBCol md="12" lg="5" className="store-search-results--store-list-container">
-            <StoreList stores={this.state.places} onStoreSelection={this.onStoreSelection}/>
-          </MDBCol>
+            <Circle
+                radius={1200}
+                center={coords}
+                strokeColor='transparent'
+                strokeOpacity={0}
+                strokeWeight={5}
+                fillColor='#FF0000'
+                fillOpacity={0.2}
+            />
 
-          <MDBCol md="12" lg="7" className="store-search-results--map-container">
-            <Map className="google-map--map" style={{width: 700, height: 500, position: 'relative'}} {...mapProps}>
+            {
+              state.places.length > 0 &&
+                state.places.map((place, index) => {
+                  const image = {
+                    url: place.icon,
+                    size: new google.maps.Size(71, 71),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(17, 34),
+                    scaledSize: new google.maps.Size(25, 25)
+                  };
+                  return (
+                    <Marker key={place.id} name={place.name} icon={image} position={place.geometry.location} onClick={onMarkerClick} />
+                  )
+                })
+            }
 
-              <Circle
-                  radius={1200}
-                  center={coords}
-                  strokeColor='transparent'
-                  strokeOpacity={0}
-                  strokeWeight={5}
-                  fillColor='#FF0000'
-                  fillOpacity={0.2}
-              />
+            <InfoWindowEx marker={state.activeMarker} visible={state.showingInfoWindow}>
+              <div>
+                <h5>{state.selectedPlace.name}</h5>
+                <MDBBtn className="btn-lighter-green" onClick={ () => props.onStoreSelection(state.selectedPlace)}>Find products</MDBBtn>
+              </div>
+          </InfoWindowEx>
 
-              {
-                this.state.places.length > 0 &&
-                  this.state.places.map((place, index) => {
-                    const image = {
-                      url: place.icon,
-                      size: new google.maps.Size(71, 71),
-                      origin: new google.maps.Point(0, 0),
-                      anchor: new google.maps.Point(17, 34),
-                      scaledSize: new google.maps.Size(25, 25)
-                    };
-                    return (
-                      <Marker key={place.id} name={place.name} icon={image} position={place.geometry.location} onClick={this.onMarkerClick} />
-                    )
-                  })
-              }
+          </Map>
+        </MDBCol>
 
-              <InfoWindowEx marker={this.state.activeMarker} visible={this.state.showingInfoWindow}>
-                  <div>
-                    <h5>{this.state.selectedPlace.name}</h5>
-                    <MDBBtn className="btn-lighter-green" onClick={this.onButtonClick} onClick={ () => this.props.onStoreSelection(this.state.selectedPlace)}>Find products</MDBBtn>
-                  </div>
-              </InfoWindowEx>
+      </MDBRow>
 
-            </Map>
-          </MDBCol>
+      }
 
-        </MDBRow>
+    </Fragment>
 
-        }
-
-      </Fragment>
-
-    );
-  }
+  );
 }
 
 export default GoogleApiWrapper({
