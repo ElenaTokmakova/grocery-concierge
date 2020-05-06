@@ -1,4 +1,5 @@
 import React from 'react';
+import logo from '../assets/images/logo.svg';
 
 const Header = () => {
 
@@ -7,7 +8,7 @@ const Header = () => {
             <div className="header--wrapper">
                 <div className="header--title">
                     <h1>
-                        <span className="header--title-green">Grocery</span> <span className="header--title-white">Concierge</span>
+                        <img src={logo} alt="Grocery Concierge Logo"/>
                     </h1>
                 </div>
                 <a className="header--account-link" href="#">Account</a>

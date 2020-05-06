@@ -33,7 +33,7 @@ module.exports = env => {
             ]
           },
           {
-            test: /\.(gif|png|jpe?g|svg)$/i,
+            test: /\.(gif|png|jpe?g)$/i,
             use: [
               {
                 loader: 'url-loader',
@@ -52,8 +52,11 @@ module.exports = env => {
           },
           {
             test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-            loader: "file-loader" // loader for Font Awesome fonts
+            loader: "file-loader", // loader for Font Awesome fonts
             // Instructs webpack to emit the required object as file and to return its public URL
+            options: {
+              name: 'images/[hash]-[name].[ext]',
+            }
           },
           {
             test: /\.(css|scss)$/,

@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { Link, withRouter } from 'react-router-dom';
 import { MDBRow, MDBCol, MDBBtn } from "mdbreact";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // a standalone build of socket.io-client is exposed automatically by the socket.io server
@@ -88,7 +89,7 @@ class App extends Component {
               component.props.addItemToGroceryList({ name: response.name, location: response.info });
             }
             this.props.setProductLocation(response.reply)
-            this.props.navigateToSearchResults();
+            this.props.goToStepThree();
           }
 
         });
@@ -187,9 +188,13 @@ class App extends Component {
             <MDBCol md="12" lg="4">
                 <MDBRow className="back-to-map-button-container justify-content-center">
                     <MDBCol sm="12">
-                        <MDBBtn className="back-to-map-button btn-lighter-green" onClick={this.props.navigateToMap}>
+                      <Link to={{
+                          pathname: '/select-store'
+                      }} onClick={this.props.goToStepOne}>
+                          <MDBBtn className="back-to-map-button btn-lighter-green">
                             <FontAwesomeIcon className="back-to-map-icon" icon="long-arrow-alt-left" /> Select another store
                         </MDBBtn>
+                      </Link>
                         <p className="product-search-subtitle voice-search">
                           <span className="font-weight-bold">Your selected store</span>
                           <span className="grocery-stores--store-name">{name}</span>
@@ -225,4 +230,4 @@ class App extends Component {
     }
 }
 
-export default App;
+export default withRouter(App);

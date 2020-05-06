@@ -1,0 +1,25 @@
+.product-search-results--action-buttons {
+    justify-content: center;
+    margin-top: 2rem;
+  }
+  .shopping-list-table {
+    th {
+      background-color: $concierge-green;
+      color: white;
+      font-weight: bold;
+    }
+  }
+
+  .voice-search-info-container {
+    @media (min-width: 576px) {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+    .card {width: 100%;
+    }
+  }
+  .clear-shopping-list-icon {
+    &:hover {
+      cursor: pointer;
+    }
+  }

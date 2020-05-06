@@ -4,7 +4,6 @@ import { Map, Marker, Circle, GoogleApiWrapper } from 'google-maps-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import StoreList from './StoreList';
 import GeocoderInput from './Geocoder';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import InfoWindowEx from './InfoWindowEx';
 
 export class MapContainer extends Component {
@@ -12,8 +11,6 @@ export class MapContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      lat: 43.643500,
-      lng: -79.393520,
       showingInfoWindow: false,
       activeMarker: {},
       selectedPlace: {},
@@ -26,11 +23,7 @@ export class MapContainer extends Component {
       navigator.geolocation.getCurrentPosition(position => {
           const lat = position.coords.latitude;
           const lng = position.coords.longitude;
-          this.setState({lat, lng}, () => {
-            // console.log("State: ", this.state)
-          })
-          this.props.hideHeroSection();
-          this.props.updateLocated(true);
+          this.props.updateLocated(true, lat, lng);
         }
       )
     } else {
@@ -74,11 +67,7 @@ export class MapContainer extends Component {
   };
 
   updateCoords = (lat, lng) => {
-    this.setState({lat, lng}, () => {
-        console.log("State: ", this.state)
-      })
-    this.props.hideHeroSection();
-    this.props.updateLocated(true);
+    this.props.updateLocated(true, lat, lng);
   }
 
   onStoreSelection = (place) => {
@@ -87,7 +76,7 @@ export class MapContainer extends Component {
 
   render() {
 
-    const coords = { lat: this.state.lat, lng: this.state.lng };
+    const coords = { lat: this.props.lat, lng: this.props.lng };
 
     const mapProps = {
       center: coords,
@@ -132,9 +121,6 @@ export class MapContainer extends Component {
               <Circle
                   radius={1200}
                   center={coords}
-                  onMouseover={() => console.log('mouseover')}
-                  onClick={() => console.log('click')}
-                  onMouseout={() => console.log('mouseout')}
                   strokeColor='transparent'
                   strokeOpacity={0}
                   strokeWeight={5}
