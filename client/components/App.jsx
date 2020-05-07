@@ -145,7 +145,7 @@ const App = () => {
 
     const addItemToGroceryList = (item) => {
       const newGroceryList = [ ...state.groceryList, item ];
-      dispatch({type: 'updateGroceryList', payload: newGroceryList })
+      dispatch({type: 'updateGroceryList', payload: newGroceryList });
     }
 
     const removeItemFromShoppingList = (name) => {
@@ -158,11 +158,10 @@ const App = () => {
     }
 
     const setProductLocation = (location) => {
-      dispatch({ type: 'setProductLocation', payload: location })
+      dispatch({ type: 'setProductLocation', payload: location });
     }
 
     const updateLocated = (located, lat, lng) => {
-      console.log("Update located in app", located, lat, lng)
       dispatch({ type : 'updateLocated', payload : { located, lat, lng }});
     }
 
@@ -193,7 +192,7 @@ const App = () => {
           <main className="main-content">
 
             {
-              (!state.located || !state.stepOne) && <Hero />
+              (!state.located || state.stepTwo) && <Hero />
             }
 
             <Router>
