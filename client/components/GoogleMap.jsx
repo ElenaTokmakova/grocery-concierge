@@ -127,7 +127,7 @@ const MapContainer = (props) => {
         </MDBCol>
 
         <MDBCol md="12" lg="7" className="store-search-results--map-container">
-          <Map className="google-map--map" style={{width: 700, height: 500, position: 'relative'}} {...mapProps}>
+          <Map className="store-selection-google-map--map" style={{width: 700, height: 500, position: 'relative'}} {...mapProps}>
 
             <Circle
                 radius={1200}

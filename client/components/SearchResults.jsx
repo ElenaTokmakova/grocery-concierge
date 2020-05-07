@@ -9,7 +9,7 @@ const SearchResults = props => {
     const [show, setShow] = useState(false);
     const { productLocation, groceryList, removeItemFromShoppingList, clearShoppingList, goToStepOne, goToStepTwo } = props;
         return (
-            <Fragment>
+            <section className="search-results-section">
                 <div className="search-results-location"><p className="font-weight-bold">{productLocation}</p></div>
                 <MDBRow className="product-search-results">
                     <MDBCol md="12" lg="6">
@@ -52,7 +52,7 @@ const SearchResults = props => {
                         </MDBBtn>
                     </Link>
                 </MDBRow>
-            </Fragment>
+            </section>
         )
 }
 

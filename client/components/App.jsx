@@ -34,7 +34,6 @@ const initialState = {
 };
 
 const reducer = (state, action) => {
-  console.log('State, action', state, action)
   switch (action.type) {
     case 'loading' :
       return {
@@ -165,89 +164,92 @@ const App = () => {
 
           <Header />
 
-          {
-            (!state.located || !state.stepOne) && <Hero />
-          }
+          <main className="main-content">
 
-          <Router>
-            <Switch>
-              <Route path="/select-store">
-                    <div className="store-selection-title-container">
-                      { !state.located &&
-                        <Fragment>
-                          <h2 className="store-selection-title store-selection-title-welcome">Welcome! </h2>
-                          <p>Start searching for your nearest grocery store here </p>
-                        </Fragment>
+            {
+              (!state.located || !state.stepOne) && <Hero />
+            }
+
+            <Router>
+              <Switch>
+                <Route path="/select-store">
+                      <section className="store-selection-title-container">
+                        { !state.located &&
+                          <Fragment>
+                            <h2 className="store-selection-title store-selection-title-welcome">Welcome! </h2>
+                            <p>Start searching for your nearest grocery store here </p>
+                          </Fragment>
+                        }
+                        {
+                          state.located && <h2 className="store-selection-title store-selection-title-nearby">Stores nearby {state.postalCode}</h2>
+                        }
+                      </section>
+                      {
+                        state.stepOne &&
+                          <section className="store-selection-google-map">
+                            <GoogleMap
+                              onStoreSelection={onStoreSelection}
+                              located={state.located}
+                              lat={state.lat}
+                              lng={state.lng}
+                              updateLocated={updateLocated}
+                              />
+                          </section>
                       }
                       {
-                        state.located && <h2 className="store-selection-title store-selection-title-nearby">Stores nearby {state.postalCode}</h2>
+                        (state.stepTwo) &&
+                          <Redirect to="/select-products"/>
                       }
-                    </div>
-
-                    {
-                      state.stepOne &&
-                        <section className="google-map">
-                          <GoogleMap
-                            onStoreSelection={onStoreSelection}
-                            located={state.located}
+                </Route>
+                <Route path="/select-products">
+                      {
+                        (state.stepOne) && <Redirect to="/select-store"/>
+                      }
+                      {
+                        (state.stepTwo ) &&
+                          <ProductSearch
+                            setProductLocation={setProductLocation}
+                            selectedPlace={state.selectedPlace}
+                            goToStepOne={goToStepOne}
+                            goToStepThree={goToStepThree}
+                            addItemToGroceryList={addItemToGroceryList}
+                            groceryList={state.groceryList}
                             lat={state.lat}
                             lng={state.lng}
-                            updateLocated={updateLocated}
-                            />
-                        </section>
-                    }
-                    {
-                      (state.stepTwo) &&
-                        <Redirect to="/select-products"/>
-                    }
-              </Route>
-              <Route path="/select-products">
-                    {
-                      (state.stepOne) && <Redirect to="/select-store"/>
-                    }
-                    {
-                      (state.stepTwo ) &&
-                        <ProductSearch
-                          setProductLocation={setProductLocation}
-                          selectedPlace={state.selectedPlace}
-                          goToStepOne={goToStepOne}
-                          goToStepThree={goToStepThree}
-                          addItemToGroceryList={addItemToGroceryList}
-                          groceryList={state.groceryList}
-                          lat={state.lat}
-                          lng={state.lng}
-                        />
-                    }
-                    {
-                    (state.stepThree) &&
-                      <Redirect to="/search-results"/>
-                    }
-              </Route>
-              <Route path="/search-results">
-                    {
-                      (state.stepOne) && <Redirect to="/select-store"/>
-                    }
-                    {
-                      (state.stepTwo) && <Redirect to="/select-products"/>
-                    }
-                    {
+                          />
+                      }
+                      {
                       (state.stepThree) &&
-                        <SearchResults
-                          groceryList={state.groceryList}
-                          removeItemFromShoppingList={removeItemFromShoppingList}
-                          clearShoppingList={clearShoppingList}
-                          goToStepOne={goToStepOne}
-                          goToStepTwo={goToStepTwo}
-                          selectedPlace={state.selectedPlace}
-                          productLocation={state.productLocation}
-                        />
-                    }
-              </Route>
-              <Route exact path="/">
-                <Redirect to="/select-store" />
-              </Route>
-            </Switch>
-          </Router>
+                        <Redirect to="/search-results"/>
+                      }
+                </Route>
+                <Route path="/search-results">
+                      {
+                        (state.stepOne) && <Redirect to="/select-store"/>
+                      }
+                      {
+                        (state.stepTwo) && <Redirect to="/select-products"/>
+                      }
+                      {
+                        (state.stepThree) &&
+                          <SearchResults
+                            groceryList={state.groceryList}
+                            removeItemFromShoppingList={removeItemFromShoppingList}
+                            clearShoppingList={clearShoppingList}
+                            goToStepOne={goToStepOne}
+                            goToStepTwo={goToStepTwo}
+                            selectedPlace={state.selectedPlace}
+                            productLocation={state.productLocation}
+                          />
+                      }
+                </Route>
+                <Route exact path="/">
+                  <Redirect to="/select-store" />
+                </Route>
+              </Switch>
+            </Router>
+
+          </main>
 
         </MDBContainer>
     );

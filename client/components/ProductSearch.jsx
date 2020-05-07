@@ -221,50 +221,52 @@ const ProductSearch = (props) => {
     }
 
     return (
-      <MDBRow className="product-search">
-          <MDBCol md="12" lg="4">
-          </MDBCol>
-          <MDBCol md="12" lg="4">
-              <MDBRow className="back-to-map-button-container justify-content-center">
-                  <MDBCol sm="12">
-                    <Link to={{
-                        pathname: '/select-store'
-                    }} onClick={props.goToStepOne}>
-                        <MDBBtn className="back-to-map-button btn-lighter-green">
-                          <FontAwesomeIcon className="back-to-map-icon" icon="long-arrow-alt-left" /> Select another store
-                      </MDBBtn>
-                    </Link>
-                      <p className="product-search-subtitle voice-search">
-                        <span className="font-weight-bold">Your selected store</span>
-                        <span className="grocery-stores--store-name">{name}</span>
-                        <span className="grocery-stores--store-address">{vicinity}</span>
-                        <span className="grocery-stores--google-map"><a href={map_link} target="_blank">Open Google Maps</a></span>
-                      </p>
-                      <hr className="hr-red"/>
-                  </MDBCol>
-              </MDBRow>
-              <MDBRow className="microphone-button-container justify-content-center">
-                  <MDBCol sm="12">
-                      <p className="font-weight-bold">What are you looking for?</p>
-                      <p className="microphone-anser-tip">
-                        { !state.listening ? 'Tap to answer' : 'I\'m listening!'}
-                      </p>
-                      <button className="microphone" onClick={toggleListen}>
-                          <FontAwesomeIcon icon="microphone" className="icon"/>
-                      </button>
-                  </MDBCol>
-              </MDBRow>
-              {/* <MDBRow className="voice-search-info-container justify-content-center">
-                  <div className="voice-search-info">
-                      <p><em className="output-you">{ state.outputYou }</em></p>
-                      <p><em className="output-bot">{ state.outputBot }</em></p>
-                  </div>
-                  <div className="info-display">{ state.infoDisplay }</div>
-              </MDBRow> */}
-          </MDBCol>
-          <MDBCol md="12" lg="4">
-          </MDBCol>
-      </MDBRow>
+      <section className="product-search-section">
+        <MDBRow className="product-search">
+            <MDBCol md="12" lg="4">
+            </MDBCol>
+            <MDBCol md="12" lg="4">
+                <MDBRow className="back-to-map-button-container justify-content-center">
+                    <MDBCol sm="12">
+                      <Link to={{
+                          pathname: '/select-store'
+                      }} onClick={props.goToStepOne}>
+                          <MDBBtn className="back-to-map-button btn-lighter-green">
+                            <FontAwesomeIcon className="back-to-map-icon" icon="long-arrow-alt-left" /> Select another store
+                        </MDBBtn>
+                      </Link>
+                        <p className="product-search-subtitle voice-search">
+                          <span className="font-weight-bold">Your selected store</span>
+                          <span className="grocery-stores--store-name">{name}</span>
+                          <span className="grocery-stores--store-address">{vicinity}</span>
+                          <span className="grocery-stores--google-map"><a href={map_link} target="_blank">Open Google Maps</a></span>
+                        </p>
+                        <hr className="hr-red"/>
+                    </MDBCol>
+                </MDBRow>
+                <MDBRow className="microphone-button-container justify-content-center">
+                    <MDBCol sm="12">
+                        <p className="font-weight-bold">What are you looking for?</p>
+                        <p className="microphone-anser-tip">
+                          { !state.listening ? 'Tap to answer' : 'I\'m listening!'}
+                        </p>
+                        <button className="microphone" onClick={toggleListen}>
+                            <FontAwesomeIcon icon="microphone" className="icon"/>
+                        </button>
+                    </MDBCol>
+                </MDBRow>
+                {/* <MDBRow className="voice-search-info-container justify-content-center">
+                    <div className="voice-search-info">
+                        <p><em className="output-you">{ state.outputYou }</em></p>
+                        <p><em className="output-bot">{ state.outputBot }</em></p>
+                    </div>
+                    <div className="info-display">{ state.infoDisplay }</div>
+                </MDBRow> */}
+            </MDBCol>
+            <MDBCol md="12" lg="4">
+            </MDBCol>
+        </MDBRow>
+      </section>
     );
 }
 
