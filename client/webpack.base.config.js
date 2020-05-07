@@ -59,7 +59,7 @@ module.exports = env => {
             loader: "file-loader", // loader for Font Awesome fonts
             // Instructs webpack to emit the required object as file and to return its public URL
             options: {
-              name: 'images/[hash]-[name].[ext]',
+              name: 'assets/icons/[hash]-[name].[ext]',
             }
           },
           {
