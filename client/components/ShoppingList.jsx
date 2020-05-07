@@ -33,8 +33,10 @@ const ShoppingList = props =>  {
             </MDBTable>
             {
                 props.groceryList.length > 0 &&
-                <Fragment>
-                    <button className="search-results-button button button-orange-red" onClick={ () => setShow(true)}>Save shopping list</button>
+                <div className="shopping-list-buttons-container">
+                    <button className="search-results-button button button-lighter-green" onClick={ () => setShow(true)}>
+                        <FontAwesomeIcon className="fa-icon" icon="cloud-upload-alt"/> Save shopping list
+                    </button>
                     <SweetAlert
                         type="success"
                         confirmButtonColor="#a1bf63"
@@ -43,8 +45,10 @@ const ShoppingList = props =>  {
                         text="Your shopping list has been saved!"
                         onConfirm={() => setShow(false)}
                     />
-                    <button className="search-results-button button button-lighter-green" onClick={props.clearShoppingList}>Clear shopping list</button>
-                </Fragment>
+                    <button className="search-results-button button button-lighter-green" onClick={props.clearShoppingList}>
+                        <FontAwesomeIcon className="fa-icon" icon="trash"/>  Clear shopping list
+                    </button>
+                </div>
             }
         </Fragment>
       );

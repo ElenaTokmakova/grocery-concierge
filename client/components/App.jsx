@@ -15,8 +15,8 @@ import ProductSearch from './ProductSearch';
 import SearchResults from './SearchResults';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faLongArrowAltLeft, faMicrophone, faAngleRight, faMapMarkerAlt, faBox, faEgg, faFish, faToiletPaper, faScroll, faTrash } from '@fortawesome/free-solid-svg-icons'
-library.add(faLongArrowAltLeft, faMicrophone, faAngleRight, faMapMarkerAlt, faBox, faEgg, faFish, faToiletPaper, faScroll, faTrash );
+import { faLongArrowAltLeft, faMicrophone, faAngleRight, faMapMarkerAlt, faBox, faEgg, faFish, faToiletPaper, faScroll, faTrash, faHeart, faQuestion, faSignOutAlt, faCloudUploadAlt } from '@fortawesome/free-solid-svg-icons'
+library.add(faLongArrowAltLeft, faMicrophone, faAngleRight, faMapMarkerAlt, faBox, faEgg, faFish, faToiletPaper, faScroll, faTrash, faHeart, faQuestion, faSignOutAlt, faCloudUploadAlt );
 
 const initialState = {
     loading: true,
