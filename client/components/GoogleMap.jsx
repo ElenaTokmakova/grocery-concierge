@@ -1,4 +1,5 @@
-import React, {Fragment, useReducer} from 'react';
+import React, {useReducer} from 'react';
+import { useHistory } from "react-router-dom";
 import { MDBRow, MDBCol } from "mdbreact";
 import { Map, Marker, Circle, GoogleApiWrapper } from 'google-maps-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -38,6 +39,8 @@ let longitude = null;
 const MapContainer = (props) => {
 
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  const history = useHistory();
 
   const showCurrentLocation = () => {
     if (navigator.geolocation) {
@@ -91,6 +94,10 @@ const MapContainer = (props) => {
     }
   };
 
+  const onNavigateToStepTwo = () => {
+    history.push("/select-products");
+  }
+
   const updateCoords = (lat, lng) => {
     props.updateLocated(true, lat, lng);
   }
@@ -109,7 +116,7 @@ const MapContainer = (props) => {
 
   return (
 
-    <Fragment>
+    <section className="store-selection-google-map">
 
       <MDBRow className="store-geocoder">
         <MDBCol sm="12" md="6" className="offset-md-3" >
@@ -166,7 +173,9 @@ const MapContainer = (props) => {
             <InfoWindowEx marker={state.activeMarker} visible={state.showingInfoWindow} selectedPlace={state.selectedPlace}>
               <div>
                 <h5>{state.selectedPlace.name}</h5>
-                <button className="button button-lighter-green" onClick={ () => props.onStoreSelection(state.selectedPlace)}>Find products</button>
+                <button className="button button-lighter-green" onClick={ () =>  { props.onStoreSelection(state.selectedPlace); onNavigateToStepTwo()}}>
+                    Find products
+                </button>
               </div>
           </InfoWindowEx>
 
@@ -177,8 +186,7 @@ const MapContainer = (props) => {
 
       }
 
-    </Fragment>
-
+  </section>
   );
 }
 

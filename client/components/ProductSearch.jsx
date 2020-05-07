@@ -1,5 +1,6 @@
 import React, { useReducer, useEffect } from 'react';
 import { Link, withRouter } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 import { MDBRow, MDBCol } from "mdbreact";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // a standalone build of socket.io-client is exposed automatically by the socket.io server
@@ -83,6 +84,8 @@ const ProductSearch = (props) => {
 
     const [state, dispatch] = useReducer(reducer, initialState);
 
+    const history = useHistory();
+
     const {name, id, vicinity} = props.selectedPlace;
     const map_link = `https://www.google.com/maps/search/?api=1&query_place_id=${id}&query=${vicinity}`;
     const url = DEV_URL + '/mapping';
@@ -135,6 +138,10 @@ const ProductSearch = (props) => {
       };
     }, [])
 
+    const onNavigateToStepThree = () => {
+      history.push("/search-results");
+    }
+
     const attachSocketListener = () => {
       socket.on('response', (response) => {
         console.log('Socket response', response);
@@ -151,6 +158,7 @@ const ProductSearch = (props) => {
           }
           props.setProductLocation(response.reply);
           props.goToStepThree();
+          onNavigateToStepThree();
         }
 
       });
