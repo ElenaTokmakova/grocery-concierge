@@ -105,11 +105,6 @@ const MapContainer = (props) => {
     history.push("/select-products");
   }
 
-  const updateCoords = (lat, lng) => {
-    console.log("Updating located")
-    props.updateLocated(true, lat, lng);
-  }
-
   const coords = { lat: props.lat, lng: props.lng };
 
   const mapProps = {
@@ -128,7 +123,7 @@ const MapContainer = (props) => {
 
       <MDBRow className="store-geocoder">
         <MDBCol sm="12" md="6" className="offset-md-3" >
-          <GeocoderInput updateCoords={updateCoords} setPostalCode={props.setPostalCode}/>
+          <GeocoderInput updateLocated={props.updateLocated} setPostalCode={props.setPostalCode}/>
         </MDBCol>
       </MDBRow>
 
