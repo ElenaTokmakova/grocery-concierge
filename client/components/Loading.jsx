@@ -1,6 +1,6 @@
 import React from 'react';
 import logo from '../assets/images/logo.svg';
-import {motion, AnimatePresence, useCycle} from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import useDebounced from './utilities/useDebounced';
 
 const Loading = ({ isVisible }) => {

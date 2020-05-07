@@ -1,5 +1,5 @@
 import React, {Fragment, useState} from 'react';
-import { MDBTable, MDBTableHead, MDBTableBody, MDBBtn } from "mdbreact";
+import { MDBTable, MDBTableHead, MDBTableBody } from "mdbreact";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import SweetAlert from 'sweetalert2-react';
 
@@ -34,7 +34,7 @@ const ShoppingList = props =>  {
             {
                 props.groceryList.length > 0 &&
                 <Fragment>
-                    <MDBBtn className="back-to-product-search-button btn-orange-red" onClick={ () => setShow(true)}>Save shopping list</MDBBtn>
+                    <button className="search-results-button button button-orange-red" onClick={ () => setShow(true)}>Save shopping list</button>
                     <SweetAlert
                         type="success"
                         confirmButtonColor="#a1bf63"
@@ -43,7 +43,7 @@ const ShoppingList = props =>  {
                         text="Your shopping list has been saved!"
                         onConfirm={() => setShow(false)}
                     />
-                    <MDBBtn className="back-to-product-search-button btn-lighter-green" onClick={props.clearShoppingList}>Clear shopping list</MDBBtn>
+                    <button className="search-results-button button button-lighter-green" onClick={props.clearShoppingList}>Clear shopping list</button>
                 </Fragment>
             }
         </Fragment>

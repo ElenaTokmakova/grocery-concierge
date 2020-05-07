@@ -1,6 +1,6 @@
 import React, { useReducer, useEffect } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { MDBRow, MDBCol, MDBBtn } from "mdbreact";
+import { MDBRow, MDBCol } from "mdbreact";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // a standalone build of socket.io-client is exposed automatically by the socket.io server
 import socketIOClient from "socket.io-client";
@@ -231,9 +231,9 @@ const ProductSearch = (props) => {
                       <Link to={{
                           pathname: '/select-store'
                       }} onClick={props.goToStepOne}>
-                          <MDBBtn className="back-to-map-button btn-lighter-green">
+                          <button className="back-to-map-button button button-lighter-green">
                             <FontAwesomeIcon className="back-to-map-icon" icon="long-arrow-alt-left" /> Select another store
-                        </MDBBtn>
+                        </button>
                       </Link>
                         <p className="product-search-subtitle voice-search">
                           <span className="font-weight-bold">Your selected store</span>

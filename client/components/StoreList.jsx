@@ -1,5 +1,5 @@
 import React from 'react';
-import { MDBListGroup, MDBListGroupItem, MDBBtn } from "mdbreact";
+import { MDBListGroup, MDBListGroupItem } from "mdbreact";
 
 const StoreList = props => {
 
@@ -17,7 +17,9 @@ const StoreList = props => {
                                     <span className="grocery-stores--store-address">{vicinity}</span>
                                     <span className="grocery-stores--google-map"><a href={map_link} target="_blank">Open Google Maps</a></span>
                                 </div>
-                                <MDBBtn className="grocery-stores--store-selection-button btn-lighter-green" onClick={() => props.onStoreSelection(store)}>Select this store</MDBBtn>
+                                <button className="grocery-stores--store-selection-button button button-lighter-green" onClick={() => props.onStoreSelection(store)}>
+                                    Select this store
+                                </button>
                             </div>
                         </MDBListGroupItem>
                     )

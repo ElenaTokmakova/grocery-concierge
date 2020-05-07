@@ -7,31 +7,45 @@ body {
     background-size: cover;
     color: #333;
   }
-  .btn {
-    background-color: white !important;
+  .button {
+    background-color: white;
     border: 2px solid;
     border-radius: 25px;
     box-shadow: none;
     font-size: 0.8rem;
     font-weight: bold;
+    outline: none;
     padding: 0.75rem;
     text-transform: none;
+    transition: all ease-in-out 0.3s;
+    &:active, &:focus, &:visited {
+      outline: none;
+    }
     &-lighter-green {
       color: $concierge-green;
       border-color: $concierge-green;
-      &:hover, &:active, &:focus, &:visited {
-        color: $concierge-green !important;
-        border-color: $concierge-green !important;
+      &:hover {
+        color: white;
+        background-color: $concierge-green;
+      }
+    }
+    &-lighter-green-fill {
+      color: white;
+      background-color: $concierge-green;
+      border-color: $concierge-green;
+      &:hover {
+        color: $concierge-green;
+        background-color: white;
+        border-color: $concierge-green;
       }
     }
     &-orange-red {
       color: $concierge-red;
-      background-color: white !important;
+      background-color: white;
       border-color: $concierge-red;
-      &:hover, &:active, &:focus, &:visited {
-        color: $concierge-red !important;
-        background-color: white !important;
-        border-color: $concierge-red !important;
+      &:hover {
+        color: white;
+        background-color: $concierge-red;
       }
     }
   }
@@ -42,4 +56,3 @@ body {
     padding-top: 1rem;
     padding-bottom: 2rem;
   }
-

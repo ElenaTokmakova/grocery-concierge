@@ -1,5 +1,5 @@
 import React, {Fragment, useReducer} from 'react';
-import { MDBRow, MDBCol, MDBBtn } from "mdbreact";
+import { MDBRow, MDBCol } from "mdbreact";
 import { Map, Marker, Circle, GoogleApiWrapper } from 'google-maps-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import StoreList from './StoreList';
@@ -111,9 +111,9 @@ const MapContainer = (props) => {
 
       <MDBRow className="store-geolocation">
         <MDBCol sm="12" md="6" className="offset-md-3" >
-              <MDBBtn className="btn-orange-red geolocation-button" onClick={showCurrentLocation} >
-                  <FontAwesomeIcon icon="map-marker"/> Locate Me
-              </MDBBtn>
+              <button className="button button-orange-red geolocation-button" onClick={showCurrentLocation} >
+                  <FontAwesomeIcon icon="map-marker-alt"/> Locate Me
+              </button>
         </MDBCol>
       </MDBRow>
 
@@ -158,7 +158,7 @@ const MapContainer = (props) => {
             <InfoWindowEx marker={state.activeMarker} visible={state.showingInfoWindow}>
               <div>
                 <h5>{state.selectedPlace.name}</h5>
-                <MDBBtn className="btn-lighter-green" onClick={ () => props.onStoreSelection(state.selectedPlace)}>Find products</MDBBtn>
+                <button className="button button-lighter-green" onClick={ () => props.onStoreSelection(state.selectedPlace)}>Find products</button>
               </div>
           </InfoWindowEx>
 

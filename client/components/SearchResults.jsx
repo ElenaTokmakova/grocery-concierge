@@ -1,6 +1,6 @@
-import React, {Fragment, useState} from 'react';
+import React, {useState} from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { MDBRow, MDBCol, MDBBtn } from "mdbreact";
+import { MDBRow, MDBCol } from "mdbreact";
 import ShoppingList from './ShoppingList';
 import SweetAlert from 'sweetalert2-react';
 import grocery_store_isle from "../assets/images/grocery_store_isle.png";
@@ -26,9 +26,9 @@ const SearchResults = props => {
                     </MDBCol>
                 </MDBRow>
                 <MDBRow className="product-search-results--action-buttons">
-                    <MDBBtn className="back-to-search-button btn-orange-red" onClick={ () => setShow(true)}>
+                    <button className="search-results-button button button-orange-red" onClick={ () => setShow(true)}>
                         Save this Map
-                    </MDBBtn>
+                    </button>
                     <SweetAlert
                         type="success"
                         confirmButtonColor="#a1bf63"
@@ -40,16 +40,16 @@ const SearchResults = props => {
                     <Link to={{
                         pathname: '/select-products'
                     }} onClick={goToStepTwo}>
-                        <MDBBtn className="back-to-search-button btn-lighter-green">
+                        <button className="search-results-button button button-lighter-green">
                             Ask another question
-                        </MDBBtn>
+                        </button>
                     </Link>
                     <Link to={{
                         pathname: '/select-store'
                     }} onClick={goToStepOne}>
-                        <MDBBtn className="back-to-search-button btn-orange-red">
+                        <button className="search-results-button button button-orange-red">
                             Exit the store
-                        </MDBBtn>
+                        </button>
                     </Link>
                 </MDBRow>
             </section>

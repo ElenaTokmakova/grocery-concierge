@@ -1,6 +1,10 @@
-.product-search-results--action-buttons {
-    justify-content: center;
+.search-results-section {
+  .product-search-results--action-buttons {
     margin-top: 2rem;
+    justify-content: center;
+  }
+  .search-results-button {
+    margin: 1rem;
   }
   .shopping-list-table {
     th {
@@ -9,7 +13,6 @@
       font-weight: bold;
     }
   }
-
   .voice-search-info-container {
     @media (min-width: 576px) {
       padding-left: 1rem;
@@ -23,3 +26,4 @@
       cursor: pointer;
     }
   }
+}
