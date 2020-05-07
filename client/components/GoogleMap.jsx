@@ -106,6 +106,7 @@ const MapContainer = (props) => {
   }
 
   const updateCoords = (lat, lng) => {
+    console.log("Updating located")
     props.updateLocated(true, lat, lng);
   }
 
@@ -127,7 +128,7 @@ const MapContainer = (props) => {
 
       <MDBRow className="store-geocoder">
         <MDBCol sm="12" md="6" className="offset-md-3" >
-          <GeocoderInput updateCoords={updateCoords}/>
+          <GeocoderInput updateCoords={updateCoords} setPostalCode={props.setPostalCode}/>
         </MDBCol>
       </MDBRow>
 

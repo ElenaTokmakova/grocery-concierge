@@ -19,7 +19,7 @@ import { faLongArrowAltLeft, faMicrophone, faAngleRight, faMapMarkerAlt, faBox, 
 library.add(faLongArrowAltLeft, faMicrophone, faAngleRight, faMapMarkerAlt, faBox, faEgg, faFish, faToiletPaper, faScroll, faTrash );
 
 const initialState = {
-  loading: true,
+    loading: true,
     selectedPlace: {},
     places: [],
     stepOne: true,
@@ -100,6 +100,11 @@ const reducer = (state, action) => {
         ...state,
         places: action.payload
       }
+    case 'setPostalCode' :
+      return {
+        ...state,
+        postalCode: action.payload
+      }
     case 'updateGroceryList' :
       return {
         ...state,
@@ -157,6 +162,7 @@ const App = () => {
     }
 
     const updateLocated = (located, lat, lng) => {
+      console.log("Update located in app", located, lat, lng)
       dispatch({ type : 'updateLocated', payload : { located, lat, lng }});
     }
 
@@ -165,7 +171,11 @@ const App = () => {
     }
 
     const updateNavigatedToStepOne = (payload) => {
-      dispatch({ type: 'updateNavigatedToStepOne', payload })
+      dispatch({ type: 'updateNavigatedToStepOne', payload });
+    }
+
+    const setPostalCode = (payload) => {
+      dispatch({ type: 'setPostalCode', payload });
     }
 
     if (state.loading) {
@@ -208,6 +218,7 @@ const App = () => {
                       updateLocated={updateLocated}
                       places={state.places}
                       setPlaces={setPlaces}
+                      setPostalCode={setPostalCode}
                       goToStepOne={goToStepOne}
                       navigatedToStepOne={state.navigatedToStepOne}
                       updateNavigatedToStepOne={updateNavigatedToStepOne}
