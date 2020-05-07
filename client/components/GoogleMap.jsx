@@ -9,8 +9,7 @@ import InfoWindowEx from './InfoWindowEx';
 const initialState = {
     showingInfoWindow: false,
     activeMarker: {},
-    selectedPlace: {},
-    places: []
+    selectedPlace: {}
 };
 
 const reducer = (state, action) => {
@@ -28,15 +27,13 @@ const reducer = (state, action) => {
             showingInfoWindow: false,
             activeMarker: null
         };
-    case 'places':
-        return {
-            ...state,
-            places: action.payload
-        };
     default:
         throw new Error();
     }
 }
+
+let latitude = null;
+let longitude = null;
 
 const MapContainer = (props) => {
 
@@ -56,21 +53,32 @@ const MapContainer = (props) => {
   }
 
   const fetchPlaces = (mapProps, map) => {
-    const {google} = mapProps;
-    const service = new google.maps.places.PlacesService(map);
-    service.nearbySearch({
-      location: mapProps.center,
-      radius: 1000,
-      type: ['grocery_or_supermarket']
-    }, (results, status) => {
-      if (status !== 'OK') return;
-      dispatch({ type: 'places', payload: results });
-      const bounds = new google.maps.LatLngBounds();
-      for (let i = 0, place; place = results[i]; i++) {
-        bounds.extend(place.geometry.location);
+    let changed = false;
+    if (mapProps.center.lat !== latitude || mapProps.center.lng !== longitude) {
+      changed = true;
+      if (!latitude && !longitude) {
+        latitude = mapProps.center.lat;
+        longitude = mapProps.center.lng;
       }
-      map.fitBounds(bounds);
-    });
+    }
+    if (changed || props.navigatedToStepOne) {
+      const {google} = mapProps;
+      const service = new google.maps.places.PlacesService(map);
+      service.nearbySearch({
+        location: mapProps.center,
+        radius: 1000,
+        type: ['grocery_or_supermarket']
+      }, (results, status) => {
+        if (status !== 'OK') return;
+        props.setPlaces(results);
+        const bounds = new google.maps.LatLngBounds();
+        for (let i = 0, place; place = results[i]; i++) {
+          bounds.extend(place.geometry.location);
+        }
+        map.fitBounds(bounds);
+      });
+      props.updateNavigatedToStepOne(false);
+    }
   }
 
   const onMarkerClick = (place, marker, e) => {
@@ -123,7 +131,7 @@ const MapContainer = (props) => {
         <MDBRow className="store-search-results">
 
         <MDBCol md="12" lg="5" className="store-search-results--store-list-container">
-          <StoreList stores={state.places} onStoreSelection={props.onStoreSelection}/>
+          <StoreList stores={props.places} onStoreSelection={props.onStoreSelection}/>
         </MDBCol>
 
         <MDBCol md="12" lg="7" className="store-search-results--map-container">
@@ -140,8 +148,8 @@ const MapContainer = (props) => {
             />
 
             {
-              state.places.length > 0 &&
-                state.places.map((place, index) => {
+              props.places.length > 0 &&
+                props.places.map((place, index) => {
                   const image = {
                     url: place.icon,
                     size: new google.maps.Size(71, 71),

@@ -21,9 +21,11 @@ library.add(faLongArrowAltLeft, faMicrophone, faAngleRight, faMapMarkerAlt, faBo
 const initialState = {
   loading: true,
     selectedPlace: {},
+    places: [],
     stepOne: true,
     stepTwo: false,
     stepThree: false,
+    navigatedToStepOne: false,
     postalCode: 'you',
     currentLocation: '',
     groceryList: [],
@@ -40,17 +42,13 @@ const reducer = (state, action) => {
         ...state,
         loading: action.payload
       }
-    case 'setStep':
-      return {
-          ...state,
-          ...action.payload
-      };
     case 'stepOne':
       return {
           ...state,
           stepOne: true,
           stepTwo: false,
           stepThree: false,
+          navigatedToStepOne: true,
           selectedPlace: {}
       };
     case 'stepTwo':
@@ -91,6 +89,16 @@ const reducer = (state, action) => {
         located: action.payload.located,
         lat: action.payload.lat,
         lng: action.payload.lng
+      }
+    case 'updateNavigatedToStepOne' :
+      return {
+        ...state,
+        navigatedToStepOne: action.payload
+      }
+    case 'setPlaces' :
+      return {
+        ...state,
+        places: action.payload
       }
     case 'updateGroceryList' :
       return {
@@ -152,6 +160,14 @@ const App = () => {
       dispatch({ type : 'updateLocated', payload : { located, lat, lng }});
     }
 
+    const setPlaces = (places) => {
+      dispatch({ type: 'setPlaces', payload: places });
+    }
+
+    const updateNavigatedToStepOne = () => {
+      dispatch({ type: 'updateNavigatedToStepOne', payload: false })
+    }
+
     if (state.loading) {
       return (
         <Loading isVisible={state.loading} />
@@ -193,6 +209,10 @@ const App = () => {
                               lat={state.lat}
                               lng={state.lng}
                               updateLocated={updateLocated}
+                              places={state.places}
+                              setPlaces={setPlaces}
+                              navigatedToStepOne={state.navigatedToStepOne}
+                              updateNavigatedToStepOne={updateNavigatedToStepOne}
                               />
                           </section>
                       }

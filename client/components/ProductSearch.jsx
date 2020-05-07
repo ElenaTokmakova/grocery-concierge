@@ -34,7 +34,6 @@ const initialState = {
 };
 
 const reducer = (state, action) => {
-  console.log('State, action', state, action)
   switch (action.type) {
     case 'products':
       return {
