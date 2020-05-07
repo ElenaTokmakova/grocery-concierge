@@ -87,6 +87,9 @@ const MapContainer = (props) => {
         }
         map.fitBounds(bounds);
       });
+      latitude = mapProps.center.lat;
+      longitude = mapProps.center.lng;
+      changed = false;
       props.updateNavigatedToStepOne(false);
     }
   }
