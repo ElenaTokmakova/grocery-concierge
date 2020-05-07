@@ -1,5 +1,5 @@
-import React, {useReducer} from 'react';
-import { useHistory } from "react-router-dom";
+import React, {useReducer, useEffect} from 'react';
+import { useHistory, useLocation } from "react-router-dom";
 import { MDBRow, MDBCol } from "mdbreact";
 import { Map, Marker, Circle, GoogleApiWrapper } from 'google-maps-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -41,6 +41,11 @@ const MapContainer = (props) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const history = useHistory();
+  const location = useLocation();
+
+  useEffect(() => {
+    console.log(location.pathname)
+  }, [location]);
 
   const showCurrentLocation = () => {
     if (navigator.geolocation) {

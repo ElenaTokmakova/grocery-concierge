@@ -164,8 +164,8 @@ const App = () => {
       dispatch({ type: 'setPlaces', payload: places });
     }
 
-    const updateNavigatedToStepOne = () => {
-      dispatch({ type: 'updateNavigatedToStepOne', payload: false })
+    const updateNavigatedToStepOne = (payload) => {
+      dispatch({ type: 'updateNavigatedToStepOne', payload })
     }
 
     if (state.loading) {
