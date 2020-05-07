@@ -1,64 +1,61 @@
-import React, {Component, Fragment} from 'react';
+import React, {useState} from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { MDBRow, MDBCol, MDBBtn } from "mdbreact";
+import { MDBRow, MDBCol } from "mdbreact";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ShoppingList from './ShoppingList';
 import SweetAlert from 'sweetalert2-react';
 import grocery_store_isle from "../assets/images/grocery_store_isle.png";
 
-class SearchResults extends Component {
-    state = {
-        show: false
-    }
-    render () {
-        const { selectedPlace, productLocation, groceryList, removeItemFromShoppingList, clearShoppingList, navigateToStore, navigateToMap } = this.props;
+const SearchResults = props => {
+    const [show, setShow] = useState(false);
+    const { productLocation, groceryList, removeItemFromShoppingList, clearShoppingList, goToStepOne, goToStepTwo } = props;
         return (
-            <Fragment>
-                <div class="search-results-location"><p className="font-weight-bold">{productLocation}</p></div>
+            <section className="search-results-section">
+                <div className="search-results-location"><p className="font-weight-bold">{productLocation}</p></div>
                 <MDBRow className="product-search-results">
                     <MDBCol md="12" lg="6">
                         <img className="image-grocery-isle img-fluid" src={grocery_store_isle} />
                     </MDBCol>
                     <MDBCol md="12" lg="6">
                         {
-                        this.props.groceryList.length > 0 && <ShoppingList
-                            groceryList={groceryList}
-                            removeItemFromShoppingList={removeItemFromShoppingList}
-                            clearShoppingList={clearShoppingList}
+                        props.groceryList.length > 0 && <ShoppingList
+                                groceryList={groceryList}
+                                removeItemFromShoppingList={removeItemFromShoppingList}
+                                clearShoppingList={clearShoppingList}
                             />
                         }
                     </MDBCol>
                 </MDBRow>
                 <MDBRow className="product-search-results--action-buttons">
-                    <MDBBtn className="back-to-search-button btn-orange-red" onClick={ () => this.setState({ show:true })}>
-                        Save this Map
-                    </MDBBtn>
+                    <p className="font-weight-bold w-100">Would you like to</p>
+                    <button className="search-results-button button button-orange-red" onClick={ () => setShow(true)}>
+                        <FontAwesomeIcon className="fa-icon" icon="heart"/> Save this Map
+                    </button>
                     <SweetAlert
                         type="success"
                         confirmButtonColor="#a1bf63"
-                        show={this.state.show}
+                        show={show}
                         title="Success"
                         text="Your map has been saved!"
-                        onConfirm={() => this.setState({ show: false })}
+                        onConfirm={() => setShow(false)}
                     />
                     <Link to={{
-                        pathname: '/select-products',
-                        state: {selectedPlace}
-                    }} onClick={navigateToStore}>
-                        <MDBBtn className="back-to-search-button btn-lighter-green">
-                            Ask another question
-                        </MDBBtn>
+                        pathname: '/select-products'
+                    }} onClick={goToStepTwo}>
+                        <button className="search-results-button button button-orange-red">
+                        <FontAwesomeIcon className="fa-icon" icon="question"/> Ask another question
+                        </button>
                     </Link>
                     <Link to={{
                         pathname: '/select-store'
-                    }} onClick={navigateToMap}>
-                        <MDBBtn className="back-to-search-button btn-orange-red">
-                            Exit the store
-                        </MDBBtn>
+                    }} onClick={goToStepOne}>
+                        <button className="search-results-button button button-orange-red">
+                            <FontAwesomeIcon className="fa-icon" icon="sign-out-alt"/> Exit the store
+                        </button>
                     </Link>
                 </MDBRow>
-            </Fragment>
+            </section>
         )
-    }
 }
 
 export default withRouter(SearchResults);

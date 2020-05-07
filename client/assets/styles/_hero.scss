@@ -1,0 +1,21 @@
+.hero-container {
+  margin: 1rem 0;
+  display: none;
+  @media (min-width: 992px) {
+    display: flex;
+  }
+  .product-search-subtitle {
+    color: $concierge-red;
+    font-weight: bold;
+  }
+  .concierge-image {
+    max-width: 250px;
+  }
+}
+
+.essential-products-wrapper {
+  display: none;
+  @media (min-width: 992px) {
+    display: block;
+  }
+}

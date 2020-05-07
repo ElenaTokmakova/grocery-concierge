@@ -1,11 +1,13 @@
-import React, {Component} from 'react';
+import React, { Fragment, useReducer, useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Redirect
 } from "react-router-dom";
-import { MDBContainer, MDBRow } from "mdbreact";
+import { MDBContainer } from "mdbreact";
+
+import Loading from './Loading';
 import Header from './Header';
 import Hero from './Hero';
 import GoogleMap from './GoogleMap';
@@ -13,170 +15,253 @@ import ProductSearch from './ProductSearch';
 import SearchResults from './SearchResults';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faLongArrowAltLeft, faMicrophone, faAngleRight, faMapMarker, faAppleAlt, faBacon, faBox, faBreadSlice, faCandyCane, faCarrot, faCheese, faCookie, faEgg, faFish, faHamburger, faHotdog, faLemon, faPepperHot, faPizzaSlice, faStroopwafel, faToiletPaper, faDrumSteelpan, faTrash, faScroll, faPumpMedical } from '@fortawesome/free-solid-svg-icons'
-// a standalone build of socket.io-client is exposed automatically by the socket.io server
-library.add(faLongArrowAltLeft, faMicrophone, faAngleRight, faMapMarker, faAppleAlt, faBacon, faBox, faBreadSlice, faCandyCane, faCarrot, faCheese, faCookie, faEgg, faFish, faHamburger, faHotdog, faLemon, faPepperHot, faPizzaSlice, faStroopwafel, faToiletPaper, faDrumSteelpan, faTrash, faScroll, faPumpMedical );
+import { faLongArrowAltLeft, faMicrophone, faAngleRight, faMapMarkerAlt, faBox, faEgg, faFish, faToiletPaper, faScroll, faTrash, faHeart, faQuestion, faSignOutAlt, faCloudUploadAlt } from '@fortawesome/free-solid-svg-icons'
+library.add(faLongArrowAltLeft, faMicrophone, faAngleRight, faMapMarkerAlt, faBox, faEgg, faFish, faToiletPaper, faScroll, faTrash, faHeart, faQuestion, faSignOutAlt, faCloudUploadAlt );
 
-class App extends Component {
+const initialState = {
+    loading: true,
+    selectedPlace: {},
+    places: [],
+    stepOne: true,
+    stepTwo: false,
+    stepThree: false,
+    navigatedToStepOne: false,
+    postalCode: 'you',
+    currentLocation: '',
+    groceryList: [],
+    productLocation: '',
+    located: false,
+    lat: 43.643500,
+    lng: -79.393520
+};
 
-    state = {
-      selectedPlace: {},
-      navigateToMap: true,
-      navigateToStore: false,
-      navigateToSearchResults: false,
-      postalCode: 'you',
-      currentLocation: '',
-      essentialProducts: [],
-      groceryList: [],
-      productLocation: '',
-      showHeroSection: true,
-      located: false
-    };
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'loading' :
+      return {
+        ...state,
+        loading: action.payload
+      }
+    case 'stepOne':
+      return {
+          ...state,
+          stepOne: true,
+          stepTwo: false,
+          stepThree: false,
+          navigatedToStepOne: true,
+          selectedPlace: {}
+      };
+    case 'stepTwo':
+      return {
+          ...state,
+          stepOne: false,
+          stepTwo: true,
+          stepThree: false
+      };
+    case 'stepThree':
+      return {
+          ...state,
+          stepOne: false,
+          stepTwo: false,
+          stepThree: true
+      };
+    case 'products':
+      return {
+          ...state,
+          products: action.payload
+      };
+    case 'storeSelection':
+      return {
+          ...state,
+          stepOne: false,
+          stepTwo: true,
+          stepThree: false,
+          selectedPlace: action.payload
+      };
+    case 'setProductLocation':
+      return {
+        ...state,
+        productLocation: action.payload
+      }
+    case 'updateLocated' :
+      return {
+        ...state,
+        located: action.payload.located,
+        lat: action.payload.lat,
+        lng: action.payload.lng
+      }
+    case 'updateNavigatedToStepOne' :
+      return {
+        ...state,
+        navigatedToStepOne: action.payload
+      }
+    case 'setPlaces' :
+      return {
+        ...state,
+        places: action.payload
+      }
+    case 'setPostalCode' :
+      return {
+        ...state,
+        postalCode: action.payload
+      }
+    case 'updateGroceryList' :
+      return {
+        ...state,
+        groceryList: action.payload
+      }
+    default:
+        throw new Error();
+    }
+}
 
-    onStoreSelection = (selectedPlace) => {
-      this.setState({
-        navigateToMap: false,
-        navigateToStore: true,
-        navigateToSearchResults: false,
-        selectedPlace
-      }, () => {
-        // console.log("State: ", this.state)
-      });
+
+const App = () => {
+
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+    useEffect(() => {
+      setTimeout( () => dispatch({ type: 'loading', payload: false }), 1500 )
+    }, []);
+
+    const onStoreSelection = (selectedPlace) => {
+        dispatch({ type: 'storeSelection', payload: selectedPlace });
+      }
+
+    const goToStepOne = () => {
+        console.log("Going to step one");
+        dispatch({ type: 'stepOne' });
+      }
+
+    const goToStepTwo = () => {
+        console.log("Going to step two");
+        dispatch({ type: 'stepTwo' });
+      }
+
+    const goToStepThree = () => {
+        console.log('Going to step three');
+        dispatch({ type: 'stepThree' });
+      }
+
+    const addItemToGroceryList = (item) => {
+      const newGroceryList = [ ...state.groceryList, item ];
+      dispatch({type: 'updateGroceryList', payload: newGroceryList });
     }
 
-    navigateToMap = () => {
-      this.setState({
-        navigateToMap: true,
-        navigateToStore: false,
-        navigateToSearchResults: false,
-        selectedPlace: {}
-      })
+    const removeItemFromShoppingList = (name) => {
+      const newGroceryList = state.groceryList.filter(element => element.name !== name);
+      dispatch({ type: 'updateGroceryList', payload: newGroceryList });
     }
 
-    navigateToStore = () => {
-      this.setState({
-        navigateToMap: false,
-        navigateToStore: true,
-        navigateToSearchResults: false,
-      })
+    const clearShoppingList = () => {
+      dispatch({ type: 'updateGroceryList', payload: [] });
     }
 
-    navigateToSearchResults = () => {
-      this.setState({
-        navigateToMap: false,
-        navigateToStore: false,
-        navigateToSearchResults: true
-      })
+    const setProductLocation = (location) => {
+      dispatch({ type: 'setProductLocation', payload: location });
     }
 
-    addItemToGroceryList = (item) => {
-      this.setState({
-        groceryList: [ ...this.state.groceryList, item ]
-      })
+    const updateLocated = (located, lat, lng) => {
+      dispatch({ type : 'updateLocated', payload : { located, lat, lng }});
     }
 
-    removeItemFromShoppingList = (name) => {
-      const newGroceryList = this.state.groceryList.filter(element => element.name !== name);
-      this.setState({
-        groceryList : newGroceryList
-      })
+    const setPlaces = (places) => {
+      dispatch({ type: 'setPlaces', payload: places });
     }
 
-    clearShoppingList = () => {
-      this.setState({
-          groceryList: []
-      })
+    const updateNavigatedToStepOne = (payload) => {
+      dispatch({ type: 'updateNavigatedToStepOne', payload });
     }
 
-    setProductLocation = (location) => {
-      this.setState({ productLocation: location })
+    const setPostalCode = (payload) => {
+      dispatch({ type: 'setPostalCode', payload });
     }
 
-    hideHeroSection = () => {
-      this.setState({ showHeroSection: false })
+    if (state.loading) {
+      return (
+        <Loading isVisible={state.loading} />
+      )
     }
 
-    updateLocated = (located) => {
-      this.setState({ located })
-    }
+    return (
 
-    render() {
-       return (
-        <MDBContainer className="app-container text-center">
+        !state.loading && <MDBContainer className="app-container text-center">
 
           <Header />
 
-          {
-            (this.state.showHeroSection || !this.state.navigateToMap) && <Hero />
-          }
+          <main className="main-content">
 
-          <Router>
-            <Switch>
-              <Route path="/select-store">
-                    <h2 className="store-selection-title">Stores nearby {this.state.postalCode}</h2>
-                    {
-                      (this.state.navigateToMap && !this.state.navigateToStore && !this.state.navigateToSearchResults) &&
-                        <section className="google-map">
-                          <GoogleMap onStoreSelection={this.onStoreSelection} hideHeroSection={this.hideHeroSection} located={this.state.located} updateLocated={this.updateLocated}/>
-                        </section>
+            {
+              (!state.located || state.stepTwo) && <Hero />
+            }
+
+            <Router>
+              <Switch>
+                <Route path="/select-store">
+                  <section className="store-selection-title-container">
+                    { !state.located &&
+                      <Fragment>
+                        <h2 className="store-selection-title store-selection-title-welcome">Welcome! </h2>
+                        <p>Start searching for your nearest grocery store here </p>
+                      </Fragment>
                     }
                     {
-                      (!this.state.navigateToMap) &&
-                        <Redirect to="/select-products"/>
+                      state.located && <h2 className="store-selection-title store-selection-title-nearby">Stores nearby {state.postalCode}</h2>
                     }
-              </Route>
-              <Route path="/select-products">
-                    {
-                      (this.state.navigateToMap && !this.state.navigateToStore && !this.state.navigateToSearchResults) &&
-                        <Redirect to="/select-store"/>
-                    }
-                    {
-                      (!this.state.navigateToMap && this.state.navigateToStore && !this.state.navigateToSearchResults ) &&
-                        <ProductSearch
-                          setProductLocation={this.setProductLocation}
-                          selectedPlace={this.state.selectedPlace}
-                          navigateToMap={this.navigateToMap}
-                          navigateToSearchResults={this.navigateToSearchResults}
-                          addItemToGroceryList={this.addItemToGroceryList}
-                          groceryList={this.state.groceryList}
-                        />
-                    }
-                    {
-                    (!this.state.navigateToMap && !this.state.navigateToStore && this.state.navigateToSearchResults) &&
-                      <Redirect to="/search-results"/>
-                    }
-              </Route>
-              <Route path="/search-results">
-                    {
-                      (this.state.navigateToMap && !this.state.navigateToStore && !this.state.navigateToSearchResults) &&
-                        <Redirect to="/select-store"/>
-                    }
-                    {
-                      (!this.state.navigateToMap && this.state.navigateToStore && !this.state.navigateToSearchResults) &&
-                        <Redirect to="/select-products"/>
-                    }
-                    {
-                      (!this.state.navigateToMap && !this.state.navigateToStore && this.state.navigateToSearchResults) &&
-                        <SearchResults
-                          groceryList={this.state.groceryList}
-                          removeItemFromShoppingList={this.removeItemFromShoppingList}
-                          clearShoppingList={this.clearShoppingList}
-                          navigateToStore={this.navigateToStore}
-                          navigateToMap={this.navigateToMap}
-                          selectedPlace={this.selectedPlace}
-                          productLocation={this.state.productLocation}
-                        />
-                    }
-              </Route>
-              <Route exact path="/">
-                <Redirect to="/select-store" />
-              </Route>
-            </Switch>
-          </Router>
+                  </section>
+                  <GoogleMap
+                      onStoreSelection={onStoreSelection}
+                      located={state.located}
+                      lat={state.lat}
+                      lng={state.lng}
+                      updateLocated={updateLocated}
+                      places={state.places}
+                      setPlaces={setPlaces}
+                      setPostalCode={setPostalCode}
+                      goToStepOne={goToStepOne}
+                      navigatedToStepOne={state.navigatedToStepOne}
+                      updateNavigatedToStepOne={updateNavigatedToStepOne}
+                    />
+                </Route>
+                <Route path="/select-products">
+                {
+                  Object.keys(state.selectedPlace).length === 0 ? <Redirect to="/select-store" /> :
+                    <ProductSearch
+                          setProductLocation={setProductLocation}
+                          selectedPlace={state.selectedPlace}
+                          goToStepOne={goToStepOne}
+                          goToStepThree={goToStepThree}
+                          addItemToGroceryList={addItemToGroceryList}
+                          groceryList={state.groceryList}
+                          lat={state.lat}
+                          lng={state.lng}
+                      />
+                }
+                </Route>
+                <Route path="/search-results">
+                {
+                  Object.keys(state.selectedPlace).length === 0 ? <Redirect to="/select-store" /> :
+                    <SearchResults
+                          groceryList={state.groceryList}
+                          removeItemFromShoppingList={removeItemFromShoppingList}
+                          clearShoppingList={clearShoppingList}
+                          goToStepOne={goToStepOne}
+                          goToStepTwo={goToStepTwo}
+                          selectedPlace={state.selectedPlace}
+                          productLocation={state.productLocation}
+                      />
+                }
+                </Route>
+                <Route exact path="/">
+                  <Redirect to="/select-store" />
+                </Route>
+              </Switch>
+            </Router>
+
+          </main>
 
         </MDBContainer>
-      );
-    }
+    );
 }
 
 export default App;

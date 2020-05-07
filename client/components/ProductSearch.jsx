@@ -1,5 +1,7 @@
-import React, {Component} from 'react';
-import { MDBRow, MDBCol, MDBBtn } from "mdbreact";
+import React, { useReducer, useEffect } from 'react';
+import { Link, withRouter } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
+import { MDBRow, MDBCol } from "mdbreact";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // a standalone build of socket.io-client is exposed automatically by the socket.io server
 import socketIOClient from "socket.io-client";
@@ -24,96 +26,155 @@ recognition.interimResults = false;
 recognition.maxAlternatives = 1;
 recognition.lang = 'en-US';
 
-class App extends Component {
+const initialState = {
+    products: [],
+    listening: false,
+    outputYou: '',
+    outputBot: '',
+    infoDisplay: ''
+};
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            products: [],
-            product_names: [],
-            listening: false,
-            outputYou: '',
-            outputBot: '',
-            infoDisplay: ''
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'products':
+      return {
+          ...state,
+          products: action.payload
+      };
+    case 'socketResponse':
+      return {
+          ...state,
+          listening: false,
+          outputBot: action.payload.reply,
+          infoDisplay: action.payload.location
+      };
+    case 'toggleListen':
+      return {
+          ...state,
+          listening: action.payload
+      };
+    case 'stopListening':
+      return {
+          ...state,
+          listening: false
+      };
+    case 'speechStart':
+      return {
+          ...state,
+          outputBot: '',
+          outputYou: '',
+          infoDisplay: ''
+      };
+    case 'outputYou':
+      return {
+          ...state,
+          outputYou: action.payload
+      };
+    case 'outputBotError':
+      return {
+          ...state,
+          outputBot: action.payload
+      };
+    default:
+        throw new Error();
+    }
+}
+
+const ProductSearch = (props) => {
+
+    const [state, dispatch] = useReducer(reducer, initialState);
+
+    const history = useHistory();
+
+    const {name, id, vicinity} = props.selectedPlace;
+    const map_link = `https://www.google.com/maps/search/?api=1&query_place_id=${id}&query=${vicinity}`;
+    const url = DEV_URL + '/mapping';
+
+    // function annotated with async returns an implicit promise
+    // an effect hook should return nothing or a clean up function
+    // you can call an async function inside an effect
+
+    useEffect(() => {
+
+        // Set up a cancellation source
+        let source = axios.CancelToken.source();
+
+        const fetchData = async () => {
+            try {
+                const result = await axios(url, {
+                    // Assign the source.token to this request
+                    cancelToken: source.token
+                });
+                dispatch({ type: 'products', payload: result.data });
+            } catch(error) {
+                // Is this error because we cancelled it?
+                if (axios.isCancel(error)) {
+                    console.log(`Call for essential products was cancelled`);
+                } else {
+                    setShow(true);
+                }
+            }
         };
+
+        fetchData();
+
+        return () => {
+            // Let's cancel the request on effect cleanup
+            source.cancel();
+        };
+
+      },
+      [url]
+    );
+
+    useEffect(() => {
+      handleListen();
+    }, [state.listening]);
+
+    useEffect(() => {
+      attachSocketListener();
+      return () => {
+        socket.off();
+      };
+    }, [])
+
+    const onNavigateToStepThree = () => {
+      history.push("/search-results");
     }
 
-    componentDidMount(){
+    const attachSocketListener = () => {
+      socket.on('response', (response) => {
+        console.log('Socket response', response);
+        synthVoice(response.reply);
 
-        // cancel previous request
-        if (typeof this._source != typeof undefined) {
-          this._source.cancel('Operation canceled due to new request');
-        }
+        if(response.reply == '') response.reply = '(No answer...)';
 
-        // save the new request for cancellation
-        this._source = axios.CancelToken.source();
+        dispatch({ type: 'socketResponse', payload: { reply: response.reply, location: response.location } });
 
-        axios.get(DEV_URL + '/mapping', {
-            // cancel token used by axios
-            cancelToken: this._source.token
-          })
-          .then(data => {
-              const productNames = data.data.map(element => element.name);
-              this.setState({
-                  products: data.data,
-                  product_names: productNames
-              })
-        }
-          )
-          .catch(error => {
-            if(axios.isCancel(error)){
-              console.log('Request is canceled', error);
-            } else {
-              console.log(error);
-            }
-          });
-
-        const component = this;
-        // listening for search result from the server
-        socket.on('response', (response) => {
-          console.log('Socket response', response);
-          component.synthVoice(response.reply);
-
-          if(response.reply == '') response.reply = '(No answer...)';
-
-          component.setState({
-              listening: false,
-              outputBot: response.reply,
-              infoDisplay: response.location
-          })
-
-          if (response.type === 'where') {
-            const includes = component.props.groceryList.map(element => element.name).includes(response.name);
-            if (!includes) {
-              component.props.addItemToGroceryList({ name: response.name, location: response.info });
-            }
-            this.props.setProductLocation(response.reply)
-            this.props.navigateToSearchResults();
+        if (response.type === 'where') {
+          const includes = props.groceryList.map(element => element.name).includes(response.name);
+          if (!includes) {
+            props.addItemToGroceryList({ name: response.name, location: response.info });
           }
+          props.setProductLocation(response.reply);
+          props.goToStepThree();
+          onNavigateToStepThree();
+        }
 
-        });
-    }
-
-    // Invoked right before React unmounts and destroys the component
-    componentWillUnmount() {
-      socket.off();
-      if (this._source) {
-          this._source.cancel('Operation canceled due to component unmounting');
-      }
+      });
     }
 
     // turn speech recognition on and off
-    toggleListen = () => {
-      this.setState({
-        listening: !this.state.listening
-      }, this.handleListen)
+    const toggleListen = () => {
+      const listening = !state.listening;
+      dispatch({ type: 'toggleListen', payload: listening});
     }
 
     // handle all of the speech recognition logic
-    handleListen = () => {
-      console.log('Listening?', this.state.listening);
+    const handleListen = () => {
+      console.log('Listening?', state.listening);
 
-      if (this.state.listening) {
+      if (state.listening) {
           recognition.start();
           // recognition.onend = () => {
           //   console.log("Continue listening...");
@@ -132,11 +193,7 @@ class App extends Component {
 
       recognition.onspeechstart = () => {
         console.log('Speech has been detected.');
-        this.setState({
-          outputYou: '',
-          outputBot: '',
-          infoDisplay: ''
-        });
+        dispatch({ type: 'speechStart' })
       }
 
       recognition.onresult = (e) => {
@@ -144,32 +201,25 @@ class App extends Component {
 
         const last = e.results.length - 1;
         const text = e.results[last][0].transcript;
-
-        console.log("Text", text)
-
-        this.setState({
-          outputYou: text
-        })
-
+        console.log("Text", text);
         console.log('Confidence: ' + e.results[0][0].confidence);
-
         socket.emit('customer query', text);
+        dispatch({ type: 'outputYou', payload: text });
       }
 
       recognition.onspeechend = () => {
         console.log('Speech has ended.');
-        this.setState({ listening: false })
+        dispatch({ type: 'stopListening' });
       }
 
       recognition.onerror = e => {
-        this.setState({
-          outputBot : 'Error: ' + e.error
-        })
+        console.log('Recognition error', e.error)
+        dispatch({ type: 'outputBotError', payload: e.error });
       }
 
     }
 
-    synthVoice = (text) => {
+    const synthVoice = (text) => {
         console.log("Speech synth", text);
         const synth = window.speechSynthesis;
         const utterance = new SpeechSynthesisUtterance();
@@ -177,19 +227,21 @@ class App extends Component {
         synth.speak(utterance);
     }
 
-    render() {
-      const {name, id, vicinity} = this.props.selectedPlace;
-      const map_link = `https://www.google.com/maps/search/?api=1&query_place_id=${id}&query=${vicinity}`;
-      return (
+    return (
+      <section className="product-search-section">
         <MDBRow className="product-search">
             <MDBCol md="12" lg="4">
             </MDBCol>
             <MDBCol md="12" lg="4">
                 <MDBRow className="back-to-map-button-container justify-content-center">
                     <MDBCol sm="12">
-                        <MDBBtn className="back-to-map-button btn-lighter-green" onClick={this.props.navigateToMap}>
+                      <Link to={{
+                          pathname: '/select-store'
+                      }} onClick={props.goToStepOne}>
+                          <button className="back-to-map-button button button-lighter-green">
                             <FontAwesomeIcon className="back-to-map-icon" icon="long-arrow-alt-left" /> Select another store
-                        </MDBBtn>
+                        </button>
+                      </Link>
                         <p className="product-search-subtitle voice-search">
                           <span className="font-weight-bold">Your selected store</span>
                           <span className="grocery-stores--store-name">{name}</span>
@@ -203,26 +255,26 @@ class App extends Component {
                     <MDBCol sm="12">
                         <p className="font-weight-bold">What are you looking for?</p>
                         <p className="microphone-anser-tip">
-                          { !this.state.listening ? 'Tap to answer' : 'I\'m listening!'}
+                          { !state.listening ? 'Tap to answer' : 'I\'m listening!'}
                         </p>
-                        <button className="microphone" onClick={this.toggleListen}>
+                        <button className="microphone" onClick={toggleListen}>
                             <FontAwesomeIcon icon="microphone" className="icon"/>
                         </button>
                     </MDBCol>
                 </MDBRow>
                 {/* <MDBRow className="voice-search-info-container justify-content-center">
                     <div className="voice-search-info">
-                        <p><em className="output-you">{ this.state.outputYou }</em></p>
-                        <p><em className="output-bot">{ this.state.outputBot }</em></p>
+                        <p><em className="output-you">{ state.outputYou }</em></p>
+                        <p><em className="output-bot">{ state.outputBot }</em></p>
                     </div>
-                    <div className="info-display">{ this.state.infoDisplay }</div>
+                    <div className="info-display">{ state.infoDisplay }</div>
                 </MDBRow> */}
             </MDBCol>
             <MDBCol md="12" lg="4">
             </MDBCol>
         </MDBRow>
-      );
-    }
+      </section>
+    );
 }
 
-export default App;
+export default withRouter(ProductSearch);
