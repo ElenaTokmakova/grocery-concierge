@@ -1,24 +1,27 @@
-import React, {Component} from 'react';
+import React, { useEffect, useRef } from 'react';
 import {InfoWindow} from 'google-maps-react';
 import ReactDOM from 'react-dom';
-export default class InfoWindowEx extends Component {
-    constructor(props) {
-      super(props);
-      this.infoWindowRef = React.createRef();
-      this.contentElement = document.createElement(`div`);
-    }
 
-    componentDidUpdate(prevProps) {
-      if (this.props.children !== prevProps.children) {
-        ReactDOM.render(
-          React.Children.only(this.props.children),
-          this.contentElement
-        );
-        this.infoWindowRef.current.infowindow.setContent(this.contentElement);
-      }
-    }
+const InfoWindowEx = (props) => {
+  const infoWindowRef = useRef(null);
+  const contentElement = document.createElement(`div`);
 
-    render() {
-      return <InfoWindow ref={this.infoWindowRef} {...this.props} />;
-    }
-  }
+  const { marker, visible, selectedPlace, children } = props;
+
+  useEffect( () => {
+      ReactDOM.render(
+        React.Children.only(children),
+        contentElement
+      );
+      infoWindowRef.current.infowindow.setContent(contentElement);
+      },
+    [marker, visible, selectedPlace],
+  );
+
+  return (
+    <InfoWindow ref={infoWindowRef} {...props} />
+  )
+
+}
+
+export default InfoWindowEx;

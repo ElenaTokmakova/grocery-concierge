@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link, withRouter } from 'react-router-dom';
 import { MDBListGroup, MDBListGroupItem } from "mdbreact";
 
 const StoreList = props => {
@@ -17,9 +18,13 @@ const StoreList = props => {
                                     <span className="grocery-stores--store-address">{vicinity}</span>
                                     <span className="grocery-stores--google-map"><a href={map_link} target="_blank">Open Google Maps</a></span>
                                 </div>
-                                <button className="grocery-stores--store-selection-button button button-lighter-green" onClick={() => props.onStoreSelection(store)}>
-                                    Select this store
-                                </button>
+                                <Link to={{
+                                    pathname: '/select-products'
+                                }} onClick={() => props.onStoreSelection(store)} >
+                                    <button className="grocery-stores--store-selection-button button button-lighter-green" >
+                                        Select this store
+                                    </button>
+                                </Link>
                             </div>
                         </MDBListGroupItem>
                     )
@@ -29,4 +34,4 @@ const StoreList = props => {
     )
 }
 
-export default StoreList;
+export default withRouter(StoreList);

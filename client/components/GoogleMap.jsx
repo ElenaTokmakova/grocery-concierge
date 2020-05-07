@@ -163,7 +163,7 @@ const MapContainer = (props) => {
                 })
             }
 
-            <InfoWindowEx marker={state.activeMarker} visible={state.showingInfoWindow}>
+            <InfoWindowEx marker={state.activeMarker} visible={state.showingInfoWindow} selectedPlace={state.selectedPlace}>
               <div>
                 <h5>{state.selectedPlace.name}</h5>
                 <button className="button button-lighter-green" onClick={ () => props.onStoreSelection(state.selectedPlace)}>Find products</button>
