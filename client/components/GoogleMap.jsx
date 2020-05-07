@@ -44,7 +44,9 @@ const MapContainer = (props) => {
   const location = useLocation();
 
   useEffect(() => {
-    console.log(location.pathname)
+    // location changed to step one
+    props.updateNavigatedToStepOne(true);
+    props.goToStepOne();
   }, [location]);
 
   const showCurrentLocation = () => {

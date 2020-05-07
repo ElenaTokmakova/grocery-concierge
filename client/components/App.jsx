@@ -208,6 +208,7 @@ const App = () => {
                       updateLocated={updateLocated}
                       places={state.places}
                       setPlaces={setPlaces}
+                      goToStepOne={goToStepOne}
                       navigatedToStepOne={state.navigatedToStepOne}
                       updateNavigatedToStepOne={updateNavigatedToStepOne}
                     />
