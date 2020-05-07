@@ -224,27 +224,33 @@ const App = () => {
                     />
                 </Route>
                 <Route path="/select-products">
+                {
+                  Object.keys(state.selectedPlace).length === 0 ? <Redirect to="/select-store" /> :
                     <ProductSearch
-                        setProductLocation={setProductLocation}
-                        selectedPlace={state.selectedPlace}
-                        goToStepOne={goToStepOne}
-                        goToStepThree={goToStepThree}
-                        addItemToGroceryList={addItemToGroceryList}
-                        groceryList={state.groceryList}
-                        lat={state.lat}
-                        lng={state.lng}
-                    />
+                          setProductLocation={setProductLocation}
+                          selectedPlace={state.selectedPlace}
+                          goToStepOne={goToStepOne}
+                          goToStepThree={goToStepThree}
+                          addItemToGroceryList={addItemToGroceryList}
+                          groceryList={state.groceryList}
+                          lat={state.lat}
+                          lng={state.lng}
+                      />
+                }
                 </Route>
                 <Route path="/search-results">
+                {
+                  Object.keys(state.selectedPlace).length === 0 ? <Redirect to="/select-store" /> :
                     <SearchResults
-                        groceryList={state.groceryList}
-                        removeItemFromShoppingList={removeItemFromShoppingList}
-                        clearShoppingList={clearShoppingList}
-                        goToStepOne={goToStepOne}
-                        goToStepTwo={goToStepTwo}
-                        selectedPlace={state.selectedPlace}
-                        productLocation={state.productLocation}
-                    />
+                          groceryList={state.groceryList}
+                          removeItemFromShoppingList={removeItemFromShoppingList}
+                          clearShoppingList={clearShoppingList}
+                          goToStepOne={goToStepOne}
+                          goToStepTwo={goToStepTwo}
+                          selectedPlace={state.selectedPlace}
+                          productLocation={state.productLocation}
+                      />
+                }
                 </Route>
                 <Route exact path="/">
                   <Redirect to="/select-store" />
