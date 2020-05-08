@@ -4,7 +4,7 @@ import { MDBRow, MDBCol } from "mdbreact";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ShoppingList from './ShoppingList';
 import SweetAlert from 'sweetalert2-react';
-import grocery_store_isle from "../assets/images/grocery_store_isle.png";
+import grocery_store_isle from "../../assets/images/grocery_store_isle.png";
 
 const SearchResults = props => {
     const [show, setShow] = useState(false);

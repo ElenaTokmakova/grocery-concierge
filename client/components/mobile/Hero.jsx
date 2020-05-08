@@ -1,8 +1,8 @@
 
 import React from 'react';
 import { MDBRow, MDBCol} from "mdbreact";
-import twoMetersBanner from "../assets/images/2metres_apart_graphic.png";
-import concierge from '../assets/images/concierge.jpg';
+import twoMetersBanner from "../../assets/images/2metres_apart_graphic.png";
+import concierge from '../../assets/images/concierge.jpg';
 import EssentialProducts from './EssentialProducts';
 
 const Hero = () => {

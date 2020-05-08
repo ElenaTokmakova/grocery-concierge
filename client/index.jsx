@@ -6,8 +6,6 @@ import "./assets/styles/scss/mdb-free.scss";
 import "./assets/styles/style.scss";
 import App from './components/App';
 
-const title = 'Grocery Concierge';
-
 ReactDOM.render(
   <App />, document.getElementById('app')
 );

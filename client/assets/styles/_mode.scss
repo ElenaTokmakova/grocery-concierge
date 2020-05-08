@@ -1,0 +1,21 @@
+.select-mode {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    &--button-column {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        a {
+            text-align: center;
+        }
+    }
+    &--icon-container {
+        margin: 2rem 0;
+    }
+    &--icon {
+        color: white;
+        font-size: 10rem;
+    }
+}
