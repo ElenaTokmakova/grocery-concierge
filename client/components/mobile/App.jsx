@@ -1,5 +1,4 @@
 import React, { Fragment, useReducer, useEffect } from 'react';
-//import Catch from "./utilities/functionalErrorBoundary.ts"
 import {
   BrowserRouter as Router,
   Switch,
@@ -115,8 +114,6 @@ const App = () => {
 
     const [state, dispatch] = useReducer(reducer, initialState);
     const match = useRouteMatch();
-
-    console.log("Match", match)
 
     useEffect(() => {
       // setTimeout( () => dispatch({ type: 'loading', payload: false }), 1500 )
