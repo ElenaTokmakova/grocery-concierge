@@ -34,7 +34,8 @@ const ShoppingList = props =>  {
             {
                 props.groceryList.length > 0 &&
                 <div className="shopping-list-buttons-container">
-                    <button className="search-results-button button button-lighter-green" onClick={ () => setShow(true)}>
+                    <button className="search-results-button button button-lighter-green" 
+                    aria-haspopup="true" aria-expanded={state.show} onClick={ () => setShow(true)}>
                         <FontAwesomeIcon className="fa-icon" icon="cloud-upload-alt"/> Save shopping list
                     </button>
                     <SweetAlert

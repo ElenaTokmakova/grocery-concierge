@@ -29,7 +29,8 @@ const SearchResults = props => {
                 </MDBRow>
                 <MDBRow className="product-search-results--action-buttons">
                     <p className="font-weight-bold w-100">Would you like to</p>
-                    <button className="search-results-button button button-orange-red" onClick={ () => setShow(true)}>
+                    <button className="search-results-button button button-orange-red" 
+                    aria-haspopup="true" aria-expanded={state.show} onClick={ () => setShow(true)}>
                         <FontAwesomeIcon className="fa-icon" icon="heart"/> Save this Map
                     </button>
                     <SweetAlert

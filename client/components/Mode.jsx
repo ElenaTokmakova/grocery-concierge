@@ -26,7 +26,7 @@ const Mode = ({ isVisible = true }) => {
                         exit={{opacity: 0}}
                         transition={{duration: 0.75, delay: 0.75}}
                         >
-                        <div className="full-screen full-screen-mode">
+                        <div className="full-screen full-screen--black">
                             <MDBContainer className="select-mode">
                                 <MDBRow className="select-mode--logo-container">
                                     <img src={logo} alt="Grocery Concierge Logo"/>
