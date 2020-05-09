@@ -7,5 +7,10 @@
 }
 .kiosk-sidebar {
     background-color: $concierge-black;
+    color: white;
     min-height: 500px;
+    padding: 2rem;
+}
+.kiosk-main-content {
+    padding: 2rem;
 }
