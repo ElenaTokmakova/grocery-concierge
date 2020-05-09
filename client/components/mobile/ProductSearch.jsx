@@ -1,5 +1,5 @@
 import React, { useReducer, useEffect } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { Link, useRouteMatch, withRouter } from 'react-router-dom';
 import { useHistory } from "react-router-dom";
 import { MDBRow, MDBCol } from "mdbreact";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -85,6 +85,7 @@ const ProductSearch = (props) => {
     const [state, dispatch] = useReducer(reducer, initialState);
 
     const history = useHistory();
+    const match = useRouteMatch();
 
     const {name, id, vicinity} = props.selectedPlace;
     const map_link = `https://www.google.com/maps/search/?api=1&query_place_id=${id}&query=${vicinity}`;
@@ -236,7 +237,7 @@ const ProductSearch = (props) => {
                 <MDBRow className="back-to-map-button-container justify-content-center">
                     <MDBCol sm="12">
                       <Link to={{
-                          pathname: '/select-store'
+                          pathname: `/mobile/select-store`
                       }} onClick={props.goToStepOne}>
                           <button className="back-to-map-button button button-lighter-green">
                             <FontAwesomeIcon className="back-to-map-icon" icon="long-arrow-alt-left" /> Select another store

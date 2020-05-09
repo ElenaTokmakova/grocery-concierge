@@ -1,9 +1,9 @@
 import React from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { Link, useRouteMatch, withRouter } from 'react-router-dom';
 import { MDBListGroup, MDBListGroupItem } from "mdbreact";
 
 const StoreList = props => {
-
+    const match = useRouteMatch();
     return (
         <MDBListGroup className="grocery-stores">
             {
@@ -19,7 +19,7 @@ const StoreList = props => {
                                     <span className="grocery-stores--google-map"><a href={map_link} target="_blank">Open Google Maps</a></span>
                                 </div>
                                 <Link to={{
-                                    pathname: '/select-products'
+                                    pathname: `/mobile/select-products`
                                 }} onClick={() => props.onStoreSelection(store)} >
                                     <button className="grocery-stores--store-selection-button button button-lighter-green" >
                                         Select this store

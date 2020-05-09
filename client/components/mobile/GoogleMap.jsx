@@ -105,7 +105,7 @@ const MapContainer = (props) => {
   };
 
   const onNavigateToStepTwo = () => {
-    history.push("/select-products");
+    history.push("/mobile/select-products");
   }
 
   const coords = { lat: props.lat, lng: props.lng };

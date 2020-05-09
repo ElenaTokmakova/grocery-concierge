@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { Link, useRouteMatch, withRouter } from 'react-router-dom';
 import { MDBRow, MDBCol } from "mdbreact";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ShoppingList from './ShoppingList';
@@ -8,6 +8,7 @@ import grocery_store_isle from "../../assets/images/grocery_store_isle.png";
 
 const SearchResults = props => {
     const [show, setShow] = useState(false);
+    const match = useRouteMatch();
     const { productLocation, groceryList, removeItemFromShoppingList, clearShoppingList, goToStepOne, goToStepTwo } = props;
         return (
             <section className="search-results-section">
@@ -40,14 +41,14 @@ const SearchResults = props => {
                         onConfirm={() => setShow(false)}
                     />
                     <Link to={{
-                        pathname: '/select-products'
+                        pathname: `/mobile/select-products`
                     }} onClick={goToStepTwo}>
                         <button className="search-results-button button button-orange-red">
                         <FontAwesomeIcon className="fa-icon" icon="question"/> Ask another question
                         </button>
                     </Link>
                     <Link to={{
-                        pathname: '/select-store'
+                        pathname: `/mobile/select-store`
                     }} onClick={goToStepOne}>
                         <button className="search-results-button button button-orange-red">
                             <FontAwesomeIcon className="fa-icon" icon="sign-out-alt"/> Exit the store

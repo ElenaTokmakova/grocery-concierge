@@ -12,8 +12,8 @@ const Header = () => {
                         <img className="img-fluid" src={metalBackground} alt="Metal Background"/>
                     </MDBCol>
                     <MDBCol md="6" className="kiosk-header--content">
-                    <p>Do not touch screen</p>
-                    <h1>
+                    <p className="kiosk-header--warning">Do not touch screen</p>
+                    <h1 className="kiosk-header--title">
                         Grocery Concierge
                     </h1>
                     </MDBCol>

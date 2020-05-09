@@ -14,10 +14,6 @@ import GoogleMap from './GoogleMap';
 import ProductSearch from './ProductSearch';
 import SearchResults from './SearchResults';
 
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { faLongArrowAltLeft, faMicrophone, faAngleRight, faMapMarkerAlt, faBox, faEgg, faFish, faToiletPaper, faScroll, faTrash, faHeart, faQuestion, faSignOutAlt, faCloudUploadAlt, faMobileAlt, faDesktop } from '@fortawesome/free-solid-svg-icons';
-library.add(faLongArrowAltLeft, faMicrophone, faAngleRight, faMapMarkerAlt, faBox, faEgg, faFish, faToiletPaper, faScroll, faTrash, faHeart, faQuestion, faSignOutAlt, faCloudUploadAlt, faMobileAlt, faDesktop );
-
 const initialState = {
     selectedPlace: {},
     places: [],
@@ -212,7 +208,7 @@ const App = () => {
           </Route>
           <Route path={`${match.url}/select-products`}>
           {
-            Object.keys(state.selectedPlace).length === 0 ? <Redirect to="/select-store" /> :
+            Object.keys(state.selectedPlace).length === 0 ? <Redirect to={`${match.url}/select-store`} /> :
               <ProductSearch
                     setProductLocation={setProductLocation}
                     selectedPlace={state.selectedPlace}
@@ -227,7 +223,7 @@ const App = () => {
           </Route>
           <Route path={`${match.url}/search-results`}>
           {
-            Object.keys(state.selectedPlace).length === 0 ? <Redirect to="/select-store" /> :
+            Object.keys(state.selectedPlace).length === 0 ? <Redirect to={`${match.url}/select-store`} /> :
               <SearchResults
                     groceryList={state.groceryList}
                     removeItemFromShoppingList={removeItemFromShoppingList}
