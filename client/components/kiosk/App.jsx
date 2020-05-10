@@ -1,7 +1,9 @@
-import React, { Fragment, useReducer, useEffect } from 'react';
+import React, { Fragment, useReducer, useEffect, Suspense, lazy } from 'react';
 import { MDBRow, MDBCol } from "mdbreact";
 import Header from './Header';
 import Sidebar from './Sidebar';
+const MainContent = lazy(() => import('./MainContent'));
+import { PushSpinner } from "react-spinners-kit";
 
 const App = () => {
 
@@ -19,7 +21,7 @@ const App = () => {
               </MDBCol>
               <MDBCol md="9">
                 <main className="kiosk-main-content">
-                    Main content here
+                  <MainContent />
                 </main>
               </MDBCol>
           </MDBRow>

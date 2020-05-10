@@ -1,16 +1,34 @@
-.kiosk-main-content {
-
-}
-
 .kiosk-sidebar-wrapper {
-    padding: 0;
-}
-.kiosk-sidebar {
-    background-color: $concierge-black;
-    color: white;
-    min-height: 500px;
-    padding: 2rem;
+    padding-right: 0;
 }
 .kiosk-main-content {
-    padding: 2rem;
+    padding: 5rem 2rem 3rem;
+    .welcome-screen {
+        .circle-container {
+            display: flex;
+            justify-content: center;
+            .circle {
+                border-radius: 50%;border: 1px solid $concierge-black;
+                position: relative;
+                height: 7vw;
+                width: 7vw;
+                span {
+                    font-size: 2rem;
+                    font-weight: bold;
+                    position:absolute;
+                    top:50%; left:50%;
+                    transform: translate(-50%, -50%);
+                    margin:0;
+                }
+              }
+        }
+        h2 {
+            font-weight: bold;
+            margin-bottom: 3rem;
+        }
+        p {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+        }
+    }
 }
