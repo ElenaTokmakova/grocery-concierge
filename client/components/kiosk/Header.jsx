@@ -1,5 +1,6 @@
 import React from 'react';
 import { MDBRow, MDBCol } from "mdbreact";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import metalBackground from '../../assets/images/metal-background.jpg';
 
 const Header = () => {
@@ -16,6 +17,12 @@ const Header = () => {
                     <h1 className="kiosk-header--title">
                         Grocery Concierge
                     </h1>
+                    <div className="kiosk-header--controls">
+                        <span>Sensor/Wave &mdash; </span>
+                        <span><FontAwesomeIcon icon="dot-circle" className="kiosk-header--sensor-wave-control"/></span>
+                        <span className="mic-icon">&bull; </span>
+                        <span>&mdash; Mic </span>
+                    </div>
                     </MDBCol>
                     <MDBCol md="3" className="kiosk-header--image-background">
                         <img className="img-fluid" src={metalBackground} alt="Metal Background"/>
