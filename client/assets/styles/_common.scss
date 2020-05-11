@@ -60,3 +60,7 @@ body {
 strong {
   font-weight: 700;
 }
+
+.full-width {
+  @include full-width();
+}
