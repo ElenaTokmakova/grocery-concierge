@@ -3,7 +3,7 @@
 }
 .kiosk-main-content {
     padding: 5rem 2rem 3rem;
-    .welcome-screen {
+    .screen-section {
         .circle-container {
             display: flex;
             justify-content: center;
@@ -22,13 +22,38 @@
                 }
               }
         }
-        h2 {
-            font-weight: bold;
-            margin-bottom: 3rem;
-        }
-        p {
-            font-size: 2rem;
-            margin-bottom: 2rem;
+        .text-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            h2 {
+                font-weight: bold;
+                &.customer-speaking {
+                    color: $concierge-green;
+                }
+                &.concierge-speaking {
+                    color: $concierge-black;
+                }
+            }
+            p {
+                font-size: 2rem;
+                margin-bottom: 2rem;
+            }
         }
     }
+    .grocery-concierge-icon {
+        width: 150px;
+        max-width: 100%;
+    }
+    .screen-navigation-links {
+        display: flex;
+        margin-top: 5rem;
+        justify-content: center;
+        button {
+            display: inline-block;
+            margin: 0 1rem;
+            min-width: 200px;
+        }
+    }
+
 }
