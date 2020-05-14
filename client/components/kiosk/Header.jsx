@@ -9,9 +9,7 @@ const Header = () => {
         <header className="kiosk-header">
             <div className="kiosk-header--wrapper">
                 <MDBRow>
-                    <MDBCol md="3" className="kiosk-header--image-background">
-                        <img className="img-fluid" src={metalBackground} alt="Metal Background"/>
-                    </MDBCol>
+                    <MDBCol md="3" className="kiosk-header--image-background"></MDBCol>
                     <MDBCol md="6" className="kiosk-header--content">
                     <p className="kiosk-header--warning">Do not touch screen</p>
                     <h1 className="kiosk-header--title">
@@ -24,9 +22,7 @@ const Header = () => {
                         <span>&mdash; Mic </span>
                     </div>
                     </MDBCol>
-                    <MDBCol md="3" className="kiosk-header--image-background">
-                        <img className="img-fluid" src={metalBackground} alt="Metal Background"/>
-                    </MDBCol>
+                    <MDBCol md="3" className="kiosk-header--image-background"></MDBCol>
                 </MDBRow>
             </div>
         </header>

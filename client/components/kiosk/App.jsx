@@ -1,5 +1,5 @@
-import React, { Fragment, createContext, lazy } from 'react';
-import { MDBRow, MDBCol } from "mdbreact";
+import React from 'react';
+import { MDBContainer, MDBRow, MDBCol } from "mdbreact";
 import Header from './Header';
 import Sidebar from './Sidebar';
 import KioskContext from './Context';
@@ -16,20 +16,24 @@ const App = () => {
           customer
         }}>
 
-          <Header />
+          <MDBContainer fluid >
 
-          <MDBRow className="kiosk-content-wrapper">
-              <MDBCol md="3" className="kiosk-sidebar-wrapper">
-                <aside className="kiosk-sidebar">
-                  <Sidebar />
-                </aside>
-              </MDBCol>
-              <MDBCol md="9">
-                <main className="kiosk-main-content">
-                    <MainContent />
-                </main>
-              </MDBCol>
-          </MDBRow>
+            <Header />
+
+            <MDBRow className="kiosk-content-wrapper">
+                <MDBCol md="3" className="kiosk-sidebar-wrapper">
+                  <aside className="kiosk-sidebar">
+                    <Sidebar />
+                  </aside>
+                </MDBCol>
+                <MDBCol md="9" className="kiosk-main-content-wrapper">
+                  <main className="kiosk-main-content">
+                      <MainContent />
+                  </main>
+                </MDBCol>
+            </MDBRow>
+
+          </MDBContainer>
 
       </ KioskContext.Provider>
 

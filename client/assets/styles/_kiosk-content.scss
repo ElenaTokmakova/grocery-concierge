@@ -1,10 +1,14 @@
 .kiosk-sidebar-wrapper {
-    padding-right: 0;
+    padding: 0;
+}
+.kiosk-main-content-wrapper {
+    background-color: white;
 }
 .kiosk-main-content {
     padding: 3rem 2rem;
     .screen-section {
         .circle-container {
+            align-items: flex-start;
             display: flex;
             justify-content: center;
             .circle {
@@ -67,16 +71,19 @@
                 margin-top: 2rem;
             }
         }
-    }
-    .session-ended-container {
-        margin-top: 3rem;
-        hr {
-            border-top: 2px solid $concierge-red;
+        .session-ended-container {
+            margin-top: 3rem;
+            hr {
+                border-top: 2px solid $concierge-red;
+            }
+            span {
+                color: $concierge-dark-red;
+                font-size: 1.7rem;
+                font-weight: bold;
+            }
         }
-        span {
-            color: $concierge-dark-red;
-            font-size: 1.7rem;
-            font-weight: bold;
+        &.screen-section-welcome {
+            padding: 5rem 5rem 0 0;
         }
     }
     .kiosk-action-button-container {

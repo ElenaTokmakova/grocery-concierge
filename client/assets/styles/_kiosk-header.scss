@@ -45,6 +45,9 @@
         font-size: 2rem;
     }
     &--image-background {
-        padding: 0;
+        background-image: url(../images/metal-background.png);
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
     }
 }
