@@ -1,6 +1,6 @@
-import React, {Fragment} from 'react';
-import { Link, withRouter } from 'react-router-dom';
-import { MDBRow, MDBCol } from 'mdbreact';
+import React, { Fragment, useContext } from 'react';
+import { MDBRow } from 'mdbreact';
+import NavigationLink from './components/NavigationLink';
 
 
 const Exit = () => {
@@ -19,23 +19,11 @@ const Exit = () => {
                </MDBRow>
             </section>
             <section className="screen-navigation-links">
-                <Link to={{
-                    pathname: `/kiosk/assistant`
-                }}>
-                    <button className="grocery-stores--store-selection-button button button-lighter-green" >
-                        Previous Screen
-                    </button>
-                </Link>
-                <Link to={{
-                    pathname: `/kiosk/welcome`
-                }}>
-                    <button className="grocery-stores--store-selection-button button button-lighter-green" >
-                        Back to Welcome Screen
-                    </button>
-                </Link>
+                <NavigationLink pathname='/kiosk/assistant' buttonText='Previous Screen'/>
+                <NavigationLink pathname='/kiosk/welcome' buttonText='Back to Welcome Screen'/>
             </section>
         </Fragment>
     )
 }
 
-export default withRouter(Exit);
+export default Exit;

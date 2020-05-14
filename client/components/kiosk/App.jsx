@@ -1,19 +1,24 @@
-import React, { Fragment, useReducer, useEffect, Suspense, lazy } from 'react';
+import React, { Fragment, createContext, lazy } from 'react';
 import { MDBRow, MDBCol } from "mdbreact";
 import Header from './Header';
 import Sidebar from './Sidebar';
-const MainContent = lazy(() => import('./MainContent'));
-import { PushSpinner } from "react-spinners-kit";
+import KioskContext from './Context';
+import MainContent from './MainContent';
+import concierge from '../../assets/images/concierge.svg';
+import customer from '../../assets/images/customer.svg';
 
 const App = () => {
 
     return (
 
-      <Fragment>
+      <KioskContext.Provider value={{
+          concierge,
+          customer
+        }}>
 
           <Header />
 
-          <MDBRow>
+          <MDBRow className="kiosk-content-wrapper">
               <MDBCol md="3" className="kiosk-sidebar-wrapper">
                 <aside className="kiosk-sidebar">
                   <Sidebar />
@@ -21,12 +26,12 @@ const App = () => {
               </MDBCol>
               <MDBCol md="9">
                 <main className="kiosk-main-content">
-                  <MainContent />
+                    <MainContent />
                 </main>
               </MDBCol>
           </MDBRow>
 
-      </Fragment>
+      </ KioskContext.Provider>
 
     );
 }

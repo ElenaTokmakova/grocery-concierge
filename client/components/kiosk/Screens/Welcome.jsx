@@ -1,8 +1,11 @@
-import React, {Fragment} from 'react';
-import { Link, Route, withRouter } from 'react-router-dom';
+import React, { Fragment, useContext } from 'react';
+import KioskContext from '../Context';
 import { MDBRow, MDBCol } from "mdbreact";
+import NavigationLink from './components/NavigationLink';
 
 const Welcome = (props) => {
+
+    const { concierge } = useContext(KioskContext);
 
     return (
         <Fragment>
@@ -12,7 +15,7 @@ const Welcome = (props) => {
                     {/* <div className="circle">
                         <span>AI</span>
                     </div> */}
-                    <img className="grocery-concierge-icon" src={props.concierge} alt="Grocery Concierge icon"/>
+                    <img className="grocery-concierge-icon" src={concierge} alt="Grocery Concierge icon"/>
                 </MDBCol>
                 <MDBCol md="10" className="text-container">
                     <h2>Welcome to Grocery Concierge.</h2>
@@ -22,16 +25,10 @@ const Welcome = (props) => {
                </MDBRow>
             </section>
             <section className="screen-navigation-links">
-                <Link className="screen-navigation-link" to={{
-                    pathname: `/kiosk/looking`
-                }}>
-                    <button className="grocery-stores--store-selection-button button button-lighter-green" >
-                        Next Screen
-                    </button>
-                </Link>
+                <NavigationLink pathname='/kiosk/looking' buttonText='Next Screen'/>
             </section>
         </Fragment>
     )
 }
 
-export default withRouter(Welcome);
+export default Welcome;

@@ -1,17 +1,20 @@
-import React, {Fragment} from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import React, { Fragment, useContext } from 'react';
 import { MDBRow, MDBCol } from 'mdbreact';
+import KioskContext from '../Context';
+import NavigationLink from './components/NavigationLink';
 import grocery_store_aisle_small from "../../../assets/images/grocery_store_aisle_small.png";
 
 
-const Found = (props) => {
+const Found = () => {
+
+    const { concierge } = useContext(KioskContext);
 
     return (
         <Fragment>
             <section className="screen-section screen-section-found">
                 <MDBRow>
                     <MDBCol md="2" className="circle-container">
-                        <img className="grocery-concierge-icon" src={props.concierge} alt="Grocery Concierge icon"/>
+                        <img className="grocery-concierge-icon" src={concierge} alt="Grocery Concierge icon"/>
                     </MDBCol>
                     <MDBCol md="10" className="text-container">
                         <h3 className="concierge-speaking">Beans are in Aisle 3.</h3>
@@ -25,23 +28,11 @@ const Found = (props) => {
                </MDBRow>
             </section>
             <section className="screen-navigation-links">
-                <Link to={{
-                    pathname: `/kiosk/looking`
-                }}>
-                    <button className="grocery-stores--store-selection-button button button-lighter-green" >
-                        Previous Screen
-                    </button>
-                </Link>
-                <Link to={{
-                    pathname: `/kiosk/actions`
-                }}>
-                    <button className="grocery-stores--store-selection-button button button-lighter-green" >
-                        Next Screen
-                    </button>
-                </Link>
+                <NavigationLink pathname='/kiosk/looking' buttonText='Previous Screen'/>
+                <NavigationLink pathname='/kiosk/actions' buttonText='Next Screen'/>
             </section>
         </Fragment>
     )
 }
 
-export default withRouter(Found);
+export default Found;

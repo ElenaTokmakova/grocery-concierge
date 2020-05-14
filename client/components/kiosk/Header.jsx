@@ -1,7 +1,7 @@
 import React from 'react';
 import { MDBRow, MDBCol } from "mdbreact";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import metalBackground from '../../assets/images/metal-background.jpg';
+import metalBackground from '../../assets/images/metal-background.png';
 
 const Header = () => {
 

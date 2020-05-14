@@ -1,9 +1,12 @@
-import React, {Fragment} from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import React, { Fragment, useContext } from 'react';
+import KioskContext from '../Context';
 import { MDBRow, MDBCol } from 'mdbreact';
+import NavigationLink from './components/NavigationLink';
 
 
-const Assistant = (props) => {
+const Assistant = () => {
+
+    const { concierge, customer } = useContext(KioskContext);
 
     return (
         <Fragment>
@@ -13,12 +16,12 @@ const Assistant = (props) => {
                         <h3 className="customer-speaking">Call for assistance.</h3>
                     </MDBCol>
                     <MDBCol md="2" className="circle-container">
-                        <img className="grocery-concierge-icon" src={props.customer} alt="Grocery Concierge icon"/>
+                        <img className="grocery-concierge-icon" src={customer} alt="Grocery Concierge icon"/>
                     </MDBCol>
                </MDBRow>
                <MDBRow>
                     <MDBCol md="2" className="circle-container">
-                        <img className="grocery-concierge-icon" src={props.concierge} alt="Grocery Concierge icon"/>
+                        <img className="grocery-concierge-icon" src={concierge} alt="Grocery Concierge icon"/>
                     </MDBCol>
                     <MDBCol md="10" className="text-container">
                         <h3 className="concierge-speaking">Ok, I will call an assistant for you. <br/>Someone will be with you shortly.</h3>
@@ -37,23 +40,11 @@ const Assistant = (props) => {
                </MDBRow>
             </section>
             <section className="screen-navigation-links">
-                <Link to={{
-                    pathname: `/kiosk/actions`
-                }}>
-                    <button className="grocery-stores--store-selection-button button button-lighter-green" >
-                        Previous Screen
-                    </button>
-                </Link>
-                <Link to={{
-                    pathname: `/kiosk/exit`
-                }}>
-                    <button className="grocery-stores--store-selection-button button button-lighter-green" >
-                        Next Screen
-                    </button>
-                </Link>
+                <NavigationLink pathname='/kiosk/actions' buttonText='Previous Screen'/>
+                <NavigationLink pathname='/kiosk/exit' buttonText='Next Screen'/>
             </section>
         </Fragment>
     )
 }
 
-export default withRouter(Assistant);
+export default Assistant;
