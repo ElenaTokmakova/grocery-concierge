@@ -4,7 +4,7 @@ import { MDBRow, MDBCol } from "mdbreact";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ShoppingList from './ShoppingList';
 import SweetAlert from 'sweetalert2-react';
-import grocery_store_isle from "../../assets/images/grocery_store_isle.png";
+import grocery_store_aisle from "../../assets/images/grocery_store_aisle.png";
 
 const SearchResults = props => {
     const [show, setShow] = useState(false);
@@ -15,7 +15,7 @@ const SearchResults = props => {
                 <div className="search-results-location"><p className="font-weight-bold">{productLocation}</p></div>
                 <MDBRow className="product-search-results">
                     <MDBCol md="12" lg="6">
-                        <img className="image-grocery-isle img-fluid" src={grocery_store_isle} />
+                        <img className="image-grocery-aisle img-fluid" src={grocery_store_aisle} />
                     </MDBCol>
                     <MDBCol md="12" lg="6">
                         {
@@ -29,7 +29,7 @@ const SearchResults = props => {
                 </MDBRow>
                 <MDBRow className="product-search-results--action-buttons">
                     <p className="font-weight-bold w-100">Would you like to</p>
-                    <button className="search-results-button button button-orange-red" 
+                    <button className="search-results-button button button-orange-red"
                     aria-haspopup="true" aria-expanded={state.show} onClick={ () => setShow(true)}>
                         <FontAwesomeIcon className="fa-icon" icon="heart"/> Save this Map
                     </button>

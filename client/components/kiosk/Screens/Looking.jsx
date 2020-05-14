@@ -9,7 +9,7 @@ const Looking = (props) => {
             <section className="screen-section screen-section-looking">
                <MDBRow>
                     <MDBCol md="10" className="text-container align-items-end">
-                        <h2 className="customer-speaking">I'm looking for something</h2>
+                        <h3 className="customer-speaking">I'm looking for something</h3>
                     </MDBCol>
                     <MDBCol md="2" className="circle-container">
                         <img className="grocery-concierge-icon" src={props.customer} alt="Grocery Concierge icon"/>
@@ -20,7 +20,15 @@ const Looking = (props) => {
                         <img className="grocery-concierge-icon" src={props.concierge} alt="Grocery Concierge icon"/>
                     </MDBCol>
                     <MDBCol md="10" className="text-container">
-                        <h2 className="concierge-speaking">What are you looking for?</h2>
+                        <h3 className="concierge-speaking">What are you looking for?</h3>
+                    </MDBCol>
+               </MDBRow>
+               <MDBRow>
+                    <MDBCol md="10" className="text-container align-items-end">
+                        <h3 className="customer-speaking">Where can I find beans?</h3>
+                    </MDBCol>
+                    <MDBCol md="2" className="circle-container">
+                        <img className="grocery-concierge-icon" src={props.customer} alt="Grocery Concierge icon"/>
                     </MDBCol>
                </MDBRow>
             </section>

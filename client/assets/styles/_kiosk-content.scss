@@ -2,23 +2,23 @@
     padding-right: 0;
 }
 .kiosk-main-content {
-    padding: 5rem 2rem 3rem;
+    padding: 3rem 2rem;
     .screen-section {
         .circle-container {
             display: flex;
             justify-content: center;
             .circle {
                 border-radius: 50%;border: 1px solid $concierge-black;
-                position: relative;
                 height: 7vw;
+                position: relative;
                 width: 7vw;
                 span {
                     font-size: 2rem;
                     font-weight: bold;
+                    margin:0;
                     position:absolute;
                     top:50%; left:50%;
                     transform: translate(-50%, -50%);
-                    margin:0;
                 }
               }
         }
@@ -26,29 +26,90 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            h2 {
-                font-weight: bold;
-                &.customer-speaking {
-                    color: $concierge-green;
-                }
-                &.concierge-speaking {
-                    color: $concierge-black;
-                }
+        }
+        .concierge-directions-container {
+            display: flex;
+            h3 {
+                margin-left: 5rem;
+                padding-top: 1rem;
             }
-            p {
-                font-size: 2rem;
-                margin-bottom: 2rem;
+        }
+        .countdown-container {
+            border: 1px solid $concierge-grey;
+            font-size: 4rem;
+            font-weight: bold;
+            padding: 1rem 3rem;
+        }
+        h2 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 2rem;
+        }
+        h3 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            &.customer-speaking {
+                color: $concierge-text-green;
+            }
+            &.concierge-speaking {
+                color: $concierge-black;
+            }
+            &.concierge-directions, &.concierge-warning {
+                color: $concierge-dark-red;
+            }
+        }
+        p {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+        }
+        &.screen-section-exit {
+            > div {
+                margin-top: 2rem;
+            }
+        }
+    }
+    .session-ended-container {
+        margin-top: 3rem;
+        hr {
+            border-top: 2px solid $concierge-red;
+        }
+        span {
+            color: $concierge-dark-red;
+            font-size: 1.7rem;
+            font-weight: bold;
+        }
+    }
+    .kiosk-action-button-container {
+        display: flex;
+        flex-wrap: wrap;
+        .kiosk-action-button {
+            align-items: center;
+            border-color: $concierge-dark-red;
+            border-radius: 50px;
+            color: $concierge-dark-red;
+            display: flex;
+            font-size: 1.2rem;
+            margin: 1rem;
+            padding: 1.3rem 2.5rem;
+            width: 320px;
+            .fa-icon {
+              font-size: 2rem;
+              margin-right: 0.5rem;
+            }
+            &:hover, .selected {
+                color: white;
+                background-color: $concierge-dark-red;
             }
         }
     }
     .grocery-concierge-icon {
-        width: 150px;
         max-width: 100%;
+        width: 120px;
     }
     .screen-navigation-links {
         display: flex;
-        margin-top: 5rem;
         justify-content: center;
+        margin-top: 3rem;
         button {
             display: inline-block;
             margin: 0 1rem;

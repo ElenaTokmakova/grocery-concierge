@@ -8,15 +8,14 @@ const Exit = () => {
     return (
         <Fragment>
             <section className="screen-section screen-section-exit">
-               <MDBRow>
-                <MDBCol md="2" className="circle-container">
-                    <div className="circle">
-                        <span>AI</span>
-                    </div>
-                </MDBCol>
-                <MDBCol md="10">
-                    <h2>Exit</h2>
-                </MDBCol>
+               <MDBRow className="justify-content-center">
+                    <h3 className="concierge-warning">The application will close automatically in 5 minutes.</h3>
+               </MDBRow>
+               <MDBRow className="justify-content-center">
+                <div className="countdown-container">4:29</div>
+               </MDBRow>
+               <MDBRow className="justify-content-center">
+                    <h3>Say "start over" if you want to begin a new season.</h3>
                </MDBRow>
             </section>
             <section className="screen-navigation-links">

@@ -51,9 +51,6 @@ body {
     }
   }
 }
-strong {
-  font-weight: 700;
-}
 .full-width {
   @include full-width();
 }
@@ -62,4 +59,7 @@ strong {
   margin-top: 1rem;
   padding-top: 1rem;
   padding-bottom: 2rem;
+}
+strong {
+  font-weight: 700;
 }
