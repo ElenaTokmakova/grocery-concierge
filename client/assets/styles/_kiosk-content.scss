@@ -114,9 +114,13 @@
         width: 120px;
     }
     .screen-navigation-links {
+        bottom: 2rem;
         display: flex;
         justify-content: center;
+        left: 50%;
         margin-top: 3rem;
+        position: absolute;
+        transform: translate(-50%, 0);
         button {
             display: inline-block;
             margin: 0 1rem;
