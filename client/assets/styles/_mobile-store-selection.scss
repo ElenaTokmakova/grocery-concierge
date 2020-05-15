@@ -1,12 +1,15 @@
 .store-selection {
   &-title-container {
-    margin: 2rem 0;
     .store-selection-title {
-      margin-bottom: 2rem;
-      font-size: 1.5rem;
+      padding-bottom: 1rem;
+      font-size: 1.1rem;
       &-welcome {
         color: $concierge-red;
         font-weight: bold;
+      }
+      &-nearby {
+        border-bottom: 1px solid #f4715a;
+        margin-bottom: 1rem;
       }
     }
   }
@@ -16,7 +19,7 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: flex-start;
-      @media (min-width: 575.98px) {
+      @media (min-width: 576px) {
         justify-content: center;
       }
       .geocoder-input {
@@ -55,6 +58,7 @@
     }
     .store-search-results {
       &--store-list-container {
+        padding: 0;
         margin-bottom: 2rem;
         @media (min-width: 992px) {
           margin-bottom: 0;
@@ -129,5 +133,23 @@
         }
       }
     }
+  }
+}
+
+.store-selection-back-navigation {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+  @media (min-width: 576px) {
+    justify-content: center;
+  }
+  .store-selection-back-link {
+    color: $concierge-black;
+    display: inline-block;
+    font-size: 0.9rem;
+  }
+  .store-selection-back-icon {
+    color: $concierge-black;
+    margin: 0 0.5rem 0 -1rem;
   }
 }

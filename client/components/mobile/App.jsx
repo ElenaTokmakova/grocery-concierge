@@ -2,14 +2,18 @@ import React, { Fragment, useReducer, useEffect } from 'react';
 import {
   Route,
   Redirect,
-  useRouteMatch
+  useRouteMatch,
+  Link
 } from "react-router-dom";
+import MobileContext from './Context';
 import { MDBContainer } from "mdbreact";
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Header from './Header';
 import GoogleMap from './GoogleMap';
 import ProductSearch from './ProductSearch';
 import SearchResults from './SearchResults';
+import concierge from '../../assets/images/concierge.svg';
+import customer from '../../assets/images/customer.svg';
 
 const initialState = {
     selectedPlace: {},
@@ -53,6 +57,11 @@ const reducer = (state, action) => {
         located: action.payload.located,
         lat: action.payload.lat,
         lng: action.payload.lng
+      }
+    case 'update' :
+      return {
+        ...state,
+        located: action.payload
       }
     case 'updateNavigatedToStepOne' :
       return {
@@ -127,7 +136,18 @@ const App = () => {
       dispatch({ type: 'setPostalCode', payload });
     }
 
+    const update = (payload) => {
+      dispatch({ type : 'update', payload});
+    }
+
+    const postalCode = state.postalCode === "you" ? "you" : <strong>{state.postalCode}</strong>;
+
     return (
+
+      <MobileContext.Provider value={{
+        concierge,
+        customer
+      }}>
 
         <MDBContainer className="mobile-app-container">
 
@@ -144,7 +164,16 @@ const App = () => {
                 </Fragment>
               }
               {
-                state.located && <h2 className="store-selection-title store-selection-title-nearby">Stores nearby {state.postalCode}</h2>
+                state.located &&
+                <Fragment>
+                  <div className="store-selection-back-navigation">
+                      <FontAwesomeIcon className="store-selection-back-icon" icon="chevron-left"/>
+                      <Link className="store-selection-back-link" to={{
+                            pathname: `/mobile/select-store`
+                        }} onClick={() => update(false)}>Back</Link>
+                  </div>
+                  <h2 className="store-selection-title store-selection-title-nearby">Stores nearby {postalCode}</h2>
+                </Fragment>
               }
             </section>
             <section className="store-selection store-selection-google-map">
@@ -194,6 +223,8 @@ const App = () => {
           </main>
 
         </MDBContainer>
+
+      </ MobileContext.Provider>
     );
 }
 

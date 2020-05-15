@@ -1,6 +1,7 @@
-import React, { useReducer, useEffect } from 'react';
+import React, { useReducer, useEffect,  useContext } from 'react';
 import { Link, useRouteMatch, withRouter } from 'react-router-dom';
 import { useHistory } from "react-router-dom";
+import MobileContext from './Context';
 import { MDBRow, MDBCol } from "mdbreact";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // a standalone build of socket.io-client is exposed automatically by the socket.io server
@@ -83,7 +84,7 @@ const reducer = (state, action) => {
 const ProductSearch = (props) => {
 
     const [state, dispatch] = useReducer(reducer, initialState);
-
+    const { concierge, customer } = useContext(MobileContext);
     const history = useHistory();
     const match = useRouteMatch();
 
@@ -230,20 +231,17 @@ const ProductSearch = (props) => {
     return (
       <section className="product-search-section">
         <MDBRow className="product-search">
-            <MDBCol md="12" lg="4">
-            </MDBCol>
-            <MDBCol md="12" lg="4">
+              <MDBCol md="4" className="offset-md-4">
                 <MDBRow className="back-to-map-button-container justify-content-center">
                     <MDBCol sm="12">
-                      <Link to={{
-                          pathname: `/mobile/select-store`
-                      }} >
-                          <button className="back-to-map-button button button-lighter-green">
-                            <FontAwesomeIcon className="back-to-map-icon" icon="long-arrow-alt-left" /> Select another store
-                        </button>
-                      </Link>
+                      <div className="store-selection-back-navigation">
+                          <FontAwesomeIcon className="store-selection-back-icon" icon="chevron-left"/>
+                          <Link className="store-selection-back-link" to={{
+                                pathname: `/mobile/select-store`
+                            }}>Select another store</Link>
+                      </div>
                         <p className="product-search-subtitle voice-search">
-                          <span className="font-weight-bold">Your selected store</span>
+                          <span className="font-weight-bold">Your Selected Store:</span>
                           <span className="store-name">{name}</span>
                           <span className="store-address">{vicinity}</span>
                           <span className="google-map"><a href={map_link} target="_blank">Open Google Maps</a></span>
@@ -253,17 +251,23 @@ const ProductSearch = (props) => {
                 </MDBRow>
                 <MDBRow className="microphone-button-container justify-content-center">
                     <MDBCol sm="12">
-                        <p className="font-weight-bold">What are you looking for?</p>
-                        <p className="microphone-anser-tip">
-                          { !state.listening ? 'Tap to answer' : 'I\'m listening!'}
-                        </p>
-                        <button className="microphone" onClick={toggleListen}>
-                            <FontAwesomeIcon icon="microphone" className="icon"/>
-                        </button>
+                        <div className="conversation-container--concierge">
+                          <img className="grocery-concierge-icon" src={concierge} alt="Grocery Concierge icon"/>
+                          <span><strong>What are you looking for?</strong></span>
+                        </div>
+                        <div className="conversation-container--customer">
+                          <img className="grocery-concierge-icon" src={customer} alt="Grocery Concierge icon"/>
+                        </div>
+                        <div className="text-center">
+                          <p className="microphone-answer-tip">
+                            { !state.listening ? 'Tap to answer' : 'I\'m listening!'}
+                          </p>
+                          <button className="microphone" onClick={toggleListen}>
+                              <FontAwesomeIcon icon="microphone" className="icon"/>
+                          </button>
+                        </div>
                     </MDBCol>
                 </MDBRow>
-            </MDBCol>
-            <MDBCol md="12" lg="4">
             </MDBCol>
         </MDBRow>
       </section>
