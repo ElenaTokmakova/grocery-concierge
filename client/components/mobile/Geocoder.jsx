@@ -52,7 +52,7 @@ const GeocoderInput = (props) => {
             </div>
             <button className="button button-lighter-green-fill geocoder-submit-button" onClick={getCoordsFromPostalCode} >
                 <span className="sr-only">Find stores by postal code</span>
-                <FontAwesomeIcon icon="angle-right"/>
+                <FontAwesomeIcon icon="chevron-right"/>
             </button>
             <SweetAlert
                 type="error"

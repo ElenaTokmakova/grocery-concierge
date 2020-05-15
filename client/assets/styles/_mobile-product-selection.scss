@@ -21,6 +21,13 @@
         .store-name {
           color: $concierge-red;
           font-weight: bold;
+          margin-bottom: 0.5rem;
+        }
+        .store-address {
+          margin-bottom: 0.5rem;
+        }
+        .google-map {
+          font-size: 0.9rem;
         }
         span {
           display: block;
@@ -43,18 +50,19 @@
   .microphone {
     -webkit-appearance: none;
     -moz-appearance: none;
-    background: linear-gradient(180deg, #F57F6A 0%, #f4715a 80%, #f4715a 100%);
-    box-shadow: 2px 5px 30px rgba(244, 113, 90, .4);
-    border: 0;
+    //background: linear-gradient(180deg, #F57F6A 0%, #f4715a 80%, #f4715a 100%);
+    //box-shadow: 2px 5px 30px rgba(244, 113, 90, .4);
+    background-color: white;
+    border: 2px solid $concierge-dark-green;
     border-radius: 50%;
-    color: #fff;
+    color: $concierge-dark-green;
     display: block;
-    height: 175px;
+    height: 150px;
     margin: 0 auto 2rem;
     padding: .7em 1em;
     text-align: center;
     transition: all 0.3s ease-out;
-    width: 175px;
+    width: 150px;
     will-change: transform, filter;
     &:hover {
       transform: scale(.92);
@@ -66,22 +74,25 @@
       outline: 0;
     }
     .icon {
-      font-size: 100px;
-      line-height: 200px;
-      margin: 0;
-      text-shadow: 1px 2px 2px #2a8b90;
+      font-size: 3rem;
     }
   }
 }
 
 .conversation-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
   &--concierge {
     span {
-      padding-left: 1rem;
+      padding-left: 0.5rem;
     }
   }
   &--customer {
-    text-align: right;
+    justify-content: flex-end;
+    span {
+      padding-right: 1rem;
+    }
   }
 }
 

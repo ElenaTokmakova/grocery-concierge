@@ -36,6 +36,7 @@ const initialState = {
 };
 
 const reducer = (state, action) => {
+  console.log("Type", action.type, action.payload)
   switch (action.type) {
     case 'products':
       return {
@@ -59,7 +60,7 @@ const reducer = (state, action) => {
           ...state,
           listening: false
       };
-    case 'speechStart':
+    case 'reset':
       return {
           ...state,
           outputBot: '',
@@ -87,6 +88,8 @@ const ProductSearch = (props) => {
     const { concierge, customer } = useContext(MobileContext);
     const history = useHistory();
     const match = useRouteMatch();
+
+    let found = false;
 
     const {name, id, vicinity} = props.selectedPlace;
     const map_link = `https://www.google.com/maps/search/?api=1&query_place_id=${id}&query=${vicinity}`;
@@ -151,16 +154,16 @@ const ProductSearch = (props) => {
 
         if(response.reply == '') response.reply = '(No answer...)';
 
-        dispatch({ type: 'socketResponse', payload: { reply: response.reply, location: response.location } });
-
         if (response.type === 'where') {
+          found = true;
           const includes = props.groceryList.map(element => element.name).includes(response.name);
           if (!includes) {
             props.addItemToGroceryList({ name: response.name, location: response.info });
           }
           props.setProductLocation(response.reply);
-          onNavigateToStepThree();
         }
+
+        dispatch({ type: 'socketResponse', payload: { reply: response.reply, location: response.info } });
 
       });
     }
@@ -194,7 +197,7 @@ const ProductSearch = (props) => {
 
       recognition.onspeechstart = () => {
         console.log('Speech has been detected.');
-        dispatch({ type: 'speechStart' })
+        dispatch({ type: 'reset' });
       }
 
       recognition.onresult = (e) => {
@@ -215,7 +218,10 @@ const ProductSearch = (props) => {
 
       recognition.onerror = e => {
         console.log('Recognition error', e.error)
-        dispatch({ type: 'outputBotError', payload: e.error });
+        dispatch({ type: 'outputBotError', payload: 'Sorry, I couldn\'t understand you!' });
+        setTimeout(() => {
+          dispatch({ type: 'reset' });
+        }, 2000);
       }
 
     }
@@ -226,6 +232,14 @@ const ProductSearch = (props) => {
         const utterance = new SpeechSynthesisUtterance();
         utterance.text = text;
         synth.speak(utterance);
+        utterance.onend = () => {
+          console.log("Finished talking, found?", state)
+          if (found) {
+            onNavigateToStepThree();
+          } else {
+            dispatch({ type: 'reset' });
+          }
+        }
     }
 
     return (
@@ -251,21 +265,32 @@ const ProductSearch = (props) => {
                 </MDBRow>
                 <MDBRow className="microphone-button-container justify-content-center">
                     <MDBCol sm="12">
-                        <div className="conversation-container--concierge">
+                        <div className="conversation-container conversation-container--concierge">
                           <img className="grocery-concierge-icon" src={concierge} alt="Grocery Concierge icon"/>
                           <span><strong>What are you looking for?</strong></span>
                         </div>
-                        <div className="conversation-container--customer">
+                        <div className="conversation-container conversation-container--customer">
+                          <span><strong>{state.outputYou}</strong></span>
                           <img className="grocery-concierge-icon" src={customer} alt="Grocery Concierge icon"/>
                         </div>
-                        <div className="text-center">
-                          <p className="microphone-answer-tip">
-                            { !state.listening ? 'Tap to answer' : 'I\'m listening!'}
-                          </p>
-                          <button className="microphone" onClick={toggleListen}>
-                              <FontAwesomeIcon icon="microphone" className="icon"/>
-                          </button>
-                        </div>
+                        {
+                          state.outputBot &&
+                            <div className="conversation-container conversation-container--concierge">
+                              <img className="grocery-concierge-icon" src={concierge} alt="Grocery Concierge icon"/>
+                              <span><strong>{state.outputBot}</strong></span>
+                          </div>
+                        }
+                        {
+                          !state.outputBot &&
+                          <div className="text-center">
+                            <p className="microphone-answer-tip">
+                              { !state.listening ? 'Tap to answer' : 'I\'m listening!'}
+                            </p>
+                            <button className="microphone" onClick={toggleListen}>
+                                <FontAwesomeIcon icon="microphone" className="icon"/>
+                            </button>
+                          </div>
+                        }
                     </MDBCol>
                 </MDBRow>
             </MDBCol>

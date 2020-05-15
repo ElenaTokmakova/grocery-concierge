@@ -7,7 +7,7 @@
         background: $concierge-black;
         display: flex;
         justify-content: flex-start;
-        min-height: 100px;
+        height: 80px;
         padding: 1rem;
         position: relative;
         @media (min-width: 576px) {
@@ -15,8 +15,11 @@
         }
     }
     &--title {
+        height: 100%;
         h1 {
             font-size: 1.8rem;
+            height: 100%;
+            margin-bottom: 0;
             @media (min-width: 576px) {
                 font-size: 2rem;
             }
@@ -28,6 +31,7 @@
             }
         }
         img {
+            height: 100%;
             max-width: 200px;
         }
     }

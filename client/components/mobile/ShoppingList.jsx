@@ -33,7 +33,7 @@ const ShoppingList = props =>  {
             </MDBTable>
             {
                 props.groceryList.length > 0 &&
-                <div className="shopping-list-buttons-container">
+                <div className="shopping-list-buttons-container action-buttons">
                     <button className="search-results-button button button-lighter-green"
                     aria-haspopup="true" aria-expanded={show} onClick={ () => setShow(true)}>
                         <FontAwesomeIcon className="fa-icon" icon="cloud-upload-alt"/> Save shopping list
