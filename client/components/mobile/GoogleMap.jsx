@@ -1,4 +1,4 @@
-import React, {useReducer, useEffect} from 'react';
+import React, {useReducer, useEffect, Fragment} from 'react';
 import { useHistory, useLocation } from "react-router-dom";
 import { MDBRow, MDBCol } from "mdbreact";
 import { Map, Marker, Circle, GoogleApiWrapper } from 'google-maps-react';
@@ -46,7 +46,6 @@ const MapContainer = (props) => {
   useEffect(() => {
     // location changed to step one
     props.updateNavigatedToStepOne(true);
-    props.goToStepOne();
   }, [location]);
 
   const showCurrentLocation = () => {
@@ -122,77 +121,81 @@ const MapContainer = (props) => {
 
   return (
 
-    <section className="store-selection-google-map">
+    <Fragment>
 
-      <MDBRow className="store-geocoder">
-        <MDBCol sm="12" md="6" className="offset-md-3" >
-          <GeocoderInput updateLocated={props.updateLocated} setPostalCode={props.setPostalCode}/>
-        </MDBCol>
-      </MDBRow>
+      { !props.located &&
+      <Fragment>
+          <MDBRow className="store-geocoder">
+            <MDBCol sm="12" md="6" className="offset-md-3" >
+              <GeocoderInput updateLocated={props.updateLocated} setPostalCode={props.setPostalCode}/>
+            </MDBCol>
+          </MDBRow>
 
-      <MDBRow className="store-geolocation">
-        <MDBCol sm="12" md="6" className="offset-md-3" >
-              <button className="button button-orange-red geolocation-button" onClick={showCurrentLocation} >
-                  <FontAwesomeIcon icon="map-marker-alt"/> Locate Me
-              </button>
-        </MDBCol>
-      </MDBRow>
+          <MDBRow className="store-geolocation">
+            <MDBCol sm="12" md="6" className="offset-md-3" >
+                  <button className="button button-orange-red geolocation-button" onClick={showCurrentLocation} >
+                      <FontAwesomeIcon icon="map-marker-alt"/> Locate Me
+                  </button>
+            </MDBCol>
+          </MDBRow>
+      </Fragment>
+
+      }
 
       {
         props.located &&
 
         <MDBRow className="store-search-results">
 
-        <MDBCol md="12" lg="5" className="store-search-results--store-list-container">
-          <StoreList stores={props.places} onStoreSelection={props.onStoreSelection}/>
-        </MDBCol>
+          <MDBCol md="12" lg="5" className="store-search-results--store-list-container">
+            <StoreList stores={props.places} onStoreSelection={props.onStoreSelection}/>
+          </MDBCol>
 
-        <MDBCol md="12" lg="7" className="store-search-results--map-container">
-          <Map className="store-selection-google-map--map" style={{width: 700, height: 500, position: 'relative'}} {...mapProps}>
+          <MDBCol md="12" lg="7" className="store-search-results--map-container">
+            <Map className="store-selection-google-map--map" style={{width: 700, height: 500, position: 'relative'}} {...mapProps}>
 
-            <Circle
-                radius={1200}
-                center={coords}
-                strokeColor='transparent'
-                strokeOpacity={0}
-                strokeWeight={5}
-                fillColor='#FF0000'
-                fillOpacity={0.2}
-            />
+              <Circle
+                  radius={1200}
+                  center={coords}
+                  strokeColor='transparent'
+                  strokeOpacity={0}
+                  strokeWeight={5}
+                  fillColor='#FF0000'
+                  fillOpacity={0.2}
+              />
 
-            {
-              props.places.length > 0 &&
-                props.places.map((place, index) => {
-                  const image = {
-                    url: place.icon,
-                    size: new google.maps.Size(71, 71),
-                    origin: new google.maps.Point(0, 0),
-                    anchor: new google.maps.Point(17, 34),
-                    scaledSize: new google.maps.Size(25, 25)
-                  };
-                  return (
-                    <Marker key={place.id} name={place.name} icon={image} position={place.geometry.location} onClick={onMarkerClick} />
-                  )
-                })
-            }
+              {
+                props.places.length > 0 &&
+                  props.places.map((place, index) => {
+                    const image = {
+                      url: place.icon,
+                      size: new google.maps.Size(71, 71),
+                      origin: new google.maps.Point(0, 0),
+                      anchor: new google.maps.Point(17, 34),
+                      scaledSize: new google.maps.Size(25, 25)
+                    };
+                    return (
+                      <Marker key={place.id} name={place.name} icon={image} position={place.geometry.location} onClick={onMarkerClick} />
+                    )
+                  })
+              }
 
-            <InfoWindowEx marker={state.activeMarker} visible={state.showingInfoWindow} selectedPlace={state.selectedPlace}>
-              <div>
-                <h5>{state.selectedPlace.name}</h5>
-                <button className="button button-lighter-green" onClick={ () =>  { props.onStoreSelection(state.selectedPlace); onNavigateToStepTwo()}}>
-                    Find products
-                </button>
-              </div>
-          </InfoWindowEx>
+              <InfoWindowEx marker={state.activeMarker} visible={state.showingInfoWindow} selectedPlace={state.selectedPlace}>
+                <div>
+                  <h5>{state.selectedPlace.name}</h5>
+                  <button className="button button-lighter-green" onClick={ () =>  { props.onStoreSelection(state.selectedPlace); onNavigateToStepTwo()}}>
+                      Find products
+                  </button>
+                </div>
+            </InfoWindowEx>
 
-          </Map>
-        </MDBCol>
+            </Map>
+          </MDBCol>
 
-      </MDBRow>
+        </MDBRow>
 
       }
-
-  </section>
+      </Fragment>
   );
 }
 

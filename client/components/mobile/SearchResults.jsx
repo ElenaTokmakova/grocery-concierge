@@ -9,7 +9,7 @@ import grocery_store_aisle from "../../assets/images/grocery_store_aisle.png";
 const SearchResults = props => {
     const [show, setShow] = useState(false);
     const match = useRouteMatch();
-    const { productLocation, groceryList, removeItemFromShoppingList, clearShoppingList, goToStepOne, goToStepTwo } = props;
+    const { productLocation, groceryList, removeItemFromShoppingList, clearShoppingList } = props;
         return (
             <section className="search-results-section">
                 <div className="search-results-location"><p className="font-weight-bold">{productLocation}</p></div>
@@ -30,7 +30,7 @@ const SearchResults = props => {
                 <MDBRow className="product-search-results--action-buttons">
                     <p className="font-weight-bold w-100">Would you like to</p>
                     <button className="search-results-button button button-orange-red"
-                    aria-haspopup="true" aria-expanded={state.show} onClick={ () => setShow(true)}>
+                    aria-haspopup="true" aria-expanded={show} onClick={ () => setShow(true)}>
                         <FontAwesomeIcon className="fa-icon" icon="heart"/> Save this Map
                     </button>
                     <SweetAlert
@@ -43,14 +43,14 @@ const SearchResults = props => {
                     />
                     <Link to={{
                         pathname: `/mobile/select-products`
-                    }} onClick={goToStepTwo}>
+                    }}>
                         <button className="search-results-button button button-orange-red">
-                        <FontAwesomeIcon className="fa-icon" icon="question"/> Ask another question
+                            <FontAwesomeIcon className="fa-icon" icon="question"/> Ask another question
                         </button>
                     </Link>
                     <Link to={{
                         pathname: `/mobile/select-store`
-                    }} onClick={goToStepOne}>
+                    }}>
                         <button className="search-results-button button button-orange-red">
                             <FontAwesomeIcon className="fa-icon" icon="sign-out-alt"/> Exit the store
                         </button>

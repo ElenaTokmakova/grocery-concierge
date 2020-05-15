@@ -11,7 +11,7 @@ const Header = () => {
                         <img src={logo} alt="Grocery Concierge Logo"/>
                     </h1>
                 </div>
-                <a className="mobile-header--account-link" href="#">Account</a>
+                <a className="mobile-header--account-link" href="#">My Account</a>
             </div>
         </header>
     )

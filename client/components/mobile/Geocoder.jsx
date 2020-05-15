@@ -38,8 +38,8 @@ const GeocoderInput = (props) => {
 
     return (
         <div className="form-group geocoder-input-container">
-            <p className="geocoder-postal-code-label">Enter postal code</p>
-            <div className="form-group postal-code-input-container">
+            <p className="geocoder-postal-code-label">Enter Postal Code</p>
+            <div className="form-group geocoder-postal-code-input-container">
                 <label htmlFor="geocoder-input" className="sr-only">Enter postal code to find stores nearby</label>
                 <input
                     type="text"

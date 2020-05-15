@@ -1,0 +1,13 @@
+.mobile-app-container {
+    background-color: white;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+    @media (min-width: 575.98px) {
+      text-align: center;
+    }
+  }
+
+.mobile-main-content {
+  padding: 2rem 1rem;
+}

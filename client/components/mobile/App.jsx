@@ -1,7 +1,5 @@
 import React, { Fragment, useReducer, useEffect } from 'react';
 import {
-  BrowserRouter as Router,
-  Switch,
   Route,
   Redirect,
   useRouteMatch
@@ -9,7 +7,6 @@ import {
 import { MDBContainer } from "mdbreact";
 
 import Header from './Header';
-import Hero from './Hero';
 import GoogleMap from './GoogleMap';
 import ProductSearch from './ProductSearch';
 import SearchResults from './SearchResults';
@@ -32,29 +29,6 @@ const initialState = {
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case 'stepOne':
-      return {
-          ...state,
-          stepOne: true,
-          stepTwo: false,
-          stepThree: false,
-          navigatedToStepOne: true,
-          selectedPlace: {}
-      };
-    case 'stepTwo':
-      return {
-          ...state,
-          stepOne: false,
-          stepTwo: true,
-          stepThree: false
-      };
-    case 'stepThree':
-      return {
-          ...state,
-          stepOne: false,
-          stepTwo: false,
-          stepThree: true
-      };
     case 'products':
       return {
           ...state,
@@ -119,21 +93,6 @@ const App = () => {
       dispatch({ type: 'storeSelection', payload: selectedPlace });
     }
 
-    const goToStepOne = () => {
-        console.log("Going to step one");
-      dispatch({ type: 'stepOne' });
-    }
-
-    const goToStepTwo = () => {
-        console.log("Going to step two");
-      dispatch({ type: 'stepTwo' });
-    }
-
-    const goToStepThree = () => {
-      console.log('Going to step three');
-      dispatch({ type: 'stepThree' });
-    }
-
     const addItemToGroceryList = (item) => {
       const newGroceryList = [ ...state.groceryList, item ];
       dispatch({type: 'updateGroceryList', payload: newGroceryList });
@@ -170,18 +129,14 @@ const App = () => {
 
     return (
 
-        <MDBContainer className="app-container text-center">
+        <MDBContainer className="mobile-app-container">
 
           <Header />
 
-          <main className="main-content">
-
-            {
-              (!state.located || state.stepTwo) && <Hero />
-            }
+          <main className="mobile-main-content">
 
             <Route path={`${match.url}/select-store`}>
-            <section className="store-selection-title-container">
+            <section className="store-selection store-selection-title-container">
               { !state.located &&
                 <Fragment>
                   <h2 className="store-selection-title store-selection-title-welcome">Welcome! </h2>
@@ -192,19 +147,20 @@ const App = () => {
                 state.located && <h2 className="store-selection-title store-selection-title-nearby">Stores nearby {state.postalCode}</h2>
               }
             </section>
-            <GoogleMap
-                onStoreSelection={onStoreSelection}
-                located={state.located}
-                lat={state.lat}
-                lng={state.lng}
-                updateLocated={updateLocated}
-                places={state.places}
-                setPlaces={setPlaces}
-                setPostalCode={setPostalCode}
-                goToStepOne={goToStepOne}
-                navigatedToStepOne={state.navigatedToStepOne}
-                updateNavigatedToStepOne={updateNavigatedToStepOne}
-              />
+            <section className="store-selection store-selection-google-map">
+              <GoogleMap
+                  onStoreSelection={onStoreSelection}
+                  located={state.located}
+                  lat={state.lat}
+                  lng={state.lng}
+                  updateLocated={updateLocated}
+                  places={state.places}
+                  setPlaces={setPlaces}
+                  setPostalCode={setPostalCode}
+                  navigatedToStepOne={state.navigatedToStepOne}
+                  updateNavigatedToStepOne={updateNavigatedToStepOne}
+                />
+              </section>
           </Route>
           <Route path={`${match.url}/select-products`}>
           {
@@ -212,8 +168,6 @@ const App = () => {
               <ProductSearch
                     setProductLocation={setProductLocation}
                     selectedPlace={state.selectedPlace}
-                    goToStepOne={goToStepOne}
-                    goToStepThree={goToStepThree}
                     addItemToGroceryList={addItemToGroceryList}
                     groceryList={state.groceryList}
                     lat={state.lat}
@@ -228,8 +182,6 @@ const App = () => {
                     groceryList={state.groceryList}
                     removeItemFromShoppingList={removeItemFromShoppingList}
                     clearShoppingList={clearShoppingList}
-                    goToStepOne={goToStepOne}
-                    goToStepTwo={goToStepTwo}
                     selectedPlace={state.selectedPlace}
                     productLocation={state.productLocation}
                 />

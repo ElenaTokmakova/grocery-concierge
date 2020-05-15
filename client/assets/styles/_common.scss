@@ -51,15 +51,6 @@ body {
     }
   }
 }
-.full-width {
-  @include full-width();
-}
-.app-container {
-  background-color: white;
-  margin-top: 1rem;
-  padding-top: 1rem;
-  padding-bottom: 2rem;
-}
 strong {
   font-weight: 700;
 }
