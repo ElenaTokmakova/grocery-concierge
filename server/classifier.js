@@ -15,6 +15,18 @@ classifier.addDocument('hello', 'hello');
 classifier.addDocument('hi', 'hello');
 classifier.addDocument('howdy', 'hello');
 
+classifier.addDocument('call for assistance', 'help');
+classifier.addDocument('help', 'help');
+
+classifier.addDocument('exit', 'exit');
+classifier.addDocument('stop', 'exit');
+classifier.addDocument('done', 'exit');
+
+classifier.addDocument('print', 'print');
+classifier.addDocument('print this map', 'print');
+
+classifier.addDocument('ask another question', 'another');
+
 classifier.train();
 
 console.log(classifier.classify('where is the sugar'));
