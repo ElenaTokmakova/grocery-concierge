@@ -62,6 +62,8 @@ io.on('connection', function(socket) {
     // Determine intent of utterance
     const classification = classifier.classify(text);
 
+    console.log('Classification', classification)
+
     if (classification == 'where') {
       // Filter question to get the search item
       const tokens = natural.PorterStemmer.tokenizeAndStem(text);
@@ -85,6 +87,14 @@ io.on('connection', function(socket) {
       }
     } else if (classification == 'hello') {
       socket.emit('response', { type: 'hello', reply: 'Hi!', info: 'Hi!'});
+    } else if (classification == 'exit') {
+      socket.emit('response', { type: 'exit', reply: 'Exiting the application', info: 'Exiting the application'});
+    } else if (classification == 'print') {
+      socket.emit('response', { type: 'print', reply: 'Printing the map', info: 'Printing the map'});
+    } else if (classification == 'help') {
+      socket.emit('response', { type: 'help', reply: 'An assistant will be with you shortly', info: 'An assistant will be with you shortly'});
+    } else if (classification == 'another') {
+      socket.emit('response', { type: 'another', reply: 'You can ask another question now', info: 'You can ask another question now'});
     }
   });
 });
