@@ -4,6 +4,7 @@ import Header from './Header';
 import Sidebar from './Sidebar';
 import KioskContext from './Context';
 import MainContent from './MainContent';
+import SpeechRecognition from '../SpeechRecognition';
 import concierge from '../../assets/images/concierge.svg';
 import customer from '../../assets/images/customer.svg';
 
@@ -28,7 +29,9 @@ const App = () => {
                 </MDBCol>
                 <MDBCol md="9" className="kiosk-main-content-wrapper">
                   <main className="kiosk-main-content">
+                    <SpeechRecognition>
                       <MainContent />
+                    </SpeechRecognition>
                   </main>
                 </MDBCol>
             </MDBRow>
