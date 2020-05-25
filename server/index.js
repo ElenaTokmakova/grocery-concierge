@@ -95,6 +95,8 @@ io.on('connection', function(socket) {
       socket.emit('response', { type: 'help', reply: 'An assistant will be with you shortly', info: 'An assistant will be with you shortly'});
     } else if (classification == 'another') {
       socket.emit('response', { type: 'another', reply: 'You can ask another question now', info: 'You can ask another question now'});
+    } else if (classification == 'start') {
+      socket.emit('response', { type: 'start', reply: 'You can start over now', info: 'You can start over now'});
     }
   });
 });
