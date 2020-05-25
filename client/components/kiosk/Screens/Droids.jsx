@@ -1,28 +1,11 @@
 import React, { Fragment, useContext } from 'react';
-import { useHistory } from "react-router-dom";
 import { MDBRow, MDBCol } from 'mdbreact';
 import KioskContext from '../Context';
 import NavigationLink from './components/NavigationLink';
-import grocery_store_aisle_small from "../../../assets/images/grocery_store_aisle_small.png";
+import droids from "../../../assets/images/droids.jpg";
 
 
-const Found = (props) => {
-
-    const { intent, outputBot, infoDisplay, speaking } = props;
-    const history = useHistory();
-
-    let conciergeReply = '';
-    let location = '';
-
-    if (intent === 'where' && outputBot) {
-        conciergeReply = outputBot;
-        location = infoDisplay;
-        if (!speaking) {
-            setTimeout( () => {
-                history.push("/kiosk/actions");
-            }, 3000);
-        }
-    }
+const Droids = () => {
 
     const { concierge } = useContext(KioskContext);
 
@@ -34,13 +17,12 @@ const Found = (props) => {
                         <img className="grocery-concierge-icon" src={concierge} alt="Grocery Concierge icon"/>
                     </MDBCol>
                     <MDBCol md="10" className="text-container">
-                        <h3 className="concierge-speaking">{ conciergeReply }</h3>
+                        <h3 className="concierge-speaking">I can't find the droids you're looking for.</h3>
                     </MDBCol>
                </MDBRow>
                <MDBRow>
-                    <MDBCol lg="10" md="12" className="offset-lg-2 offset-md-0 concierge-directions-container">
-                        <img src={grocery_store_aisle_small} className="img-fluid" alt="Grocery store aisle"/>
-                        <h3 className="concierge-directions">{ location }</h3>
+                    <MDBCol md="12" className="concierge-directions-container justify-content-center">
+                        <img src={droids} className="img-fluid" alt="Droids"/>
                     </MDBCol>
                </MDBRow>
             </section>
@@ -52,4 +34,4 @@ const Found = (props) => {
     )
 }
 
-export default Found;
+export default Droids;

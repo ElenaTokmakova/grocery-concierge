@@ -83,20 +83,24 @@ io.on('connection', function(socket) {
         console.log('Message: ' + found.location);
         socket.emit('response', { type: 'where', term: searchItem, reply: 'You can find ' + found.category + ' in ' + found.location, name: found.name, info: found.location});
       } else {
-        socket.emit('response', { type: 'not-found', reply: 'Sorry, I can\'t find what you\'re looking for, please try again', info: 'Please try again'});
+        socket.emit('response', { type: 'not-found', reply: 'Sorry, I can\'t find what you\'re looking for, please try again'});
       }
     } else if (classification == 'hello') {
-      socket.emit('response', { type: 'hello', reply: 'Hi!', info: 'Hi!'});
+      socket.emit('response', { type: 'hello', reply: 'Hi!'});
     } else if (classification == 'exit') {
-      socket.emit('response', { type: 'exit', reply: 'Exiting the application', info: 'Exiting the application'});
+      socket.emit('response', { type: 'exit', reply: 'The application will close automatically in 5 minutes. Say "start over" if you want to begin a new session.'});
     } else if (classification == 'print') {
-      socket.emit('response', { type: 'print', reply: 'Printing the map', info: 'Printing the map'});
+      socket.emit('response', { type: 'print', reply: 'Printing the map'});
     } else if (classification == 'help') {
-      socket.emit('response', { type: 'help', reply: 'An assistant will be with you shortly', info: 'An assistant will be with you shortly'});
-    } else if (classification == 'another') {
-      socket.emit('response', { type: 'another', reply: 'You can ask another question now', info: 'You can ask another question now'});
+      socket.emit('response', { type: 'help', reply: 'An assistant will be with you shortly'});
+    } else if (classification == 'question') {
+      socket.emit('response', { type: 'question', reply: 'What are you looking for?'});
     } else if (classification == 'start') {
-      socket.emit('response', { type: 'start', reply: 'You can start over now', info: 'You can start over now'});
+      socket.emit('response', { type: 'start', reply: 'Say "Ask a question" to continue.'});
+    } else if (classification == 'actions') {
+      socket.emit('response', { type: 'actions', reply: 'Please select what you would like to do'});
+    } else if (classification == 'droids') {
+      socket.emit('response', { type: 'droids', reply: 'I can\'t find the droids you are looking for'});
     }
   });
 });

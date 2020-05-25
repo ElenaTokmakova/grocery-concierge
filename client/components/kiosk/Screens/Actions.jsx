@@ -1,13 +1,22 @@
-import React, { Fragment, useContext } from 'react';
+import React, { Fragment, useContext, useState, useEffect } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import KioskContext from '../Context';
 import { MDBRow, MDBCol } from 'mdbreact';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import SweetAlert from 'sweetalert2-react';
 import NavigationLink from './components/NavigationLink';
 
-const Action = () => {
+const Action = (props) => {
 
+    const [show, setShow] = useState(false);
     const { concierge } = useContext(KioskContext);
+
+    useEffect( () => {
+        if (props.intent === 'print' && !show) {
+            setShow(true)
+            setTimeout( () => setShow(false), 1500)
+        }
+    }, [props.intent])
 
     return (
         <Fragment>
@@ -25,11 +34,19 @@ const Action = () => {
                         <div className="kiosk-action-button-container">
                             <Link to={{
                                 pathname: `/kiosk/actions`
-                            }} >
+                            }} onClick={ () => setShow(true)}>
                                 <button className="kiosk-action-button button button-orange-red">
                                 <FontAwesomeIcon className="fa-icon" icon="print"/> Print this Map
                                 </button>
                             </Link>
+                            <SweetAlert
+                                type="success"
+                                confirmButtonColor="#a1bf63"
+                                show={show}
+                                title="Success"
+                                text="Your map has been printed!"
+                                onConfirm={() => setShow(false)}
+                            />
                             <Link to={{
                                 pathname: `/kiosk/actions`
                             }} >

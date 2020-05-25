@@ -3,7 +3,13 @@ import KioskContext from '../Context';
 import { MDBRow, MDBCol } from 'mdbreact';
 import NavigationLink from './components/NavigationLink';
 
-const Looking = () => {
+const Looking = (props) => {
+
+    let customerUtterance = '';
+
+    if (props.intent === 'where' && props.outputYou) {
+        customerUtterance = props.outputYou;
+    }
 
     const { concierge, customer } = useContext(KioskContext);
 
@@ -28,7 +34,7 @@ const Looking = () => {
                </MDBRow>
                <MDBRow>
                     <MDBCol md="10" className="text-container align-items-end">
-                        <h3 className="customer-speaking">Where can I find beans?</h3>
+                        <h3 className="customer-speaking">{customerUtterance}</h3>
                     </MDBCol>
                     <MDBCol md="2" className="circle-container">
                         <img className="grocery-concierge-icon" src={customer} alt="Grocery Concierge icon"/>

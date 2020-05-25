@@ -19,8 +19,8 @@ const Welcome = (props) => {
                 </MDBCol>
                 <MDBCol md="10" className="text-container">
                     <h2>Welcome to Grocery Concierge.</h2>
-                    <p>We can help you find what you are looking for in this store</p>
-                    <p>Say <strong>"Let's Start"</strong> to continue or <strong>"Pause"</strong> to stay on this screen.</p>
+                    <p>We can help you find what you are looking for in this store.</p>
+                    <p>Say <strong>"Ask a question"</strong> to continue.</p>
                 </MDBCol>
                </MDBRow>
             </section>

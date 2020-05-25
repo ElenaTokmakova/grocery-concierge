@@ -1,4 +1,4 @@
-import React, { Fragment, useReducer, useEffect } from 'react';
+import React, { Fragment, cloneElement, useReducer, useEffect } from 'react';
 // a standalone build of socket.io-client is exposed automatically by the socket.io server
 import socketIOClient from "socket.io-client";
 
@@ -22,27 +22,28 @@ recognition.maxAlternatives = 1;
 recognition.lang = 'en-US';
 
 const initialState = {
+    listening: true,
+    intent: '',
+    speaking: false,
     outputYou: '',
     outputBot: '',
     infoDisplay: ''
 };
 
 const reducer = (state, action) => {
-  console.log("Type", action.type, action.payload)
   switch (action.type) {
     case 'socketResponse':
       return {
           ...state,
+          intent: action.payload.intent,
           outputBot: action.payload.reply,
           infoDisplay: action.payload.location
       };
-    case 'reset':
-      return {
-          ...state,
-          outputBot: '',
-          outputYou: '',
-          infoDisplay: ''
-      };
+    case 'setSpeaking':
+    return {
+        ...state,
+        speaking: action.payload
+    };
     case 'outputYou':
       return {
           ...state,
@@ -77,7 +78,7 @@ const Recognition = (props) => {
 
         if(response.reply == '') response.reply = '(No answer...)';
 
-        dispatch({ type: 'socketResponse', payload: { reply: response.reply, location: response.info } });
+        dispatch({ type: 'socketResponse', payload: { reply: response.reply, location: response.info, intent: response.type } });
 
       });
     }
@@ -87,7 +88,6 @@ const Recognition = (props) => {
 
       recognition.start();
       recognition.onend = () => {
-        console.log("Continue listening...");
         recognition.start();
       }
 
@@ -97,7 +97,7 @@ const Recognition = (props) => {
 
       recognition.onspeechstart = () => {
         console.log('Speech has been detected.');
-        dispatch({ type: 'reset' });
+        // dispatch({ type: 'reset' });
       }
 
       recognition.onresult = (e) => {
@@ -115,27 +115,26 @@ const Recognition = (props) => {
         console.log('Recognition error', e.error)
         dispatch({ type: 'outputBotError', payload: 'Sorry, I couldn\'t understand you!' });
         setTimeout(() => {
-          dispatch({ type: 'reset' });
+          //dispatch({ type: 'reset' });
         }, 2000);
       }
 
     }
 
     const synthVoice = (text) => {
-        console.log("Speech synth", text);
         const synth = window.speechSynthesis;
         const utterance = new SpeechSynthesisUtterance();
         utterance.text = text;
         synth.speak(utterance);
+        dispatch({ type: 'setSpeaking', payload: true });
         utterance.onend = () => {
-            console.log("Utterance ended");
-            dispatch({ type: 'reset' });
+            dispatch({ type: 'setSpeaking', payload: false });
         }
     }
 
     return (
         <Fragment>
-            { props.children }
+            { cloneElement(props.children, { ...state }) }
         </Fragment>
     )
 }

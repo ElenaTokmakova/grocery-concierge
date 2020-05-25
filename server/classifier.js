@@ -19,6 +19,8 @@ classifier.addDocument('start', 'start');
 classifier.addDocument('let\'s start', 'start');
 classifier.addDocument('start over', 'start');
 
+classifier.addDocument('actions', 'actions');
+
 classifier.addDocument('call for assistance', 'help');
 classifier.addDocument('help', 'help');
 
@@ -29,18 +31,24 @@ classifier.addDocument('done', 'exit');
 classifier.addDocument('print', 'print');
 classifier.addDocument('print this map', 'print');
 
-classifier.addDocument('another question', 'another');
+classifier.addDocument('ask a question', 'question');
+classifier.addDocument('I\'m looking for something', 'question');
+classifier.addDocument('another question', 'question');
+
+classifier.addDocument('droids', 'droids');
 
 classifier.train();
 
 console.log(classifier.classify('where is the sugar'));
 console.log(classifier.classify('can you tell me where ice cream is'));
 console.log(classifier.classify('hello'));
+console.log(classifier.classify('actions'));
 console.log(classifier.classify('let\'s start'));
 console.log(classifier.classify('call for assistance'));
 console.log(classifier.classify('done'));
 console.log(classifier.classify('print this map'));
 console.log(classifier.classify('another question'));
+console.log(classifier.classify('droids'));
 
 var output = classifier.classify('where is the sugar');
 
