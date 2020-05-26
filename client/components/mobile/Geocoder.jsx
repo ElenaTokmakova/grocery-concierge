@@ -20,7 +20,7 @@ const GeocoderInput = (props) => {
         Geocode.fromAddress(postalCode).then(response => {
               const { lat, lng } = response.results[0].geometry.location;
               setPostalCode('');
-              props.updateLocated(true, lat, lng);
+              props.updateLocatedAndCoordinates(true, lat, lng);
               props.setPostalCode(postalCode);
             },
             error => {

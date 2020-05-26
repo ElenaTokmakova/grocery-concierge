@@ -30,17 +30,17 @@ const Found = (props) => {
         <Fragment>
             <section className="screen-section screen-section-found">
                 <MDBRow>
-                    <MDBCol md="2" className="circle-container">
+                    <MDBCol size="2" className="circle-container">
                         <img className="grocery-concierge-icon" src={concierge} alt="Grocery Concierge icon"/>
                     </MDBCol>
-                    <MDBCol md="10" className="text-container">
+                    <MDBCol size="10" className="text-container">
                         <h3 className="concierge-speaking">{ conciergeReply }</h3>
                     </MDBCol>
                </MDBRow>
                <MDBRow>
-                    <MDBCol lg="10" md="12" className="offset-lg-2 offset-md-0 concierge-directions-container">
+                    <MDBCol size="12" className="concierge-directions-container justify-content-center">
                         <img src={grocery_store_aisle_small} className="img-fluid" alt="Grocery store aisle"/>
-                        <h3 className="concierge-directions">{ location }</h3>
+                        {/* <h3 className="concierge-directions">{ location }</h3> */}
                     </MDBCol>
                </MDBRow>
             </section>

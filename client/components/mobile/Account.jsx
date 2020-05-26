@@ -5,7 +5,7 @@ import { Link, withRouter } from 'react-router-dom';
 const Account = (props) => {
 
     return (
-        <Fragment>
+        <section className="mobile-section mobile-section-account">
             <h1>My Account</h1>
             <div className="account--action-buttons action-buttons">
                 <Link to={{
@@ -75,7 +75,7 @@ const Account = (props) => {
                     </div>
                 </Fragment>
             }
-        </Fragment>
+        </section>
     )
 }
 

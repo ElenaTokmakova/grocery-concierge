@@ -22,10 +22,10 @@ const Action = (props) => {
         <Fragment>
             <section className="screen-section screen-section-actions">
                 <MDBRow>
-                    <MDBCol md="2" className="circle-container">
+                    <MDBCol size="2" className="circle-container">
                         <img className="grocery-concierge-icon" src={concierge} alt="Grocery Concierge icon"/>
                     </MDBCol>
-                    <MDBCol md="10" className="text-container">
+                    <MDBCol size="10" className="text-container">
                         <h3 className="concierge-speaking">Would you like to</h3>
                     </MDBCol>
                </MDBRow>
@@ -48,7 +48,7 @@ const Action = (props) => {
                                 onConfirm={() => setShow(false)}
                             />
                             <Link to={{
-                                pathname: `/kiosk/actions`
+                                pathname: `/kiosk/assistant`
                             }} >
                                 <button className="kiosk-action-button button button-orange-red">
                                     <FontAwesomeIcon className="fa-icon" icon="phone-volume"/> Call for Assistance

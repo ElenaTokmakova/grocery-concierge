@@ -59,14 +59,14 @@ const reducer = (state, action) => {
         ...state,
         productLocation: action.payload
       }
-    case 'updateLocated' :
+    case 'updateLocatedAndCoordinates' :
       return {
         ...state,
         located: action.payload.located,
         lat: action.payload.lat,
         lng: action.payload.lng
       }
-    case 'update' :
+    case 'updateLocated' :
       return {
         ...state,
         located: action.payload
@@ -134,8 +134,8 @@ const App = () => {
       dispatch({ type: 'setProductLocation', payload: location });
     }
 
-    const updateLocated = (located, lat, lng) => {
-      dispatch({ type : 'updateLocated', payload : { located, lat, lng }});
+    const updateLocatedAndCoordinates = (located, lat, lng) => {
+      dispatch({ type : 'updateLocatedAndCoordinates', payload : { located, lat, lng }});
     }
 
     const setPlaces = (places) => {
@@ -150,11 +150,12 @@ const App = () => {
       dispatch({ type: 'setPostalCode', payload });
     }
 
-    const update = (payload) => {
-      dispatch({ type : 'update', payload});
+    const updateLocated = (payload) => {
+      dispatch({ type : 'updateLocated', payload});
     }
 
     const postalCode = state.postalCode === "you" ? "you" : <strong>{state.postalCode}</strong>;
+    const placeSelected = Object.keys(state.selectedPlace).length > 0;
 
     return (
 
@@ -174,44 +175,42 @@ const App = () => {
           <main className="mobile-main-content">
 
             <Route path={`${match.url}/select-store`}>
-            <section className="store-selection store-selection-title-container">
-              { !state.located &&
-                <Fragment>
-                  <h2 className="store-selection-title store-selection-title-welcome">Welcome! </h2>
-                  <p>Start searching for your nearest grocery store here </p>
-                </Fragment>
-              }
-              {
-                state.located &&
-                <Fragment>
-                  <div className="back-navigation">
-                      <FontAwesomeIcon className="back-icon" icon="chevron-left"/>
-                      <Link className="back-link" to={{
-                            pathname: `/mobile/select-store`
-                        }} onClick={() => update(false)}>Back</Link>
-                  </div>
-                  <h2 className="store-selection-title store-selection-title-nearby">Stores nearby {postalCode}</h2>
-                </Fragment>
-              }
-            </section>
-            <section className="store-selection store-selection-google-map">
+              <section className="mobile-section mobile-section-store-selection mobile-section-store-selection-title-container">
+                { !state.located &&
+                  <Fragment>
+                    <h2 className="mobile-section-store-selection-title mobile-section-store-selection-title-welcome">Welcome! </h2>
+                    <p>Start searching for your nearest grocery store here </p>
+                  </Fragment>
+                }
+                {
+                  state.located &&
+                  <Fragment>
+                    <div className="back-navigation">
+                        <FontAwesomeIcon className="back-icon" icon="chevron-left"/>
+                        <Link className="back-link" to={{
+                              pathname: `/mobile/select-store`
+                          }} onClick={() => updateLocated(false)}>Back</Link>
+                    </div>
+                    <h2 className="mobile-section-store-selection-title mobile-section-store-selection-title-nearby">Stores nearby {postalCode}</h2>
+                  </Fragment>
+                }
+              </section>
               <GoogleMap
                   onStoreSelection={onStoreSelection}
                   located={state.located}
                   lat={state.lat}
                   lng={state.lng}
-                  updateLocated={updateLocated}
+                  updateLocatedAndCoordinates={updateLocatedAndCoordinates}
                   places={state.places}
                   setPlaces={setPlaces}
                   setPostalCode={setPostalCode}
                   navigatedToStepOne={state.navigatedToStepOne}
                   updateNavigatedToStepOne={updateNavigatedToStepOne}
                 />
-              </section>
           </Route>
           <Route path={`${match.url}/select-products`}>
           {
-            Object.keys(state.selectedPlace).length === 0 ? <Redirect to={`${match.url}/select-store`} /> :
+            !placeSelected ? <Redirect to={`${match.url}/select-store`} /> :
               <ProductSearch
                     setProductLocation={setProductLocation}
                     selectedPlace={state.selectedPlace}
@@ -224,7 +223,7 @@ const App = () => {
           </Route>
           <Route path={`${match.url}/search-results`}>
           {
-            Object.keys(state.selectedPlace).length === 0 ? <Redirect to={`${match.url}/select-store`} /> :
+            !placeSelected ? <Redirect to={`${match.url}/select-store`} /> :
               <SearchResults
                     groceryList={state.groceryList}
                     removeItemFromShoppingList={removeItemFromShoppingList}
@@ -235,32 +234,24 @@ const App = () => {
           }
           </Route>
           <Route path={`${match.url}/account`}>
-            <section className="account-section">
-              <Account
+            <Account
                     selectedPlaces={state.selectedPlaces}
                     onStoreSelection={onStoreSelection}
                     removeStoreFromSelectedStoreList={removeStoreFromSelectedStoreList}
               />
-            </section>
           </Route>
           <Route path={`${match.url}/shopping-list`}>
-            <section className="shopping-list-section">
               <ShoppingList
                     groceryList={state.groceryList}
                     removeItemFromShoppingList={removeItemFromShoppingList}
                     clearShoppingList={clearShoppingList}
               />
-              </section>
           </Route>
           <Route path={`${match.url}/saved-maps`}>
-            <section className="saved-maps-section">
               <SavedMaps />
-            </section>
           </Route>
           <Route path={`${match.url}/bulletin`}>
-            <section className="bulletin-section">
               <Bulletin />
-            </section>
           </Route>
           <Route exact path="/mobile">
             <Redirect to={`${match.url}/select-store`} />

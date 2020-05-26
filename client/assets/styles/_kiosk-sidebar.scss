@@ -3,6 +3,9 @@
     color: white;
     height: 100%;
     padding: 3rem 2rem;
+    @media (max-width: 767px) {
+        display: none;
+    }
     section {
         margin-bottom: 2rem;
         &:last-of-type {

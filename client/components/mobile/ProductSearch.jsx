@@ -1,9 +1,10 @@
 import React, { useReducer, useEffect,  useContext } from 'react';
-import { Link, useRouteMatch, withRouter } from 'react-router-dom';
+import { useRouteMatch } from 'react-router-dom';
 import { useHistory } from "react-router-dom";
 import MobileContext from './Context';
 import { MDBRow, MDBCol } from "mdbreact";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import NavigateBack from './components/NavigateBack';
 // a standalone build of socket.io-client is exposed automatically by the socket.io server
 import socketIOClient from "socket.io-client";
 import axios from 'axios';
@@ -243,12 +244,7 @@ const ProductSearch = (props) => {
               <MDBCol md="4" className="offset-md-4">
                 <MDBRow className="back-to-map-button-container justify-content-center">
                     <MDBCol sm="12">
-                      <div className="back-navigation">
-                          <FontAwesomeIcon className="back-icon" icon="chevron-left"/>
-                          <Link className="back-link" to={{
-                                pathname: `/mobile/select-store`
-                            }}>Select another store</Link>
-                      </div>
+                      <NavigateBack pathname="/mobile/select-store" text="Select another store"/>
                         <p className="selected-store">
                           <span className="font-weight-bold">Your Selected Store:</span>
                           <span className="store-name">{name}</span>
@@ -294,4 +290,4 @@ const ProductSearch = (props) => {
     );
 }
 
-export default withRouter(ProductSearch);
+export default ProductSearch;

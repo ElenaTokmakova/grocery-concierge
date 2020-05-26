@@ -53,7 +53,7 @@ const MapContainer = (props) => {
       navigator.geolocation.getCurrentPosition(position => {
           const lat = position.coords.latitude;
           const lng = position.coords.longitude;
-          props.updateLocated(true, lat, lng);
+          props.updateLocatedAndCoordinates(true, lat, lng);
         }
       )
     } else {
@@ -131,13 +131,13 @@ const MapContainer = (props) => {
 
   return (
 
-    <Fragment>
+    <section className="mobile-section mobile-section-google-map">
 
       { !props.located &&
       <Fragment>
           <MDBRow className="store-geocoder">
             <MDBCol sm="12" md="6" className="offset-md-3" >
-              <GeocoderInput updateLocated={props.updateLocated} setPostalCode={props.setPostalCode}/>
+              <GeocoderInput updateLocatedAndCoordinates={props.updateLocatedAndCoordinates} setPostalCode={props.setPostalCode}/>
             </MDBCol>
           </MDBRow>
 
@@ -162,7 +162,7 @@ const MapContainer = (props) => {
           </MDBCol>
 
           <MDBCol md="12" lg="7" className="store-search-results--map-container">
-            <Map className="store-selection-google-map--map" style={{width: 700, height: 500, position: 'relative'}} {...mapProps}>
+            <Map className="mobile-section-google-map--map" style={{width: 700, height: 500, position: 'relative'}} {...mapProps}>
 
               <Circle
                   radius={1200}
@@ -205,7 +205,7 @@ const MapContainer = (props) => {
         </MDBRow>
 
       }
-      </Fragment>
+      </section>
   );
 }
 

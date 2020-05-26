@@ -11,6 +11,7 @@
             align-items: flex-start;
             display: flex;
             justify-content: center;
+            margin-bottom: 1rem;
             .circle {
                 border-radius: 50%;border: 1px solid $concierge-black;
                 height: 7vw;
@@ -48,6 +49,9 @@
             font-size: 2.5rem;
             font-weight: bold;
             margin-bottom: 2rem;
+            @media (max-width: 767px) {
+                font-size: 1.5rem;
+            }
         }
         h3 {
             font-size: 2.5rem;
@@ -61,10 +65,16 @@
             &.concierge-directions, &.concierge-warning {
                 color: $concierge-dark-red;
             }
+            @media (max-width: 767px) {
+                font-size: 1.2rem;
+            }
         }
         p {
             font-size: 2.5rem;
             margin-bottom: 2rem;
+            @media (max-width: 767px) {
+                font-size: 1.5rem;
+            }
         }
         &.screen-section-exit {
             > div {
@@ -112,8 +122,12 @@
     .grocery-concierge-icon {
         max-width: 100%;
         width: 120px;
+        @media (max-width: 767px) {
+            width: 80px;
+        }
     }
     .screen-navigation-links {
+        display: none !important;
         bottom: 2rem;
         display: flex;
         justify-content: center;

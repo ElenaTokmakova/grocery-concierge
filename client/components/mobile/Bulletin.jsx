@@ -5,13 +5,12 @@ import metres_apart_graphic from "../../assets/images/2metres_apart_graphic.png"
 const Bulletin = () => {
 
     return (
-        <Fragment>
+        <section className="mobile-section mobile-section-bulletin">
             <MDBRow>
                 <MDBCol md="6" className="offset-md-3 concierge-action-buttons-container mb-4">
                     <img className="img-fluid" src={metres_apart_graphic} />
                 </MDBCol>
             </MDBRow>
-            <section>
                 <h3 className="underlined">News Bulletin</h3>
                 <MDBListGroup>
                     <MDBListGroupItem>Stay away from each other at least 6 feet apart</MDBListGroupItem>
@@ -23,8 +22,7 @@ const Bulletin = () => {
                     <MDBListGroupItem>Wash/Soak your produce</MDBListGroupItem>
                     <MDBListGroupItem>Use credit cards/visa debit if possible.</MDBListGroupItem>
                 </MDBListGroup>
-            </section>
-        </Fragment>
+        </section>
     )
 }
 

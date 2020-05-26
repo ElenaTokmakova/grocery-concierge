@@ -1,32 +1,22 @@
 import React, {Fragment, useState} from 'react';
-import { Link, withRouter } from 'react-router-dom';
 import { MDBTable, MDBTableHead, MDBTableBody } from "mdbreact";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import SweetAlert from 'sweetalert2-react';
+import NavigateBack from './components/NavigateBack';
 
 const ShoppingList = props =>  {
     const [show, setShow] = useState(false);
     if (props.groceryList.length === 0) {
         return (
             <Fragment>
-                <div className="back-navigation">
-                    <FontAwesomeIcon className="back-icon" icon="chevron-left"/>
-                    <Link className="back-link" to={{
-                        pathname: `/mobile/account`
-                    }}>Back</Link>
-                </div>
+                <NavigateBack pathname="/mobile/account" text="Back"/>
                 <h3>Your shopping list is empty</h3>
             </Fragment>
         );
     }
     return (
-        <Fragment>
-            <div className="back-navigation">
-                <FontAwesomeIcon className="back-icon" icon="chevron-left"/>
-                <Link className="back-link" to={{
-                    pathname: `/mobile/account`
-                }}>Back</Link>
-            </div>
+        <section className="mobile-section mobile-section-shopping-list">
+            <NavigateBack pathname="/mobile/account" text="Back"/>
             <p className="product-search-subtitle font-weight-bold">Your shopping list</p>
             <MDBTable className="shopping-list-table" striped bordered responsive hover>
                 <MDBTableHead>
@@ -68,8 +58,8 @@ const ShoppingList = props =>  {
                     <FontAwesomeIcon className="fa-icon" icon="trash"/>  Clear shopping list
                 </button>
             </div>
-        </Fragment>
+        </section>
       );
 }
 
-export default withRouter(ShoppingList);
+export default ShoppingList;

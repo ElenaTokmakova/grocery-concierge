@@ -11,13 +11,10 @@ const Welcome = (props) => {
         <Fragment>
             <section className="screen-section screen-section-welcome">
                <MDBRow>
-                <MDBCol md="2" className="circle-container">
-                    {/* <div className="circle">
-                        <span>AI</span>
-                    </div> */}
+                <MDBCol size="2" className="circle-container">
                     <img className="grocery-concierge-icon" src={concierge} alt="Grocery Concierge icon"/>
                 </MDBCol>
-                <MDBCol md="10" className="text-container">
+                <MDBCol size="10" className="text-container">
                     <h2>Welcome to Grocery Concierge.</h2>
                     <p>We can help you find what you are looking for in this store.</p>
                     <p>Say <strong>"Ask a question"</strong> to continue.</p>
