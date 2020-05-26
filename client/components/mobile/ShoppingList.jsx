@@ -1,4 +1,5 @@
 import React, {Fragment, useState} from 'react';
+import { Link, withRouter } from 'react-router-dom';
 import { MDBTable, MDBTableHead, MDBTableBody } from "mdbreact";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import SweetAlert from 'sweetalert2-react';
@@ -7,11 +8,25 @@ const ShoppingList = props =>  {
     const [show, setShow] = useState(false);
     if (props.groceryList.length === 0) {
         return (
-            <h2>Your shopping list is empty</h2>
+            <Fragment>
+                <div className="back-navigation">
+                    <FontAwesomeIcon className="back-icon" icon="chevron-left"/>
+                    <Link className="back-link" to={{
+                        pathname: `/mobile/account`
+                    }}>Back</Link>
+                </div>
+                <h3>Your shopping list is empty</h3>
+            </Fragment>
         );
     }
     return (
         <Fragment>
+            <div className="back-navigation">
+                <FontAwesomeIcon className="back-icon" icon="chevron-left"/>
+                <Link className="back-link" to={{
+                    pathname: `/mobile/account`
+                }}>Back</Link>
+            </div>
             <p className="product-search-subtitle font-weight-bold">Your shopping list</p>
             <MDBTable className="shopping-list-table" striped bordered responsive hover>
                 <MDBTableHead>
@@ -29,7 +44,7 @@ const ShoppingList = props =>  {
                             <tr key={index}>
                             <td>{name}</td>
                             <td>{location}</td>
-                            <td><FontAwesomeIcon onClick={props.removeItemFromShoppingList.bind(this, name)} icon="trash" className="clear-shopping-list-icon"/></td>
+                            <td><FontAwesomeIcon onClick={ () => { props.removeItemFromShoppingList(name)}} icon="trash" className="clear-shopping-list-icon"/></td>
                             </tr>
                         )
                     })
@@ -57,4 +72,4 @@ const ShoppingList = props =>  {
       );
 }
 
-export default ShoppingList;
+export default withRouter(ShoppingList);

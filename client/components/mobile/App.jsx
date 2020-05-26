@@ -21,6 +21,7 @@ import customer from '../../assets/images/customer.svg';
 
 const initialState = {
     selectedPlace: {},
+    selectedPlaces: [],
     places: [],
     stepOne: true,
     stepTwo: false,
@@ -45,10 +46,13 @@ const reducer = (state, action) => {
     case 'storeSelection':
       return {
           ...state,
-          stepOne: false,
-          stepTwo: true,
-          stepThree: false,
-          selectedPlace: action.payload
+          selectedPlace: action.payload.selectedPlace,
+          selectedPlaces: action.payload.selectedPlaces
+      };
+    case 'updateSelectedStoreList':
+      return {
+          ...state,
+          selectedPlaces: action.payload
       };
     case 'setProductLocation':
       return {
@@ -103,7 +107,8 @@ const App = () => {
     }, []);
 
     const onStoreSelection = (selectedPlace) => {
-      dispatch({ type: 'storeSelection', payload: selectedPlace });
+      const selectedPlaces = state.selectedPlaces.filter(element => selectedPlace.id === element.id).length === 0 ? [...state.selectedPlaces, selectedPlace] : state.selectedPlaces;
+      dispatch({ type: 'storeSelection', payload: {selectedPlace, selectedPlaces} });
     }
 
     const addItemToGroceryList = (item) => {
@@ -114,6 +119,11 @@ const App = () => {
     const removeItemFromShoppingList = (name) => {
       const newGroceryList = state.groceryList.filter(element => element.name !== name);
       dispatch({ type: 'updateGroceryList', payload: newGroceryList });
+    }
+
+    const removeStoreFromSelectedStoreList = (store) => {
+      const newSelectedStoreList = state.selectedPlaces.filter(element => element.id !== store.id);
+      dispatch({ type: 'updateSelectedStoreList', payload: newSelectedStoreList });
     }
 
     const clearShoppingList = () => {
@@ -174,9 +184,9 @@ const App = () => {
               {
                 state.located &&
                 <Fragment>
-                  <div className="store-selection-back-navigation">
-                      <FontAwesomeIcon className="store-selection-back-icon" icon="chevron-left"/>
-                      <Link className="store-selection-back-link" to={{
+                  <div className="back-navigation">
+                      <FontAwesomeIcon className="back-icon" icon="chevron-left"/>
+                      <Link className="back-link" to={{
                             pathname: `/mobile/select-store`
                         }} onClick={() => update(false)}>Back</Link>
                   </div>
@@ -227,7 +237,9 @@ const App = () => {
           <Route path={`${match.url}/account`}>
             <section className="account-section">
               <Account
-                    selectedPlace={state.selectedPlace}
+                    selectedPlaces={state.selectedPlaces}
+                    onStoreSelection={onStoreSelection}
+                    removeStoreFromSelectedStoreList={removeStoreFromSelectedStoreList}
               />
             </section>
           </Route>

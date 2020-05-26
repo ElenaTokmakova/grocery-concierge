@@ -243,9 +243,9 @@ const ProductSearch = (props) => {
               <MDBCol md="4" className="offset-md-4">
                 <MDBRow className="back-to-map-button-container justify-content-center">
                     <MDBCol sm="12">
-                      <div className="store-selection-back-navigation">
-                          <FontAwesomeIcon className="store-selection-back-icon" icon="chevron-left"/>
-                          <Link className="store-selection-back-link" to={{
+                      <div className="back-navigation">
+                          <FontAwesomeIcon className="back-icon" icon="chevron-left"/>
+                          <Link className="back-link" to={{
                                 pathname: `/mobile/select-store`
                             }}>Select another store</Link>
                       </div>
