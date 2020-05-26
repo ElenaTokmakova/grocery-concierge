@@ -1,6 +1,7 @@
 .mobile-app-container {
     background-color: white;
-    height: 100vh;
+    height: 100%;
+    min-height: 100vh;
     padding: 1rem;
     @media (min-width: 575.98px) {
       text-align: center;

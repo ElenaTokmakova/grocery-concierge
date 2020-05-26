@@ -8,7 +8,7 @@ const StoreList = props => {
         <MDBListGroup className="grocery-stores">
             {
                 props.stores.map((store, index) => {
-                    const {name, id, vicinity} = store;
+                    const {name, id, vicinity, open_now} = store;
                     const map_link = `https://www.google.com/maps/search/?api=1&query_place_id=${id}&query=${vicinity}`;
                     return (
                         <MDBListGroupItem key={index} className="grocery-stores--store-wrapper">
@@ -17,6 +17,7 @@ const StoreList = props => {
                                     <span className="grocery-stores--store-name">{name}</span>
                                     <span className="grocery-stores--store-address">{vicinity}</span>
                                     <span className="grocery-stores--google-map"><a href={map_link} target="_blank">Open Google Maps</a></span>
+                                    <span className="grocery-stores--open-now">{ open_now ? 'Open Now' : 'Closed' }</span>
                                 </div>
                                 <Link to={{
                                     pathname: `/mobile/select-products`

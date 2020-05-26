@@ -1,17 +1,15 @@
 import React, { useState, useContext } from 'react';
-import { Link, useRouteMatch, withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { MDBRow, MDBCol } from "mdbreact";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import MobileContext from './Context';
-import ShoppingList from './ShoppingList';
 import SweetAlert from 'sweetalert2-react';
 import grocery_store_aisle from "../../assets/images/grocery_store_aisle_small.png";
 
 const SearchResults = props => {
     const [show, setShow] = useState(false);
-    const match = useRouteMatch();
     const { concierge } = useContext(MobileContext);
-    const { productLocation, groceryList, removeItemFromShoppingList, clearShoppingList } = props;
+    const { productLocation } = props;
         return (
             <section className="search-results-section">
                 <div className="conversation-container conversation-container--concierge search-results-location">
@@ -19,19 +17,9 @@ const SearchResults = props => {
                     <span><strong>{productLocation}</strong></span>
                 </div>
                 <MDBRow className="product-search-results">
-                    <MDBCol md="12" lg="6" className="aisle-image-container offset-lg-3">
+                    <MDBCol lg="6" className="aisle-image-container offset-lg-3">
                         <img className="image-grocery-aisle img-fluid" src={grocery_store_aisle} />
                     </MDBCol>
-                    {/* <MDBCol md="12" lg="6" className="grocery-list-container offset-lg-3">
-                        {
-                            props.groceryList.length > 0 &&
-                            <ShoppingList
-                                    groceryList={groceryList}
-                                    removeItemFromShoppingList={removeItemFromShoppingList}
-                                    clearShoppingList={clearShoppingList}
-                                />
-                        }
-                    </MDBCol> */}
                 </MDBRow>
                 <MDBRow>
                     <MDBCol className="product-search-results--action-buttons-container">
@@ -39,7 +27,7 @@ const SearchResults = props => {
                         <div className="product-search-results--action-buttons action-buttons">
                             <button className="search-results-button button button-orange-red"
                             aria-haspopup="true" aria-expanded={show} onClick={ () => setShow(true)}>
-                                <FontAwesomeIcon className="fa-icon" icon="heart"/> Save this Map
+                                <FontAwesomeIcon className="fa-icon" icon="heart"/> Save this map
                             </button>
                             <SweetAlert
                                 type="success"

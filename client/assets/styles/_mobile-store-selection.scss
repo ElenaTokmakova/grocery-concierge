@@ -109,8 +109,13 @@
         &--store-selection-button {
           align-self: center;
         }
-        &--store-address, &--store-is-open, &--google-map {
-          font-size: 0.85rem;
+        &--store-address, &--google-map {
+          font-size: 0.875rem;
+        }
+        &--open-now {
+          color: $concierge-text-green;
+          font-size: 0.8rem;
+          font-weight: bold;
         }
         &--store-address, &--store-is-open {
           color: $concierge-grey;

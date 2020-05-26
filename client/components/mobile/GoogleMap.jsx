@@ -79,10 +79,20 @@ const MapContainer = (props) => {
         type: ['grocery_or_supermarket']
       }, (results, status) => {
         if (status !== 'OK') return;
-        props.setPlaces(results);
         const bounds = new google.maps.LatLngBounds();
+        const details = [];
         for (let i = 0, place; place = results[i]; i++) {
           bounds.extend(place.geometry.location);
+          const request = { reference: place.reference };
+          service.getDetails(request, (placeDetails, status) => {
+            details.push(placeDetails);
+            if (details.length === results.length) {
+              results.forEach(result => {
+                  result.open_now = placeDetails.opening_hours.isOpen();
+              });
+              props.setPlaces(results);
+            }
+          })
         }
         map.fitBounds(bounds);
       });

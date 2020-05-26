@@ -14,22 +14,8 @@
             justify-content: center;
         }
     }
-    &--title {
+    &--logo {
         height: 100%;
-        h1 {
-            font-size: 1.8rem;
-            height: 100%;
-            margin-bottom: 0;
-            @media (min-width: 576px) {
-                font-size: 2rem;
-            }
-            @media (min-width: 768px) {
-                font-size: 2.2rem;
-            }
-            @media (min-width: 992px) {
-                font-size: 2.5rem;
-            }
-        }
         img {
             height: 100%;
             max-width: 200px;

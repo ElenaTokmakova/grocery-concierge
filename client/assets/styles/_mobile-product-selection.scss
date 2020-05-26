@@ -4,40 +4,6 @@
     .back-to-map-button {
       margin: 0 auto;
     }
-    .product-search-subtitle {
-      align-items: center;
-      background: #ffffff;
-      border: 1px solid rgba(0, 0, 0, 0.125);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      margin: 1rem 0 2rem;
-      &.voice-search {
-        align-items: flex-start;
-        border: none;
-        @media (min-width: 576px) {
-          align-items: center;
-        }
-        .store-name {
-          color: $concierge-red;
-          font-weight: bold;
-          margin-bottom: 0.5rem;
-        }
-        .store-address {
-          margin-bottom: 0.5rem;
-        }
-        .google-map {
-          font-size: 0.9rem;
-        }
-        span {
-          display: block;
-        }
-        a {
-          color: $concierge-black;
-          text-decoration: underline;
-        }
-      }
-    }
   }
   .hr {
     &-red {

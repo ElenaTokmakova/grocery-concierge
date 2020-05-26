@@ -1,15 +1,17 @@
-.grocery-list-container {
-  margin-top: 1rem;
-  .shopping-list-table {
-    th {
-      background-color: $concierge-green;
-      color: white;
-      font-weight: bold;
+.shopping-list-table {
+  th {
+    background-color: $concierge-green;
+    color: white;
+    font-weight: bold;
+  }
+  td {
+    &:last-of-type {
+      text-align: center;
     }
-    .clear-shopping-list-icon {
-      &:hover {
-        cursor: pointer;
-      }
+  }
+  .clear-shopping-list-icon {
+    &:hover {
+      cursor: pointer;
     }
   }
 }

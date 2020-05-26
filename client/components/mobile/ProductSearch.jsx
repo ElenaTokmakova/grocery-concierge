@@ -36,7 +36,6 @@ const initialState = {
 };
 
 const reducer = (state, action) => {
-  console.log("Type", action.type, action.payload)
   switch (action.type) {
     case 'products':
       return {
@@ -180,10 +179,6 @@ const ProductSearch = (props) => {
 
       if (state.listening) {
           recognition.start();
-          // recognition.onend = () => {
-          //   console.log("Continue listening...");
-          //   recognition.start();
-          // }
       } else {
           recognition.stop();
           recognition.onend = () => {
@@ -254,7 +249,7 @@ const ProductSearch = (props) => {
                                 pathname: `/mobile/select-store`
                             }}>Select another store</Link>
                       </div>
-                        <p className="product-search-subtitle voice-search">
+                        <p className="selected-store">
                           <span className="font-weight-bold">Your Selected Store:</span>
                           <span className="store-name">{name}</span>
                           <span className="store-address">{vicinity}</span>

@@ -1,20 +1,27 @@
 import React from 'react';
 import logo from '../../assets/images/logo.svg';
+import { Link, withRouter } from 'react-router-dom';
 
-const Header = () => {
+const Header = (props) => {
 
     return (
         <header className="mobile-header">
             <div className="mobile-header--wrapper">
-                <div className="mobile-header--title">
-                    <h1>
+                <div className="mobile-header--logo">
+                    <Link to={{
+                        pathname: `/mobile`
+                        }}>
                         <img src={logo} alt="Grocery Concierge Logo"/>
-                    </h1>
+                    </Link>
                 </div>
-                <a className="mobile-header--account-link" href="#">My Account</a>
+                <Link className="mobile-header--account-link" to={{
+                    pathname: `/mobile/account`
+                    }}>
+                    My Account
+                </Link>
             </div>
         </header>
     )
 }
 
-export default Header;
+export default withRouter(Header);

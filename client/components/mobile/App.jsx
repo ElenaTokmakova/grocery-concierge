@@ -12,6 +12,10 @@ import Header from './Header';
 import GoogleMap from './GoogleMap';
 import ProductSearch from './ProductSearch';
 import SearchResults from './SearchResults';
+import ShoppingList from './ShoppingList';
+import SavedMaps from './SavedMaps';
+import Bulletin from './Bulletin';
+import Account from './Account';
 import concierge from '../../assets/images/concierge.svg';
 import customer from '../../assets/images/customer.svg';
 
@@ -151,7 +155,11 @@ const App = () => {
 
         <MDBContainer className="mobile-app-container">
 
-          <Header />
+          <Header
+              groceryList={state.groceryList}
+              removeItemFromShoppingList={removeItemFromShoppingList}
+              clearShoppingList={clearShoppingList}
+          />
 
           <main className="mobile-main-content">
 
@@ -215,6 +223,32 @@ const App = () => {
                     productLocation={state.productLocation}
                 />
           }
+          </Route>
+          <Route path={`${match.url}/account`}>
+            <section className="account-section">
+              <Account
+                    selectedPlace={state.selectedPlace}
+              />
+            </section>
+          </Route>
+          <Route path={`${match.url}/shopping-list`}>
+            <section className="shopping-list-section">
+              <ShoppingList
+                    groceryList={state.groceryList}
+                    removeItemFromShoppingList={removeItemFromShoppingList}
+                    clearShoppingList={clearShoppingList}
+              />
+              </section>
+          </Route>
+          <Route path={`${match.url}/saved-maps`}>
+            <section className="saved-maps-section">
+              <SavedMaps />
+            </section>
+          </Route>
+          <Route path={`${match.url}/bulletin`}>
+            <section className="bulletin-section">
+              <Bulletin />
+            </section>
           </Route>
           <Route exact path="/mobile">
             <Redirect to={`${match.url}/select-store`} />
