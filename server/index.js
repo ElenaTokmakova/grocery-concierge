@@ -88,7 +88,7 @@ io.on('connection', function(socket) {
     } else if (classification == 'hello') {
       socket.emit('response', { type: 'hello', reply: 'Hi!'});
     } else if (classification == 'exit') {
-      socket.emit('response', { type: 'exit', reply: 'The application will close automatically in 5 minutes. Say "start over" if you want to begin a new session.'});
+      socket.emit('response', { type: 'exit', reply: 'I will leave to assist another customer in 5 minutes. Say "Start Over" if you want to find something else.'});
     } else if (classification == 'print') {
       socket.emit('response', { type: 'print', reply: 'Printing the map'});
     } else if (classification == 'help') {
@@ -96,9 +96,9 @@ io.on('connection', function(socket) {
     } else if (classification == 'question') {
       socket.emit('response', { type: 'question', reply: 'What are you looking for?'});
     } else if (classification == 'start') {
-      socket.emit('response', { type: 'start', reply: 'Say "Ask a question" to continue.'});
+      socket.emit('response', { type: 'start', reply: 'Say "I have a question" to continue.'});
     } else if (classification == 'actions') {
-      socket.emit('response', { type: 'actions', reply: 'Please select what you would like to do'});
+      socket.emit('response', { type: 'actions', reply: 'How can I help you?'});
     } else if (classification == 'droids') {
       socket.emit('response', { type: 'droids', reply: 'I can\'t find the droids you are looking for'});
     }

@@ -1,10 +1,12 @@
-import React, { Fragment, useState, useEffect } from 'react';
-import { MDBRow } from 'mdbreact';
+import React, { Fragment, useState, useContext, useEffect } from 'react';
+import { MDBRow, MDBCol } from 'mdbreact';
+import KioskContext from '../Context';
 import NavigationLink from './components/NavigationLink';
 
 const Exit = () => {
 
     const [timeLeft, setTimeLeft] = useState(300);
+    const { concierge } = useContext(KioskContext);
 
     useEffect(() => {
         // exit early when we reach 0
@@ -25,14 +27,19 @@ const Exit = () => {
     return (
         <Fragment>
             <section className="screen-section screen-section-exit">
-               <MDBRow className="justify-content-center">
-                    <h3 className="concierge-warning">The application will close automatically in 5 minutes.</h3>
+               <MDBRow>
+                    <MDBCol size="2" className="circle-container">
+                        <img className="grocery-concierge-icon" src={concierge} alt="Grocery Concierge icon"/>
+                    </MDBCol>
+                    <MDBCol size="10" className="text-container">
+                        <h3 className="concierge-warning">I will leave to assist another customer in 5 minutes.</h3>
+                    </MDBCol>
                </MDBRow>
                <MDBRow className="justify-content-center">
                 <div className="countdown-container">{formatTime(timeLeft)}</div>
                </MDBRow>
                <MDBRow className="justify-content-center">
-                    <h3>Say "Start Over" if you want to begin a new session.</h3>
+                    <h3>Say "Start Over" if you want to find something else.</h3>
                </MDBRow>
             </section>
             <section className="screen-navigation-links">

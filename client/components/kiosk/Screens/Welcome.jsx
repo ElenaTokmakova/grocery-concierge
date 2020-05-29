@@ -15,9 +15,9 @@ const Welcome = (props) => {
                     <img className="grocery-concierge-icon" src={concierge} alt="Grocery Concierge icon"/>
                 </MDBCol>
                 <MDBCol size="10" className="text-container">
-                    <h2>Welcome to Grocery Concierge.</h2>
-                    <p>We can help you find what you are looking for in this store.</p>
-                    <p>Say <strong>"Ask a question"</strong> to continue.</p>
+                    <h2>Hi, I'm Grocery Concierge.</h2>
+                    <p>I can help you find what you are looking for in this store.</p>
+                    <p>Say <strong>"I have a question"</strong> to continue.</p>
                 </MDBCol>
                </MDBRow>
             </section>

@@ -26,7 +26,7 @@ const Action = (props) => {
                         <img className="grocery-concierge-icon" src={concierge} alt="Grocery Concierge icon"/>
                     </MDBCol>
                     <MDBCol size="10" className="text-container">
-                        <h3 className="concierge-speaking">Would you like to</h3>
+                        <h3 className="concierge-speaking">How can I help you?</h3>
                     </MDBCol>
                </MDBRow>
                <MDBRow>
@@ -36,7 +36,7 @@ const Action = (props) => {
                                 pathname: `/kiosk/actions`
                             }} onClick={ () => setShow(true)}>
                                 <button className="kiosk-action-button button button-orange-red">
-                                <FontAwesomeIcon className="fa-icon" icon="print"/> Print this Map
+                                <FontAwesomeIcon className="fa-icon" icon="print"/> Would you like me to print this map for you?
                                 </button>
                             </Link>
                             <SweetAlert
@@ -51,7 +51,7 @@ const Action = (props) => {
                                 pathname: `/kiosk/assistant`
                             }} >
                                 <button className="kiosk-action-button button button-orange-red">
-                                    <FontAwesomeIcon className="fa-icon" icon="phone-volume"/> Call for Assistance
+                                    <FontAwesomeIcon className="fa-icon" icon="phone-volume"/> Would you like me to call for assistance?
                                 </button>
                             </Link>
                         </div>
@@ -60,14 +60,14 @@ const Action = (props) => {
                                 pathname: `/kiosk/looking`
                             }} >
                                 <button className="kiosk-action-button button button-orange-red">
-                                    <FontAwesomeIcon className="fa-icon" icon="question"/> Ask another question
+                                    <FontAwesomeIcon className="fa-icon" icon="question"/> Ask me another question
                                 </button>
                             </Link>
                             <Link to={{
                                 pathname: `/kiosk/welcome`
                             }} >
                                 <button className="kiosk-action-button button button-orange-red">
-                                    <FontAwesomeIcon className="fa-icon" icon="sign-out-alt"/> Exit Application
+                                    <FontAwesomeIcon className="fa-icon" icon="sign-out-alt"/> I'm done! Bye for now
                                 </button>
                             </Link>
                         </div>

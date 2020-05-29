@@ -16,14 +16,14 @@ const Looking = (props) => {
     return (
         <Fragment>
             <section className="screen-section screen-section-looking">
-               <MDBRow>
+               {/* <MDBRow>
                     <MDBCol size="10" className="text-container align-items-end">
                         <h3 className="customer-speaking">I'm looking for something</h3>
                     </MDBCol>
                     <MDBCol size="2" className="circle-container">
                         <img className="grocery-concierge-icon" src={customer} alt="Grocery Concierge icon"/>
                     </MDBCol>
-               </MDBRow>
+               </MDBRow> */}
                <MDBRow>
                     <MDBCol size="2" className="circle-container">
                         <img className="grocery-concierge-icon" src={concierge} alt="Grocery Concierge icon"/>
