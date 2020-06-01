@@ -1,8 +1,15 @@
 import React from 'react';
 import { MDBRow, MDBCol } from "mdbreact";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useHistory } from "react-router-dom";
 
 const Header = () => {
+
+    const history = useHistory();
+
+    const navigateToModeScreen = () => {
+        history.push("/");
+      }
 
     return (
         <header className="kiosk-header">
@@ -21,7 +28,7 @@ const Header = () => {
                         <span>&mdash; Mic </span>
                     </div>
                     </MDBCol>
-                    <MDBCol md="3" className="kiosk-header--image-background"></MDBCol>
+                    <MDBCol md="3" className="kiosk-header--image-background" onClick={navigateToModeScreen}></MDBCol>
                 </MDBRow>
             </div>
         </header>

@@ -9,7 +9,7 @@ const Header = (props) => {
             <div className="mobile-header--wrapper">
                 <div className="mobile-header--logo">
                     <Link to={{
-                        pathname: `/mobile`
+                        pathname: `/`
                         }}>
                         <img src={logo} alt="Grocery Concierge Logo"/>
                     </Link>
