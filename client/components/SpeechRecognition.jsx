@@ -1,6 +1,7 @@
 import React, { Fragment, cloneElement, useReducer, useEffect } from 'react';
 // a standalone build of socket.io-client is exposed automatically by the socket.io server
 import socketIOClient from "socket.io-client";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // dev url is only required in development to make requests from client to server
 let DEV_URL = '';
@@ -22,7 +23,7 @@ recognition.maxAlternatives = 1;
 recognition.lang = 'en-US';
 
 const initialState = {
-    listening: true,
+    listening: false,
     intent: '',
     speaking: false,
     outputYou: '',
@@ -43,7 +44,12 @@ const reducer = (state, action) => {
     return {
         ...state,
         speaking: action.payload
-    };
+      };
+    case 'toggleListen':
+      return {
+          ...state,
+          listening: action.payload
+      };
     case 'outputYou':
       return {
           ...state,
@@ -65,11 +71,14 @@ const Recognition = (props) => {
 
     useEffect(() => {
       attachSocketListener();
-      handleListen();
       return () => {
         socket.off();
       };
     }, []);
+
+    useEffect(() => {
+      handleListen();
+    }, [state.listening]);
 
     const attachSocketListener = () => {
       socket.on('response', (response) => {
@@ -86,9 +95,16 @@ const Recognition = (props) => {
     // handle all of the speech recognition logic
     const handleListen = () => {
 
-      recognition.start();
-      recognition.onend = () => {
+      if (state.listening) {
         recognition.start();
+        recognition.onend = () => {
+          recognition.start();
+        }
+      } else {
+          recognition.stop();
+          recognition.onend = () => {
+            console.log("Stopped listening per click");
+          }
       }
 
       recognition.onstart = () => {
@@ -132,8 +148,16 @@ const Recognition = (props) => {
         }
     }
 
+    const toggleListen = () => {
+      const listening = !state.listening;
+      dispatch({ type: 'toggleListen', payload: listening});
+    }
+
+    const color = state.listening ? '#d3452c' : '#3c3c3b';
+
     return (
         <Fragment>
+            <span onClick={toggleListen} className="concierge-bell" style={{ color }}><FontAwesomeIcon icon="concierge-bell"/></span>
             { cloneElement(props.children, { ...state }) }
         </Fragment>
     )

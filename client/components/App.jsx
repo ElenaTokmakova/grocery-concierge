@@ -6,8 +6,8 @@ import {
   } from 'react-router-dom';
 import { PushSpinner } from "react-spinners-kit";
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faLongArrowAltLeft, faMicrophone, faMapMarkerAlt, faBox, faEgg, faFish, faToiletPaper, faScroll, faTrash, faHeart, faQuestion, faSignOutAlt, faCloudUploadAlt, faMobileAlt, faDesktop, faDotCircle, faPrint, faPhoneVolume, faChevronRight, faChevronLeft, faClipboardList, faNewspaper, faHandPointer } from '@fortawesome/free-solid-svg-icons';
-library.add(faLongArrowAltLeft, faMicrophone, faMapMarkerAlt, faBox, faEgg, faFish, faToiletPaper, faScroll, faTrash, faHeart, faQuestion, faSignOutAlt, faCloudUploadAlt, faMobileAlt, faDesktop, faDotCircle, faPrint, faPhoneVolume, faChevronRight, faChevronLeft, faClipboardList, faNewspaper, faHandPointer );
+import { faLongArrowAltLeft, faMicrophone, faMapMarkerAlt, faBox, faEgg, faFish, faToiletPaper, faScroll, faTrash, faHeart, faQuestion, faSignOutAlt, faCloudUploadAlt, faMobileAlt, faDesktop, faDotCircle, faPrint, faPhoneVolume, faChevronRight, faChevronLeft, faClipboardList, faNewspaper, faHandPointer, faConciergeBell } from '@fortawesome/free-solid-svg-icons';
+library.add(faLongArrowAltLeft, faMicrophone, faMapMarkerAlt, faBox, faEgg, faFish, faToiletPaper, faScroll, faTrash, faHeart, faQuestion, faSignOutAlt, faCloudUploadAlt, faMobileAlt, faDesktop, faDotCircle, faPrint, faPhoneVolume, faChevronRight, faChevronLeft, faClipboardList, faNewspaper, faHandPointer, faConciergeBell );
 
 const Mobile = lazy(() => import('./mobile/App'));
 const Kiosk = lazy(() => import('./kiosk/App'));
