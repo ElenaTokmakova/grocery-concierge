@@ -36,7 +36,7 @@ const Action = (props) => {
                                 pathname: `/kiosk/actions`
                             }} onClick={ () => setShow(true)}>
                                 <button className="kiosk-action-button button button-orange-red">
-                                <FontAwesomeIcon className="fa-icon" icon="print"/> Would you like me to print this map for you?
+                                <FontAwesomeIcon className="fa-icon" icon="print"/> Would you like me to print this map?
                                 </button>
                             </Link>
                             <SweetAlert

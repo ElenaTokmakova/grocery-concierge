@@ -17,7 +17,7 @@ const Welcome = (props) => {
                 <MDBCol size="10" className="text-container">
                     <h2>Hi, I'm Grocery Concierge.</h2>
                     <p>I can help you find what you are looking for in this store.</p>
-                    <p>Say <strong>"I have a question"</strong> to continue.</p>
+                    <p>Click the bell in the top left corner of the screen to call me and say <strong>"I have a question"</strong> to continue.</p>
                 </MDBCol>
                </MDBRow>
             </section>
