@@ -27,9 +27,6 @@ classifier.addDocument('help', 'help');
 classifier.addDocument('exit', 'exit');
 classifier.addDocument('stop', 'exit');
 classifier.addDocument('done', 'exit');
-classifier.addDocument('I\'m done', 'exit');
-classifier.addDocument('bye', 'exit');
-classifier.addDocument('bye for now', 'exit');
 
 classifier.addDocument('print', 'print');
 classifier.addDocument('map', 'print');
